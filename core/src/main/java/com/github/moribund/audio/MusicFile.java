@@ -7,6 +7,9 @@ import lombok.Getter;
  * the title given by the value name.
  */
 public enum MusicFile {
+    /**
+     * The title screen song.
+     */
     TITLE_SCREEN("music/title.mp3");
 
     /**
