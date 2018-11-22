@@ -6,16 +6,32 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.github.moribund.MoribundClient;
 import lombok.val;
 
-/** Launches the desktop (LWJGL) application. */
+/**
+ * The {@code DesktopLauncher} class launches the desktop (LWJGL) application.
+ */
 public class DesktopLauncher {
+    /**
+     * The start point of the desktop client.
+     * @param args The program arguments.
+     */
     public static void main(String[] args) {
         createApplication();
     }
 
+    /**
+     * Creates an application by making a new {@link LwjglApplication} using
+     * {@link MoribundClient} using the {@link LwjglApplicationConfiguration}
+     * provided by {@link DesktopLauncher#getDefaultConfiguration()}.
+     * @return The created {@link LwjglApplication}.
+     */
     private static LwjglApplication createApplication() {
         return new LwjglApplication(new MoribundClient(), getDefaultConfiguration());
     }
 
+    /**
+     * The configuration for the {@link LwjglApplication}.
+     * @return The created configurations for the {@link LwjglApplication}.
+     */
     private static LwjglApplicationConfiguration getDefaultConfiguration() {
         val configuration = new LwjglApplicationConfiguration();
 
