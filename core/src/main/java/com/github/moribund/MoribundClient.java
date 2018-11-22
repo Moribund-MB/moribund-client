@@ -1,14 +1,10 @@
 package com.github.moribund;
 
 import com.badlogic.gdx.Game;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.Client;
 import com.github.moribund.audio.MusicPlayer;
+import com.github.moribund.net.NetworkBootstrapper;
 import lombok.Getter;
-
-import java.io.IOException;
-
-import static com.github.moribund.net.ConnectionConfigurations.*;
+import lombok.val;
 
 /**
  * The {@code MoribundClient} class represents the entire {@link Game} for
@@ -27,36 +23,11 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
+        val networkBootstrapper = new NetworkBootstrapper();
         musicPlayer = new MusicPlayer();
+
         setScreen(new TitleScreen(this));
-        //connect();
-    }
-
-    /**
-     * Connects to the {@link com.esotericsoftware.kryonet.Server} using our
-     * {@link Client}. This method registers the packets before starting the
-     * {@link com.esotericsoftware.kryonet.Connection}.
-     */
-    private void connect() {
-        Client client = new Client();
-        //client.addListener(new TextListener());
-        registerPackets(client.getKryo());
-
-        client.start();
-        try {
-            client.connect(INITIAL_TIMEOUT, IP_ADDRESS, PORT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Registers packets that are serialized by {@link Kryo}. Packets
-     * are NOT required to implement {@link Kryo} or {@link com.esotericsoftware.kryo.KryoSerializable}.
-     * @param kryo The {@link Client}'s {@link Kryo}.
-     */
-    private void registerPackets(Kryo kryo) {
-        //kryo.register(MessagePacket.class);
+        networkBootstrapper.connect();
     }
 
     /**
