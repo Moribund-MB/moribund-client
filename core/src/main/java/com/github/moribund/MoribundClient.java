@@ -26,8 +26,8 @@ public class MoribundClient extends Game {
         val networkBootstrapper = new NetworkBootstrapper();
         musicPlayer = new MusicPlayer();
 
-        setScreen(new TitleScreen(this));
         networkBootstrapper.connect();
+        setScreen(new TitleScreen(this));
     }
 
     /**
