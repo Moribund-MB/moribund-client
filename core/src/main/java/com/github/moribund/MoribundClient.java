@@ -8,6 +8,8 @@ import lombok.Getter;
 
 import java.io.IOException;
 
+import static com.github.moribund.net.ConnectionConfigurations.*;
+
 /**
  * The {@code MoribundClient} class represents the entire {@link Game} for
  * both graphics and networking.
@@ -42,7 +44,7 @@ public class MoribundClient extends Game {
 
         client.start();
         try {
-            client.connect(3000, "localhost", 43594);
+            client.connect(INITIAL_TIMEOUT, IP_ADDRESS, PORT);
         } catch (IOException e) {
             e.printStackTrace();
         }
