@@ -24,7 +24,7 @@ public class TitleScreen implements Screen {
 
     /**
      * The equivalent of {@link Game#create()} where this is run as soon as the
-     * {@link Screen} shows this screen.
+     * {@link Game} shows this screen.
      */
     @Override
     public void show() {
