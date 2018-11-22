@@ -3,7 +3,7 @@ package com.github.moribund.audio;
 import lombok.Getter;
 
 /**
- * The {@code MusicFile} represents location for a certain music file based on
+ * A {@code MusicFile} that represents a location for a certain music file based on
  * the title given by the value name.
  */
 public enum MusicFile {
