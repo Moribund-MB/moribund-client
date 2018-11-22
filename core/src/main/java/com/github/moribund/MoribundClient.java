@@ -4,8 +4,6 @@ import com.badlogic.gdx.Game;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.github.moribund.audio.MusicPlayer;
-import com.github.moribund.net.TextListener;
-import com.github.moribund.net.packets.MessagePacket;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -39,7 +37,7 @@ public class MoribundClient extends Game {
      */
     private void connect() {
         Client client = new Client();
-        client.addListener(new TextListener());
+        //client.addListener(new TextListener());
         registerPackets(client.getKryo());
 
         client.start();
@@ -56,7 +54,7 @@ public class MoribundClient extends Game {
      * @param kryo The {@link Client}'s {@link Kryo}.
      */
     private void registerPackets(Kryo kryo) {
-        kryo.register(MessagePacket.class);
+        //kryo.register(MessagePacket.class);
     }
 
     /**
