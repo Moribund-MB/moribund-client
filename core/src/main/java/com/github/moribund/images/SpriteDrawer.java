@@ -27,11 +27,6 @@ public class SpriteDrawer {
      * documentation.
      */
     private final Object2ObjectOpenHashMap<SpriteFile, Sprite> spriteForFile;
-    /**
-     * The {@link SpriteBatch} that is {@link Inject}ed by Dagger 2.
-     */
-    @Inject
-    SpriteBatch spriteBatch;
 
     /**
      * The constructor for the {@code SpriteDrawer}. This injects the {@link SpriteComponent},
@@ -39,16 +34,8 @@ public class SpriteDrawer {
      * {@link SpriteDrawer#setup()}.
      */
     public SpriteDrawer() {
-        injectSpriteComponenet();
         spriteForFile = new Object2ObjectOpenHashMap<>();
         setup();
-    }
-
-    /**
-     * Injects the {@code SpriteDrawer} to provide a {@link SpriteDrawer#spriteBatch}.
-     */
-    private void injectSpriteComponenet() {
-        MoribundClient.getInstance().getSpriteComponent().inject(this);
     }
 
     /**
@@ -79,7 +66,7 @@ public class SpriteDrawer {
      * @param spriteFile The {@link SpriteFile} enum value to draw.
      * @param coordinate The {@link Coordinate} on the game's grid.
      */
-    public void drawSprite(SpriteFile spriteFile, Coordinate coordinate) {
+    public void drawSprite(SpriteFile spriteFile, Coordinate coordinate, SpriteBatch spriteBatch) {
         val sprite = getSprite(spriteFile);
         sprite.setPosition(coordinate.getX(), coordinate.getY());
         sprite.draw(spriteBatch);

@@ -58,7 +58,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         clearGl();
         drawSpriteBatch(() -> {
-            spriteDrawer.drawSprite(SpriteFile.DUMMY_PLAYER, new Coordinate(50, 100));
+            spriteDrawer.drawSprite(SpriteFile.DUMMY_PLAYER, new Coordinate(50, 100), spriteBatch);
         });
     }
 
