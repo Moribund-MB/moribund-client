@@ -7,20 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.entity.Coordinate;
 import com.github.moribund.images.SpriteDrawer;
 import com.github.moribund.images.SpriteFile;
-
-import javax.inject.Inject;
+import lombok.val;
 
 public class GameScreen implements Screen {
-    /**
-     * The {@link SpriteBatch} that is {@link Inject}ed by Dagger 2.
-     */
-    @Inject
-    SpriteBatch spriteBatch;
-    /**
-     * The {@link SpriteDrawer} that is {@link Inject}ed by Dagger 2.
-     */
-    @Inject
-    SpriteDrawer spriteDrawer;
+
+    private SpriteBatch spriteBatch;
 
     /**
      * The equivalent of {@link com.badlogic.gdx.Game#create()} where this
@@ -28,17 +19,13 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        injectSpriteComponent();
+        initializeSpriteBatch();
         drawGameFrame();
         drawPlayers();
     }
 
-    /**
-     * Injects the dependencies {@link com.github.moribund.images.SpriteModule}
-     * provides.
-     */
-    private void injectSpriteComponent() {
-        MoribundClient.getInstance().getSpriteComponent().inject(this);
+    private void initializeSpriteBatch() {
+        spriteBatch = MoribundClient.getInstance().getSpriteBatch();
     }
 
     private void drawPlayers() {
@@ -57,6 +44,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         clearGl();
+        val spriteDrawer = MoribundClient.getInstance().getSpriteDrawer();
         drawSpriteBatch(() -> {
             spriteDrawer.drawSprite(SpriteFile.DUMMY_PLAYER, new Coordinate(50, 100), spriteBatch);
         });

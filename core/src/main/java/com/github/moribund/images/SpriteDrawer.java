@@ -77,7 +77,7 @@ public class SpriteDrawer {
      * @param file The {@link SpriteFile} enum value to get.
      * @return The {@link Sprite} fetched.
      */
-    private Sprite getSprite(SpriteFile file) {
+    public Sprite getSprite(SpriteFile file) {
         return spriteForFile.get(file);
     }
 }

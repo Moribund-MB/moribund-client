@@ -2,16 +2,14 @@ package com.github.moribund;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.github.moribund.audio.DaggerMusicComponent;
-import com.github.moribund.audio.MusicComponent;
 import com.github.moribund.audio.MusicFile;
+import lombok.val;
 
 /**
  * The {@code TitleScreen} class is the first {@link Screen} of the {@link com.badlogic.gdx.Game}
  * that {@link MoribundClient} sets to.
  */
 public class TitleScreen implements Screen {
-    private MusicComponent musicComponent = DaggerMusicComponent.create();
 
     /**
      * The equivalent of {@link Game#create()} where this is run as soon as the
@@ -19,7 +17,8 @@ public class TitleScreen implements Screen {
      */
     @Override
     public void show() {
-        musicComponent.getMusicPlayer().play(MusicFile.TITLE_SCREEN, true);
+        val musicPlayer = MoribundClient.getInstance().getMusicPlayer();
+        musicPlayer.play(MusicFile.TITLE_SCREEN, true);
     }
 
     @Override
