@@ -1,9 +1,11 @@
 package com.github.moribund.images;
 
+import com.github.moribund.GameScreen;
 import dagger.Component;
 
 @SpriteScope
 @Component(modules = SpriteModule.class)
 public interface SpriteComponent {
-    SpriteDrawer getSpriteDrawer();
+    void inject(GameScreen gameScreen);
+    void inject(SpriteDrawer spriteDrawer);
 }

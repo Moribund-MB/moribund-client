@@ -4,14 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.moribund.MoribundClient;
 import com.github.moribund.entity.Coordinate;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.val;
 
+import javax.inject.Inject;
+
 public class SpriteDrawer {
     private final Object2ObjectOpenHashMap<SpriteFile, Sprite> spriteForFile;
+    @Inject
+    SpriteBatch spriteBatch;
 
     public SpriteDrawer() {
+        MoribundClient.getInstance().getSpriteComponent().inject(this);
         spriteForFile = new Object2ObjectOpenHashMap<>();
         setup();
     }
@@ -28,7 +34,7 @@ public class SpriteDrawer {
         return new Sprite(texture, 0, 0, texture.getWidth(), texture.getHeight());
     }
 
-    public void drawSprite(SpriteFile spriteFile, Coordinate coordinate, SpriteBatch spriteBatch) {
+    public void drawSprite(SpriteFile spriteFile, Coordinate coordinate) {
         val sprite = getSprite(spriteFile);
         sprite.setPosition(coordinate.getX(), coordinate.getY());
         sprite.draw(spriteBatch);

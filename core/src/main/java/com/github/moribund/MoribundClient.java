@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.audio.DaggerMusicComponent;
 import com.github.moribund.audio.MusicComponent;
+import com.github.moribund.images.DaggerSpriteComponent;
+import com.github.moribund.images.SpriteComponent;
 import com.github.moribund.net.NetworkBootstrapper;
 import lombok.Getter;
 import lombok.val;
@@ -14,11 +16,15 @@ import lombok.val;
  * both graphics and networking.
  */
 public class MoribundClient extends Game {
+    private static MoribundClient instance;
     @Getter
     private SpriteBatch spriteBatch;
     @Getter
     private OrthographicCamera camera;
+    @Getter
     private MusicComponent musicComponent = DaggerMusicComponent.create();
+    @Getter
+    private SpriteComponent spriteComponent = DaggerSpriteComponent.create();
 
     /**
      * Sets the visual graphics to its initial state and starts the client
@@ -26,6 +32,8 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
+        instance = this;
+
         initializeCamera();
         initializeSpriteBatch();
         connectNetworkBootstrapper();
@@ -57,5 +65,9 @@ public class MoribundClient extends Game {
         super.dispose();
         musicComponent.getMusicPlayer().dispose();
         spriteBatch.dispose();
+    }
+
+    public static MoribundClient getInstance() {
+        return instance;
     }
 }

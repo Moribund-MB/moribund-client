@@ -3,23 +3,28 @@ package com.github.moribund;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.entity.Coordinate;
-import com.github.moribund.images.DaggerSpriteComponent;
-import com.github.moribund.images.SpriteComponent;
+import com.github.moribund.images.SpriteDrawer;
 import com.github.moribund.images.SpriteFile;
 
-public class GameScreen implements Screen {
-    private final MoribundClient client;
-    private final SpriteComponent spriteComponent = DaggerSpriteComponent.create();
+import javax.inject.Inject;
 
-    public GameScreen(MoribundClient client) {
-        this.client = client;
-    }
+public class GameScreen implements Screen {
+    @Inject
+    SpriteBatch spriteBatch;
+    @Inject
+    SpriteDrawer spriteDrawer;
 
     @Override
     public void show() {
+        injectSpriteComponent();
         drawGameFrame();
         drawPlayers();
+    }
+
+    private void injectSpriteComponent() {
+        MoribundClient.getInstance().getSpriteComponent().inject(this);
     }
 
     private void drawPlayers() {
@@ -34,7 +39,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         clearGl();
         drawSpriteBatch(() -> {
-            spriteComponent.getSpriteDrawer().drawSprite(SpriteFile.DUMMY_PLAYER, new Coordinate(50, 100), client.getSpriteBatch());
+            spriteDrawer.drawSprite(SpriteFile.DUMMY_PLAYER, new Coordinate(50, 100));
         });
     }
 
@@ -44,10 +49,10 @@ public class GameScreen implements Screen {
     }
 
     private void drawSpriteBatch(Runnable drawing) {
-        client.getSpriteBatch().setProjectionMatrix(client.getCamera().combined);
-        client.getSpriteBatch().begin();
+        spriteBatch.setProjectionMatrix(MoribundClient.getInstance().getCamera().combined);
+        spriteBatch.begin();
         drawing.run();
-        client.getSpriteBatch().end();
+        spriteBatch.end();
     }
 
     @Override
