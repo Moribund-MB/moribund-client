@@ -1,7 +1,10 @@
 package com.github.moribund;
 
 import com.badlogic.gdx.Game;
-import com.github.moribund.audio.MusicPlayer;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.moribund.audio.DaggerMusicComponent;
+import com.github.moribund.audio.MusicComponent;
 import com.github.moribund.net.NetworkBootstrapper;
 import lombok.Getter;
 import lombok.val;
@@ -11,11 +14,11 @@ import lombok.val;
  * both graphics and networking.
  */
 public class MoribundClient extends Game {
-    /**
-     * The music player dependency.
-     */
     @Getter
-    private MusicPlayer musicPlayer;
+    private SpriteBatch spriteBatch;
+    @Getter
+    private OrthographicCamera camera;
+    private MusicComponent musicComponent = DaggerMusicComponent.create();
 
     /**
      * Sets the visual graphics to its initial state and starts the client
@@ -23,11 +26,26 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
-        val networkBootstrapper = new NetworkBootstrapper();
-        musicPlayer = new MusicPlayer();
+        initializeCamera();
+        initializeSpriteBatch();
+        connectNetworkBootstrapper();
 
-        networkBootstrapper.connect();
-        setScreen(new TitleScreen(this));
+        setScreen(new TitleScreen());
+    }
+
+    private void initializeSpriteBatch() {
+        spriteBatch = new SpriteBatch();
+    }
+
+    private void initializeCamera() {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+    }
+
+    private void connectNetworkBootstrapper() {
+        val networkBootstrapper = new NetworkBootstrapper();
+
+//        networkBootstrapper.connect();
     }
 
     /**
@@ -37,6 +55,7 @@ public class MoribundClient extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        musicPlayer.dispose();
+        musicComponent.getMusicPlayer().dispose();
+        spriteBatch.dispose();
     }
 }

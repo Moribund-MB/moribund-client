@@ -2,7 +2,6 @@ apply plugin: 'application'
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').absolutePath ]
 mainClassName = 'com.github.moribund.desktop.DesktopLauncher'
-eclipse.project.name = appName + '-desktop'
 sourceCompatibility = 1.7
 
 dependencies {
