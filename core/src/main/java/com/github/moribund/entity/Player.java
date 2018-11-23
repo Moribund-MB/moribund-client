@@ -1,40 +1,69 @@
 package com.github.moribund.entity;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteFile;
 
-public final class Player extends MovableEntity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Player implements PlayableCharacter {
+    private Coordinate coordinate;
+    private Sprite sprite;
+    private Map<Integer, Runnable> keyBinds;
 
     public Player(Coordinate startingCoordinate) {
-        super(MoribundClient.getInstance().getSpriteDrawer().getSprite(SpriteFile.DUMMY_PLAYER), startingCoordinate);
+        coordinate = startingCoordinate;
+        sprite = MoribundClient.getInstance().getSpriteDrawer().getSprite(SpriteFile.DUMMY_PLAYER);
     }
 
     @Override
-    void moveUp() {
+    public void moveUp() {
         coordinate = coordinate.transmorphY(1);
     }
 
     @Override
-    void moveLeft() {
-        coordinate = coordinate.transmorphX(-1);
-    }
-
-    @Override
-    void moveRight() {
-        coordinate = coordinate.transmorphX(1);
-    }
-
-    @Override
-    void moveDown() {
+    public void moveDown() {
         coordinate = coordinate.transmorphY(-1);
     }
 
     @Override
-    void bindKeys() {
+    public void moveLeft() {
+        coordinate = coordinate.transmorphX(-1);
+    }
+
+    @Override
+    public void moveRight() {
+        coordinate = coordinate.transmorphX(1);
+    }
+
+    @Override
+    public Map<Integer, Runnable> getKeyBinds() {
+        if (keyBinds == null) {
+            keyBinds = new HashMap<>();
+            bindKeys();
+        }
+        return keyBinds;
+    }
+
+    @Override
+    public void bindKeys() {
         keyBinds.put(Input.Keys.UP, this::moveUp);
+        keyBinds.put(Input.Keys.DOWN, this::moveDown);
         keyBinds.put(Input.Keys.LEFT, this::moveLeft);
         keyBinds.put(Input.Keys.RIGHT, this::moveRight);
-        keyBinds.put(Input.Keys.DOWN, this::moveDown);
+    }
+
+    @Override
+    public Coordinate getCurrentCoordinate() {
+        return coordinate;
+    }
+
+    @Override
+    public void draw(SpriteBatch spriteBatch) {
+        sprite.setPosition(coordinate.getX(), coordinate.getY());
+        sprite.draw(spriteBatch);
     }
 }

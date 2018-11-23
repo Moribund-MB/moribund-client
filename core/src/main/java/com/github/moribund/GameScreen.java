@@ -10,7 +10,7 @@ import com.github.moribund.images.SpriteDrawer;
 public class GameScreen implements Screen {
 
     private SpriteBatch spriteBatch;
-    private Entity dummyPlayer;
+    private PlayableCharacter dummyPlayer;
 
     /**
      * The equivalent of {@link com.badlogic.gdx.Game#create()} where this
@@ -53,21 +53,16 @@ public class GameScreen implements Screen {
     }
 
     private void drawVisibleEntities() {
-        if (dummyPlayer instanceof VisibleEntity) {
-            VisibleEntity visibleEntity = (VisibleEntity) dummyPlayer;
-            visibleEntity.draw(spriteBatch);
-        }
+        dummyPlayer.draw(spriteBatch);
     }
 
     private void processMovement() {
-        if (dummyPlayer instanceof MovableEntity) {
-            MovableEntity movableEntity = (MovableEntity) dummyPlayer;
-            movableEntity.getKeyBinds().forEach((key, action) -> {
-                if (Gdx.input.isKeyPressed(key)) {
-                    action.run();
-                }
-            });
-        }
+        dummyPlayer.getKeyBinds().forEach((key, action) -> {
+            if (Gdx.input.isKeyPressed(key)) {
+                action.run();
+                // todo send packet
+            }
+        });
     }
 
     /**
