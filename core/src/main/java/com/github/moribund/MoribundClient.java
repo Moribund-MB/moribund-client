@@ -37,7 +37,7 @@ public class MoribundClient extends Game {
         initializeSpriteDrawer();
         connectNetworkBootstrapper();
 
-        setScreen(new TitleScreen());
+        setScreen(new GameScreen());
     }
 
     private void initializeSpriteDrawer() {

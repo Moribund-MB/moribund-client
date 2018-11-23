@@ -1,6 +1,7 @@
 package com.github.moribund.entity;
 
 import lombok.Data;
+import lombok.val;
 
 /**
  * Represents a {@code Coordinate} on the Cartesian coordinate
@@ -26,5 +27,19 @@ public class Coordinate {
     public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Coordinate transmorph(int x, int y) {
+        val newX = this.x + x;
+        val newY = this.y + y;
+        return new Coordinate(newX, newY);
+    }
+
+    public Coordinate transmorphX(int x) {
+        return transmorph(x, 0);
+    }
+
+    public Coordinate transmorphY(int y) {
+        return transmorph(0, y);
     }
 }

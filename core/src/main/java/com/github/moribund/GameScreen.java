@@ -4,14 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.entity.Coordinate;
+import com.github.moribund.entity.*;
 import com.github.moribund.images.SpriteDrawer;
-import com.github.moribund.images.SpriteFile;
-import lombok.val;
 
 public class GameScreen implements Screen {
 
     private SpriteBatch spriteBatch;
+    private Entity dummyPlayer;
 
     /**
      * The equivalent of {@link com.badlogic.gdx.Game#create()} where this
@@ -20,8 +19,13 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         initializeSpriteBatch();
+        makeDummyPlayer();
         drawGameFrame();
         drawPlayers();
+    }
+
+    private void makeDummyPlayer() {
+        dummyPlayer = new Player(new Coordinate(50, 100));
     }
 
     private void initializeSpriteBatch() {
@@ -43,11 +47,27 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        processMovement();
         clearGl();
-        val spriteDrawer = MoribundClient.getInstance().getSpriteDrawer();
-        drawSpriteBatch(() -> {
-            spriteDrawer.drawSprite(SpriteFile.DUMMY_PLAYER, new Coordinate(50, 100), spriteBatch);
-        });
+        drawSpriteBatch(this::drawVisibleEntities);
+    }
+
+    private void drawVisibleEntities() {
+        if (dummyPlayer instanceof VisibleEntity) {
+            VisibleEntity visibleEntity = (VisibleEntity) dummyPlayer;
+            visibleEntity.draw(spriteBatch);
+        }
+    }
+
+    private void processMovement() {
+        if (dummyPlayer instanceof MovableEntity) {
+            MovableEntity movableEntity = (MovableEntity) dummyPlayer;
+            movableEntity.getKeyBinds().forEach((key, action) -> {
+                if (Gdx.input.isKeyPressed(key)) {
+                    action.run();
+                }
+            });
+        }
     }
 
     /**
