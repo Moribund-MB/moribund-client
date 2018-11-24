@@ -12,7 +12,7 @@ import java.io.Serializable;
  * info in the link to the annotation.
  */
 @Data
-public class Coordinate implements Serializable {
+public class Tile implements Serializable {
     /**
      * The x-coordinate representation.
      */
@@ -27,28 +27,28 @@ public class Coordinate implements Serializable {
      * @param x The x-coordinate representation.
      * @param y The y-coordinate representation.
      */
-    public Coordinate(int x, int y) {
+    public Tile(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Coordinate transmorph(int x, int y) {
+    public Tile transmorph(int x, int y) {
         val newX = this.x + x;
         val newY = this.y + y;
-        return new Coordinate(newX, newY);
+        return new Tile(newX, newY);
     }
 
-    public Coordinate transmorphX(int x) {
+    public Tile transmorphX(int x) {
         return transmorph(x, 0);
     }
 
-    public Coordinate transmorphY(int y) {
+    public Tile transmorphY(int y) {
         return transmorph(0, y);
     }
 
-    public static Coordinate pairToCoordinate(Pair<Integer, Integer> coordinatePair) {
+    public static Tile pairToCoordinate(Pair<Integer, Integer> coordinatePair) {
         val x = coordinatePair.getKey();
         val y = coordinatePair.getValue();
-        return new Coordinate(x, y);
+        return new Tile(x, y);
     }
 }

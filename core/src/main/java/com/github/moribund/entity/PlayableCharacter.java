@@ -11,8 +11,8 @@ public interface PlayableCharacter {
     void moveRight();
     Map<Integer, Runnable> getKeyBinds();
     void bindKeys();
-    Coordinate getCurrentCoordinate();
-    void setCoordinate(Coordinate coordinate);
+    Tile getCurrentTile();
+    void setTile(Tile tile);
     void draw(SpriteBatch spriteBatch);
     int getPlayerId();
 }

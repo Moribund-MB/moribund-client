@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player implements PlayableCharacter {
-    private Coordinate coordinate;
+    private Tile tile;
     private int playerId;
     private transient Sprite sprite;
     private transient Map<Integer, Runnable> keyBinds;
@@ -22,22 +22,22 @@ public class Player implements PlayableCharacter {
 
     @Override
     public void moveUp() {
-        coordinate = coordinate.transmorphY(1);
+        tile = tile.transmorphY(1);
     }
 
     @Override
     public void moveDown() {
-        coordinate = coordinate.transmorphY(-1);
+        tile = tile.transmorphY(-1);
     }
 
     @Override
     public void moveLeft() {
-        coordinate = coordinate.transmorphX(-1);
+        tile = tile.transmorphX(-1);
     }
 
     @Override
     public void moveRight() {
-        coordinate = coordinate.transmorphX(1);
+        tile = tile.transmorphX(1);
     }
 
     @Override
@@ -58,18 +58,18 @@ public class Player implements PlayableCharacter {
     }
 
     @Override
-    public Coordinate getCurrentCoordinate() {
-        return coordinate;
+    public Tile getCurrentTile() {
+        return tile;
     }
 
     @Override
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setTile(Tile tile) {
+        this.tile = tile;
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-        sprite.setPosition(coordinate.getX(), coordinate.getY());
+        sprite.setPosition(tile.getX(), tile.getY());
         sprite.draw(spriteBatch);
     }
 

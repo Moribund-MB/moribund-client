@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.MoribundClient;
-import com.github.moribund.entity.Coordinate;
+import com.github.moribund.entity.Tile;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.val;
 
@@ -62,13 +61,13 @@ public class SpriteDrawer {
 
     /**
      * Draws a {@link Sprite} by fetching it from the {@link SpriteDrawer#spriteForFile}
-     * {@link java.util.HashMap} and drawing it to the given {@link Coordinate}.
+     * {@link java.util.HashMap} and drawing it to the given {@link Tile}.
      * @param spriteFile The {@link SpriteFile} enum value to draw.
-     * @param coordinate The {@link Coordinate} on the game's grid.
+     * @param tile The {@link Tile} on the game's grid.
      */
-    public void drawSprite(SpriteFile spriteFile, Coordinate coordinate, SpriteBatch spriteBatch) {
+    public void drawSprite(SpriteFile spriteFile, Tile tile, SpriteBatch spriteBatch) {
         val sprite = getSprite(spriteFile);
-        sprite.setPosition(coordinate.getX(), coordinate.getY());
+        sprite.setPosition(tile.getX(), tile.getY());
         sprite.draw(spriteBatch);
     }
 
