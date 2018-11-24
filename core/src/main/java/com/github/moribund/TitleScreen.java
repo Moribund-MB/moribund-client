@@ -1,8 +1,11 @@
 package com.github.moribund;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicFile;
+import com.github.moribund.net.packets.LoginRequestPacket;
 import lombok.val;
 
 /**
@@ -23,6 +26,11 @@ public class TitleScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (Gdx.input.isKeyPressed(Input.Keys.T)) {
+            val client = MoribundClient.getInstance();
+            client.setScreen(new GameScreen());
+            client.getPacketDispatcher().sendTCP(new LoginRequestPacket());
+        }
         // Draw your screen here. "delta" is the time since last render in seconds.
     }
 

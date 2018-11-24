@@ -4,13 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.entity.*;
 import com.github.moribund.images.SpriteDrawer;
+import lombok.val;
 
 public class GameScreen implements Screen {
 
     private SpriteBatch spriteBatch;
-    private PlayableCharacter dummyPlayer;
 
     /**
      * The equivalent of {@link com.badlogic.gdx.Game#create()} where this
@@ -19,13 +18,8 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         initializeSpriteBatch();
-        makeDummyPlayer();
         drawGameFrame();
         drawPlayers();
-    }
-
-    private void makeDummyPlayer() {
-        dummyPlayer = new Player(new Coordinate(50, 100));
     }
 
     private void initializeSpriteBatch() {
@@ -53,16 +47,11 @@ public class GameScreen implements Screen {
     }
 
     private void drawVisibleEntities() {
-        dummyPlayer.draw(spriteBatch);
+        MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> player.draw(spriteBatch));
     }
 
     private void processMovement() {
-        dummyPlayer.getKeyBinds().forEach((key, action) -> {
-            if (Gdx.input.isKeyPressed(key)) {
-                action.run();
-                // todo send packet
-            }
-        });
+
     }
 
     /**
@@ -82,7 +71,8 @@ public class GameScreen implements Screen {
      *                {@link SpriteBatch} ends.
      */
     private void drawSpriteBatch(Runnable drawing) {
-        spriteBatch.setProjectionMatrix(MoribundClient.getInstance().getCamera().combined);
+        val camera = MoribundClient.getInstance().getCamera();
+        spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         drawing.run();
         spriteBatch.end();

@@ -1,10 +1,14 @@
 package com.github.moribund.net;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryonet.Client;
-import lombok.val;
+import com.github.moribund.net.packets.*;
+import com.github.moribund.util.Reference;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * The {@code NetworkBootstrapper} class is responsible for giving the
@@ -24,14 +28,20 @@ public class NetworkBootstrapper {
      */
     private static final int PORT = 43594;
 
+    private final Client client;
+
+    public NetworkBootstrapper() {
+        client = new Client();
+    }
+
     /**
      * Connects to the {@link com.esotericsoftware.kryonet.Server} using our
      * {@link Client}. This method registers the packets before starting the
      * {@link com.esotericsoftware.kryonet.Connection}.
      */
     public void connect() {
-        val client = new Client();
-        //client.addListener(new TextListener());
+        client.addListener(new MovementListener());
+        client.addListener(new AccountListener());
         registerPackets(client.getKryo());
 
         client.start();
@@ -48,6 +58,17 @@ public class NetworkBootstrapper {
      * @param kryo The {@link Client}'s {@link Kryo}.
      */
     private void registerPackets(Kryo kryo) {
-        //kryo.register(MessagePacket.class);
+        kryo.register(MovingPacket.class);
+        kryo.register(MovingFlagPacket.class);
+        kryo.register(DrawNewPlayerPacket.class);
+        kryo.register(LoginPacket.class);
+        kryo.register(LoginRequestPacket.class);
+        kryo.register(ArrayList.class, new JavaSerializer());
+        kryo.register(Pair.class, new JavaSerializer());
+        kryo.register(Integer.class, new JavaSerializer());
+    }
+
+    public void initializePacketDispatcher(Reference<PacketDispatcher> packetDispatcherReference) {
+        packetDispatcherReference.setVariable(new PacketDispatcher(client));
     }
 }

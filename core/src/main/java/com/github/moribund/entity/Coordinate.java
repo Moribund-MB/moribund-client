@@ -1,7 +1,10 @@
 package com.github.moribund.entity;
 
+import javafx.util.Pair;
 import lombok.Data;
 import lombok.val;
+
+import java.io.Serializable;
 
 /**
  * Represents a {@code Coordinate} on the Cartesian coordinate
@@ -9,7 +12,7 @@ import lombok.val;
  * info in the link to the annotation.
  */
 @Data
-public class Coordinate {
+public class Coordinate implements Serializable {
     /**
      * The x-coordinate representation.
      */
@@ -41,5 +44,11 @@ public class Coordinate {
 
     public Coordinate transmorphY(int y) {
         return transmorph(0, y);
+    }
+
+    public static Coordinate pairToCoordinate(Pair<Integer, Integer> coordinatePair) {
+        val x = coordinatePair.getKey();
+        val y = coordinatePair.getValue();
+        return new Coordinate(x, y);
     }
 }

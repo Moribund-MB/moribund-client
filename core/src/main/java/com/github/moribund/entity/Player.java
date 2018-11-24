@@ -1,6 +1,6 @@
 package com.github.moribund.entity;
 
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
@@ -11,11 +11,12 @@ import java.util.Map;
 
 public class Player implements PlayableCharacter {
     private Coordinate coordinate;
-    private Sprite sprite;
-    private Map<Integer, Runnable> keyBinds;
+    private int playerId;
+    private transient Sprite sprite;
+    private transient Map<Integer, Runnable> keyBinds;
 
-    public Player(Coordinate startingCoordinate) {
-        coordinate = startingCoordinate;
+    public Player(int playerId) {
+        this.playerId = playerId;
         sprite = MoribundClient.getInstance().getSpriteDrawer().getSprite(SpriteFile.DUMMY_PLAYER);
     }
 
@@ -50,10 +51,10 @@ public class Player implements PlayableCharacter {
 
     @Override
     public void bindKeys() {
-        keyBinds.put(Input.Keys.UP, this::moveUp);
-        keyBinds.put(Input.Keys.DOWN, this::moveDown);
-        keyBinds.put(Input.Keys.LEFT, this::moveLeft);
-        keyBinds.put(Input.Keys.RIGHT, this::moveRight);
+        keyBinds.put(Keys.UP, this::moveUp);
+        keyBinds.put(Keys.DOWN, this::moveDown);
+        keyBinds.put(Keys.LEFT, this::moveLeft);
+        keyBinds.put(Keys.RIGHT, this::moveRight);
     }
 
     @Override
@@ -62,8 +63,18 @@ public class Player implements PlayableCharacter {
     }
 
     @Override
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    @Override
     public void draw(SpriteBatch spriteBatch) {
         sprite.setPosition(coordinate.getX(), coordinate.getY());
         sprite.draw(spriteBatch);
+    }
+
+    @Override
+    public int getPlayerId() {
+        return playerId;
     }
 }

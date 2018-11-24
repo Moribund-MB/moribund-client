@@ -4,8 +4,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.audio.MusicPlayer;
+import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.images.SpriteDrawer;
 import com.github.moribund.net.NetworkBootstrapper;
+import com.github.moribund.net.PacketDispatcher;
+import com.github.moribund.util.Reference;
+import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.val;
 
@@ -23,6 +28,9 @@ public class MoribundClient extends Game {
     private MusicPlayer musicPlayer;
     @Getter
     private SpriteDrawer spriteDrawer;
+    @Getter
+    private AbstractInt2ObjectMap<PlayableCharacter> players;
+    private Reference<PacketDispatcher> packetDispatcherReference;
 
     /**
      * Sets the visual graphics to its initial state and starts the client
@@ -35,9 +43,14 @@ public class MoribundClient extends Game {
         initializeSpriteBatch();
         initializeMusicPlayer();
         initializeSpriteDrawer();
-        connectNetworkBootstrapper();
+        initializePlayersMap();
+        setupNetworking();
 
-        setScreen(new GameScreen());
+        setScreen(new TitleScreen());
+    }
+
+    private void initializePlayersMap() {
+        players = new Int2ObjectOpenHashMap<>();
     }
 
     private void initializeSpriteDrawer() {
@@ -57,10 +70,11 @@ public class MoribundClient extends Game {
         camera.setToOrtho(false, 800, 480);
     }
 
-    private void connectNetworkBootstrapper() {
+    private void setupNetworking() {
         val networkBootstrapper = new NetworkBootstrapper();
-
-//        networkBootstrapper.connect();
+        networkBootstrapper.connect();
+        packetDispatcherReference = new Reference<>();
+        networkBootstrapper.initializePacketDispatcher(packetDispatcherReference);
     }
 
     /**
@@ -75,5 +89,9 @@ public class MoribundClient extends Game {
 
     public static MoribundClient getInstance() {
         return instance;
+    }
+
+    public PacketDispatcher getPacketDispatcher() {
+        return packetDispatcherReference.getVariable();
     }
 }
