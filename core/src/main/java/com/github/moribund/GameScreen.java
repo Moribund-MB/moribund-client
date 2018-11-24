@@ -51,7 +51,10 @@ public class GameScreen implements Screen {
     }
 
     private void processMovement() {
+        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+        MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> {
 
+        });
     }
 
     /**

@@ -1,19 +1,14 @@
 package com.github.moribund.entity;
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteFile;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Player implements PlayableCharacter {
     private Tile tile;
     private int playerId;
     private transient Sprite sprite;
-    private transient Map<Integer, Runnable> keyBinds;
 
     public Player(int playerId) {
         this.playerId = playerId;
@@ -41,20 +36,8 @@ public class Player implements PlayableCharacter {
     }
 
     @Override
-    public Map<Integer, Runnable> getKeyBinds() {
-        if (keyBinds == null) {
-            keyBinds = new HashMap<>();
-            bindKeys();
-        }
-        return keyBinds;
-    }
-
-    @Override
     public void bindKeys() {
-        keyBinds.put(Keys.UP, this::moveUp);
-        keyBinds.put(Keys.DOWN, this::moveDown);
-        keyBinds.put(Keys.LEFT, this::moveLeft);
-        keyBinds.put(Keys.RIGHT, this::moveRight);
+
     }
 
     @Override
