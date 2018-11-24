@@ -1,6 +1,7 @@
 package com.github.moribund.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 
 public interface PlayableCharacter {
     void moveUp();
@@ -12,4 +13,6 @@ public interface PlayableCharacter {
     void setTile(Tile tile);
     void draw(SpriteBatch spriteBatch);
     int getPlayerId();
+    AbstractInt2ObjectMap<Runnable> getKeyBinds();
+    void keyPressed(int keyPressed);
 }

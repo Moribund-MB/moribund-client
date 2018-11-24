@@ -1,14 +1,18 @@
 package com.github.moribund.entity;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteFile;
+import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 public class Player implements PlayableCharacter {
     private Tile tile;
     private int playerId;
-    private transient Sprite sprite;
+    private Sprite sprite;
+    private AbstractInt2ObjectMap<Runnable> keyBinds;
 
     public Player(int playerId) {
         this.playerId = playerId;
@@ -37,7 +41,10 @@ public class Player implements PlayableCharacter {
 
     @Override
     public void bindKeys() {
-
+        keyBinds.put(Input.Keys.UP, this::moveUp);
+        keyBinds.put(Input.Keys.DOWN, this::moveDown);
+        keyBinds.put(Input.Keys.RIGHT, this::moveRight);
+        keyBinds.put(Input.Keys.LEFT, this:: moveLeft);
     }
 
     @Override
@@ -59,5 +66,19 @@ public class Player implements PlayableCharacter {
     @Override
     public int getPlayerId() {
         return playerId;
+    }
+
+    @Override
+    public AbstractInt2ObjectMap<Runnable> getKeyBinds() {
+        if (keyBinds == null) {
+            keyBinds = new Int2ObjectOpenHashMap<>();
+            bindKeys();
+        }
+        return keyBinds;
+    }
+
+    @Override
+    public void keyPressed(int keyPressed) {
+        keyBinds.get(keyPressed).run();
     }
 }

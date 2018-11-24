@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.images.SpriteDrawer;
+import com.github.moribund.net.packets.KeyPressedPacket;
 import lombok.val;
 
 public class GameScreen implements Screen {
@@ -53,7 +54,12 @@ public class GameScreen implements Screen {
     private void processMovement() {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
         MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> {
-
+            player.getKeyBinds().forEach((key, action) -> {
+                if (Gdx.input.isKeyPressed(key)) {
+                    val keyPressedPacket = new KeyPressedPacket(playerId, key);
+                    packetDispatcher.sendTCP(keyPressedPacket);
+                }
+            });
         });
     }
 
