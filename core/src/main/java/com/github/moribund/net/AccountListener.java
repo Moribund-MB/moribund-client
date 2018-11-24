@@ -14,21 +14,22 @@ public class AccountListener extends Listener {
     public void received(Connection connection, Object object) {
         if (object instanceof DrawNewPlayerPacket) {
             val drawNewPlayerPacket = (DrawNewPlayerPacket) object;
-            makePlayer(drawNewPlayerPacket.getPlayerId(), new Tile(drawNewPlayerPacket.getX(),
-                    drawNewPlayerPacket.getY()));
+            makePlayer(drawNewPlayerPacket.getPlayerId(), drawNewPlayerPacket.getTile());
         } else if (object instanceof LoginPacket) {
             val loginPacket = (LoginPacket) object;
-            loginPacket.getPlayerIds().forEach(pair -> {
+            loginPacket.getPlayerLocations().forEach(pair -> {
                 val playerId = pair.getKey();
-                val coordinatePair = pair.getValue();
-                makePlayer(playerId, Tile.pairToCoordinate(coordinatePair));
+                val tile = pair.getValue();
+                makePlayer(playerId, tile);
             });
         }
     }
 
     private void makePlayer(int playerId, Tile tile) {
         val player = new Player(playerId);
-        MoribundClient.getInstance().getPlayers().put(playerId, player);
+        val playersMap = MoribundClient.getInstance().getPlayers();
+
+        playersMap.put(playerId, player);
         player.setTile(tile);
     }
 }

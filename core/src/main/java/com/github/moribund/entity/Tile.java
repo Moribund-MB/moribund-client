@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 public class Tile implements Serializable {
+    private static final long serialVersionUID = 3010849893269236310L;
     /**
      * The x-coordinate representation.
      */
