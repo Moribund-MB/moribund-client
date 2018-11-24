@@ -19,17 +19,38 @@ import lombok.val;
  * both graphics and networking.
  */
 public class MoribundClient extends Game {
+    /**
+     * The singleton instance of the client for all classes to access.
+     */
     private static MoribundClient instance;
+    /**
+     * The sprite batch of the client.
+     */
     @Getter
     private SpriteBatch spriteBatch;
+    /**
+     * The camera shared between all screens.
+     */
     @Getter
     private OrthographicCamera camera;
+    /**
+     * The universal music player.
+     */
     @Getter
     private MusicPlayer musicPlayer;
+    /**
+     * The universal sprite drawer.
+     */
     @Getter
     private SpriteDrawer spriteDrawer;
+    /**
+     * All the {@link PlayableCharacter}s in the game.
+     */
     @Getter
     private AbstractInt2ObjectMap<PlayableCharacter> players;
+    /**
+     * The packet dispatcher to send packets to the server restrictively.
+     */
     private Reference<PacketDispatcher> packetDispatcherReference;
 
     /**
@@ -49,27 +70,45 @@ public class MoribundClient extends Game {
         setScreen(new TitleScreen());
     }
 
+    /**
+     * Initializes the map of players.
+     */
     private void initializePlayersMap() {
         players = new Int2ObjectOpenHashMap<>();
     }
 
+    /**
+     * Initializes the sprite drawer.
+     */
     private void initializeSpriteDrawer() {
         spriteDrawer = new SpriteDrawer();
     }
 
+    /**
+     * Initializes the music player.
+     */
     private void initializeMusicPlayer() {
         musicPlayer = new MusicPlayer();
     }
 
+    /**
+     * Initializes the sprite batch.
+     */
     private void initializeSpriteBatch() {
         spriteBatch = new SpriteBatch();
     }
 
+    /**
+     * Initialzies the shared camera.
+     */
     private void initializeCamera() {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
     }
 
+    /**
+     * Sets up the client to server connection.
+     */
     private void setupNetworking() {
         val networkBootstrapper = new NetworkBootstrapper();
         networkBootstrapper.connect();
@@ -87,10 +126,18 @@ public class MoribundClient extends Game {
         spriteBatch.dispose();
     }
 
+    /**
+     * Gets the singleton instance of the client.
+     * @return The singleton instance.
+     */
     public static MoribundClient getInstance() {
         return instance;
     }
 
+    /**
+     * Gets the value of the pass-by-reference variable of {@link MoribundClient#packetDispatcherReference}.
+     * @return The packet dispatcher to securely send packets to the server.
+     */
     public PacketDispatcher getPacketDispatcher() {
         return packetDispatcherReference.getVariable();
     }

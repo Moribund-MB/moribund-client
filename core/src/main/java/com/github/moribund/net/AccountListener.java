@@ -9,6 +9,10 @@ import com.github.moribund.net.packets.DrawNewPlayerPacket;
 import com.github.moribund.net.packets.LoginPacket;
 import lombok.val;
 
+/**
+ * The {@code AccountListener} listens to all packets relating
+ * to accounts (account creation, etc).
+ */
 public class AccountListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
@@ -25,6 +29,11 @@ public class AccountListener extends Listener {
         }
     }
 
+    /**
+     * Makes a new player and sets their coordinates for rendering them.
+     * @param playerId The unique player ID of the character made.
+     * @param tile The tile the player stands on when made.
+     */
     private void makePlayer(int playerId, Tile tile) {
         val player = new Player(playerId);
         val playersMap = MoribundClient.getInstance().getPlayers();

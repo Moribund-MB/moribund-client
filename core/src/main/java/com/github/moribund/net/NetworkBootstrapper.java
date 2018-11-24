@@ -29,8 +29,14 @@ public class NetworkBootstrapper {
      */
     private static final int PORT = 43594;
 
+    /**
+     * The {@code KryoNet} connection client.
+     */
     private final Client client;
 
+    /**
+     * Allows for a creation of the connection client.
+     */
     public NetworkBootstrapper() {
         client = new Client();
     }
@@ -71,6 +77,14 @@ public class NetworkBootstrapper {
         kryo.register(KeyPressedResponsePacket.class);
     }
 
+    /**
+     * Initializes the {@link PacketDispatcher} that is passed-by-{@link Reference}
+     * by the {@link com.github.moribund.MoribundClient} with the {@link Client}
+     * made. This allows for restrictive access to the {@link Client}
+     * class.
+     * @param packetDispatcherReference The passed-by-{@link Reference} variable for
+     *                                  a {@link PacketDispatcher}.
+     */
     public void initializePacketDispatcher(Reference<PacketDispatcher> packetDispatcherReference) {
         packetDispatcherReference.setVariable(new PacketDispatcher(client));
     }

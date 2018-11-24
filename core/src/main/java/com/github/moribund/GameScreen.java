@@ -10,6 +10,9 @@ import lombok.val;
 
 public class GameScreen implements Screen {
 
+    /**
+     * A shortcut to the {@link MoribundClient}'s sprite batch.
+     */
     private SpriteBatch spriteBatch;
 
     /**
@@ -23,6 +26,9 @@ public class GameScreen implements Screen {
         drawPlayers();
     }
 
+    /**
+     * Initializes the {@link GameScreen#spriteBatch} with the {@link MoribundClient}'s.
+     */
     private void initializeSpriteBatch() {
         spriteBatch = MoribundClient.getInstance().getSpriteBatch();
     }
@@ -47,10 +53,17 @@ public class GameScreen implements Screen {
         drawSpriteBatch(this::drawVisibleEntities);
     }
 
+    /**
+     * Draws all the {@link com.github.moribund.entity.PlayableCharacter}'s
+     * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
+     */
     private void drawVisibleEntities() {
         MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> player.draw(spriteBatch));
     }
 
+    /**
+     * Processes the movement of the {@link com.github.moribund.entity.PlayableCharacter}s.
+     */
     private void processMovement() {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
         MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> {

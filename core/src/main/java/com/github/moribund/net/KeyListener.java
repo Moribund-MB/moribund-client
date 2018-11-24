@@ -6,6 +6,10 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.KeyPressedResponsePacket;
 import lombok.val;
 
+/**
+ * The {@code KeyListener} listens to all packets relating
+ * to key presses.
+ */
 public class KeyListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
