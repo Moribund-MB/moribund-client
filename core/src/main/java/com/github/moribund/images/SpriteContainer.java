@@ -11,35 +11,32 @@ import lombok.val;
 import javax.inject.Inject;
 
 /**
- * The {@code SpriteDrawer} class displays {@link Sprite}s. It is set up
+ * The {@code SpriteContainer} class displays {@link Sprite}s. It is set up
  * at the start of the program and populates a {@link java.util.HashMap}
- * to have readily available {@link Sprite} that can then be displayed
- * directly from this class. The use of Dagger 2's {@link Inject}ion
- * allows much more easy to simply using this {@code SpriteDrawer} as opposed
- * to having to make one's own {@link SpriteBatch} field.
+ * to have readily available {@link Sprite}s.
  */
-public class SpriteDrawer {
+public class SpriteContainer {
     /**
      * A {@link Object2ObjectOpenHashMap} that contains all the {@link Sprite}
      * in relation to their {@link SpriteFile}. The reason to prefer a {@link Object2ObjectOpenHashMap}
-     * over a {@link java.util.HashMap} can be found in {@link com.github.moribund.audio.MusicPlayer#musicForFile}'s
-     * documentation.
+     * over a {@link java.util.HashMap} is due to the superior speed of the
+     * fastutil library over the standard Java ones.
      */
     private final Object2ObjectOpenHashMap<SpriteFile, Sprite> spriteForFile;
+    private static SpriteContainer instance;
 
     /**
-     * The constructor for the {@code SpriteDrawer}. This injects the {@link SpriteComponent},
-     * initializes {@link SpriteDrawer#spriteForFile}, then populates it by calling
-     * {@link SpriteDrawer#setup()}.
+     * The constructor for the {@code SpriteDrawer}. This initializes {@link SpriteContainer#spriteForFile},
+     * then populates it by calling {@link SpriteContainer#setup()}.
      */
-    public SpriteDrawer() {
+    private SpriteContainer() {
         spriteForFile = new Object2ObjectOpenHashMap<>();
         setup();
     }
 
     /**
-     * Populates the {@link SpriteDrawer#spriteForFile}, using
-     * {@link SpriteDrawer#makeSprite(SpriteFile)} to make {@link Sprite}s.
+     * Populates the {@link SpriteContainer#spriteForFile}, using
+     * {@link SpriteContainer#makeSprite(SpriteFile)} to make {@link Sprite}s.
      */
     private void setup() {
         for (SpriteFile spriteFile : SpriteFile.VALUES) {
@@ -56,27 +53,22 @@ public class SpriteDrawer {
      */
     private Sprite makeSprite(SpriteFile file) {
         val texture = new Texture(Gdx.files.internal(file.getLocation()));
-        return new Sprite(texture, 0, 0, texture.getWidth(), texture.getHeight());
+        return new Sprite(texture);
     }
 
     /**
-     * Draws a {@link Sprite} by fetching it from the {@link SpriteDrawer#spriteForFile}
-     * {@link java.util.HashMap} and drawing it to the given {@link Tile}.
-     * @param spriteFile The {@link SpriteFile} enum value to draw.
-     * @param tile The {@link Tile} on the game's grid.
-     */
-    public void drawSprite(SpriteFile spriteFile, Tile tile, SpriteBatch spriteBatch) {
-        val sprite = getSprite(spriteFile);
-        sprite.setPosition(tile.getX(), tile.getY());
-        sprite.draw(spriteBatch);
-    }
-
-    /**
-     * Gets the sprite for a given {@link SpriteFile} stored in the {@link SpriteDrawer#spriteForFile}.
+     * Gets the sprite for a given {@link SpriteFile} stored in the {@link SpriteContainer#spriteForFile}.
      * @param file The {@link SpriteFile} enum value to get.
      * @return The {@link Sprite} fetched.
      */
     public Sprite getSprite(SpriteFile file) {
         return spriteForFile.get(file);
+    }
+
+    public static SpriteContainer getInstance() {
+        if (instance == null) {
+            instance = new SpriteContainer();
+        }
+        return instance;
     }
 }

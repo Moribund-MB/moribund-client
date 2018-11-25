@@ -1,13 +1,12 @@
-package com.github.moribund;
+package com.github.moribund.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.entity.PlayableCharacter;
-import com.github.moribund.images.SpriteDrawer;
-import com.github.moribund.net.packets.KeyPressedPacket;
-import com.github.moribund.net.packets.KeyUnpressedPacket;
+import com.github.moribund.MoribundClient;
+import com.github.moribund.images.SpriteContainer;
 import lombok.val;
 
 public class GameScreen implements Screen {
@@ -15,7 +14,13 @@ public class GameScreen implements Screen {
     /**
      * A shortcut to the {@link MoribundClient}'s sprite batch.
      */
-    private SpriteBatch spriteBatch;
+    private final SpriteBatch spriteBatch;
+    private final Camera camera;
+
+    GameScreen(SpriteBatch spriteBatch, Camera camera) {
+        this.spriteBatch = spriteBatch;
+        this.camera = camera;
+    }
 
     /**
      * The equivalent of {@link com.badlogic.gdx.Game#create()} where this
@@ -23,14 +28,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        initializeSpriteBatch();
-    }
 
-    /**
-     * Initializes the {@link GameScreen#spriteBatch} with the {@link MoribundClient}'s.
-     */
-    private void initializeSpriteBatch() {
-        spriteBatch = MoribundClient.getInstance().getSpriteBatch();
     }
 
     /**
@@ -41,7 +39,6 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        processKeyInput();
         processFlags();
         clearGl();
         drawSpriteBatch(this::drawVisibleEntities);
@@ -53,28 +50,6 @@ public class GameScreen implements Screen {
      */
     private void drawVisibleEntities() {
         MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> player.draw(spriteBatch));
-    }
-
-    /**
-     * Processes the movement of the {@link com.github.moribund.entity.PlayableCharacter}s.
-     */
-    private void processKeyInput() {
-        /*val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-        val clientPlayer = MoribundClient.getInstance().getPlayer();
-        if (clientPlayer != null) {
-            clientPlayer.getKeyBinds().forEach((key, action) -> {
-                if (Gdx.input.isKeyJustPressed(key)) {
-                    val keyPressedPacket = new KeyPressedPacket(clientPlayer.getPlayerId(), key);
-                    packetDispatcher.sendTCP(keyPressedPacket);
-                }
-            });
-            clientPlayer.getKeyUnpressedBinds().forEach((key, action) -> {
-                if (!Gdx.input.isKeyPressed(key) && !clientPlayer.getFlags().isEmpty()) {
-                    val keyUnpressedPacket = new KeyUnpressedPacket(clientPlayer.getPlayerId(), key);
-                    packetDispatcher.sendTCP(keyUnpressedPacket);
-                }
-            });
-        }*/
     }
 
     private void processFlags() {
@@ -96,11 +71,10 @@ public class GameScreen implements Screen {
      * It then closes the {@link SpriteBatch}.
      *
      * @param drawing The {@link Runnable} drawing actions (typically using
-     *                {@link SpriteDrawer} to draw them) executed just before the
+     *                {@link SpriteContainer} to draw them) executed just before the
      *                {@link SpriteBatch} ends.
      */
     private void drawSpriteBatch(Runnable drawing) {
-        val camera = MoribundClient.getInstance().getCamera();
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         drawing.run();

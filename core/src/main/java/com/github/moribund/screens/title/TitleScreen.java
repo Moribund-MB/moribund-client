@@ -1,11 +1,16 @@
-package com.github.moribund;
+package com.github.moribund.screens.title;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
+import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.LoginRequestPacket;
+import com.github.moribund.screens.ScreenFactory;
+import com.github.moribund.screens.game.GameScreen;
+import com.github.moribund.screens.game.GameScreenFactory;
 import lombok.val;
 
 /**
@@ -14,13 +19,20 @@ import lombok.val;
  */
 public class TitleScreen implements Screen {
 
+    private final MusicPlayer musicPlayer;
+    private final ScreenFactory gameScreenFactory;
+
+    TitleScreen(MusicPlayer musicPlayer, ScreenFactory gameScreenFactory) {
+        this.musicPlayer = musicPlayer;
+        this.gameScreenFactory = gameScreenFactory;
+    }
+
     /**
      * The equivalent of {@link Game#create()} where this is run as soon as the
      * {@link Game} shows this screen.
      */
     @Override
     public void show() {
-        val musicPlayer = MoribundClient.getInstance().getMusicPlayer();
         musicPlayer.play(MusicFile.TITLE_SCREEN, true);
     }
 
@@ -28,7 +40,7 @@ public class TitleScreen implements Screen {
     public void render(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.T)) {
             val client = MoribundClient.getInstance();
-            client.setScreen(new GameScreen());
+            client.setScreen(gameScreenFactory.createScreen());
             client.getPacketDispatcher().sendTCP(new LoginRequestPacket());
         }
         // Draw your screen here. "delta" is the time since last render in seconds.
@@ -56,6 +68,6 @@ public class TitleScreen implements Screen {
 
     @Override
     public void dispose() {
-        // Destroy screen's assets here.
+        musicPlayer.dispose();
     }
 }

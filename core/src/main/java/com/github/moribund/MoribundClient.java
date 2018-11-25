@@ -1,15 +1,10 @@
 package com.github.moribund;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.entity.PlayableCharacter;
-import com.github.moribund.entity.Player;
-import com.github.moribund.images.SpriteDrawer;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
+import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.util.Reference;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -26,26 +21,7 @@ public class MoribundClient extends Game {
      * The singleton instance of the client for all classes to access.
      */
     private static MoribundClient instance;
-    /**
-     * The sprite batch of the client.
-     */
-    @Getter
-    private SpriteBatch spriteBatch;
-    /**
-     * The camera shared between all screens.
-     */
-    @Getter
-    private OrthographicCamera camera;
-    /**
-     * The universal music player.
-     */
-    @Getter
-    private MusicPlayer musicPlayer;
-    /**
-     * The universal sprite drawer.
-     */
-    @Getter
-    private SpriteDrawer spriteDrawer;
+    private TitleScreenFactory titleScreenFactory;
     /**
      * All the {@link PlayableCharacter}s in the game.
      */
@@ -65,14 +41,15 @@ public class MoribundClient extends Game {
     @Override
     public void create() {
         instance = this;
-        initializeCamera();
-        initializeSpriteBatch();
-        initializeMusicPlayer();
-        initializeSpriteDrawer();
         initializePlayersMap();
+        initializeTitleScreenFactory();
         setupNetworking();
 
-        setScreen(new TitleScreen());
+        setScreen(titleScreenFactory.createScreen());
+    }
+
+    private void initializeTitleScreenFactory() {
+        titleScreenFactory = new TitleScreenFactory();
     }
 
     /**
@@ -80,35 +57,6 @@ public class MoribundClient extends Game {
      */
     private void initializePlayersMap() {
         players = new Int2ObjectOpenHashMap<>();
-    }
-
-    /**
-     * Initializes the sprite drawer.
-     */
-    private void initializeSpriteDrawer() {
-        spriteDrawer = new SpriteDrawer();
-    }
-
-    /**
-     * Initializes the music player.
-     */
-    private void initializeMusicPlayer() {
-        musicPlayer = new MusicPlayer();
-    }
-
-    /**
-     * Initializes the sprite batch.
-     */
-    private void initializeSpriteBatch() {
-        spriteBatch = new SpriteBatch();
-    }
-
-    /**
-     * Initialzies the shared camera.
-     */
-    private void initializeCamera() {
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
     }
 
     /**
@@ -128,7 +76,6 @@ public class MoribundClient extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        spriteBatch.dispose();
     }
 
     /**

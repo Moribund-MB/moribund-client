@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
 import com.github.moribund.net.packets.KeyPressedPacket;
 import com.github.moribund.net.packets.KeyUnpressedPacket;
@@ -49,7 +50,7 @@ public class Player implements PlayableCharacter, InputProcessor {
      */
     public Player(int playerId) {
         this.playerId = playerId;
-        sprite = MoribundClient.getInstance().getSpriteDrawer().getSprite(SpriteFile.DUMMY_PLAYER);
+        sprite = SpriteContainer.getInstance().getSprite(SpriteFile.DUMMY_PLAYER);
         flags = new HashSet<>();
     }
 
