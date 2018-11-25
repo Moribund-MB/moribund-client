@@ -16,7 +16,9 @@ public interface PlayableCharacter {
      * {@link com.badlogic.gdx.Input.Keys} constants to delegate
      * {@link Runnable} actions.
      */
-    void bindKeys();
+    void bindKeysPressed();
+
+    void bindKeysUnpressed();
 
     /**
      * Gets the current {@link Tile} the player is on.
@@ -46,9 +48,10 @@ public interface PlayableCharacter {
     /**
      * Gets the respective {@link com.badlogic.gdx.Input.Keys} for the above actions
      * and/or custom-defined ones.
-     * @return The key binds defined by {@link PlayableCharacter#bindKeys()}.
+     * @return The key binds defined by {@link PlayableCharacter#bindKeysPressed()}.
      */
-    AbstractInt2ObjectMap<Runnable> getKeyBinds();
+    AbstractInt2ObjectMap<Runnable> getKeyPressedBinds();
+    AbstractInt2ObjectMap<Runnable> getKeyUnpressedBinds();
 
     Set<Flag> getFlags();
 
@@ -59,4 +62,5 @@ public interface PlayableCharacter {
      *                   pressed.
      */
     void keyPressed(int keyPressed);
+    void keyUnpressed(int keyUnpressed);
 }

@@ -1,12 +1,16 @@
 package com.github.moribund.entity;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteFile;
+import com.github.moribund.net.packets.KeyPressedPacket;
+import com.github.moribund.net.packets.KeyUnpressedPacket;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import lombok.val;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +18,7 @@ import java.util.Set;
 /**
  * The {@code Player} that is being controlled by a client.
  */
-public class Player implements PlayableCharacter {
+public class Player implements PlayableCharacter, InputProcessor {
     /**
      * The tile the {@code Player} currently resides on.
      */
@@ -33,7 +37,8 @@ public class Player implements PlayableCharacter {
      * The respective {@link com.badlogic.gdx.Input.Keys} that are bound to
      * {@link Runnable} methods defined in this class.
      */
-    private AbstractInt2ObjectMap<Runnable> keyBinds;
+    private AbstractInt2ObjectMap<Runnable> keyPressedBinds;
+    private AbstractInt2ObjectMap<Runnable> keyUnpressedBinds;
     private Set<Flag> flags;
 
     /**
@@ -48,28 +53,28 @@ public class Player implements PlayableCharacter {
         flags = new HashSet<>();
     }
 
-    private void flagMoveUp() {
-        flags.add(Flag.MOVE_UP);
+    private void flag(Flag flag) {
+        flags.add(flag);
     }
 
-    private void flagMoveDown() {
-        flags.add(Flag.MOVE_DOWN);
-    }
-
-    private void flagMoveLeft() {
-        flags.add(Flag.MOVE_LEFT);
-    }
-
-    private void flagMoveRight() {
-        flags.add(Flag.MOVE_RIGHT);
+    private void unflag(Flag flag) {
+        flags.remove(flag);
     }
 
     @Override
-    public void bindKeys() {
-        keyBinds.put(Input.Keys.UP, this::flagMoveUp);
-        keyBinds.put(Input.Keys.DOWN, this::flagMoveDown);
-        keyBinds.put(Input.Keys.RIGHT, this::flagMoveRight);
-        keyBinds.put(Input.Keys.LEFT, this::flagMoveLeft);
+    public void bindKeysPressed() {
+        keyPressedBinds.put(Input.Keys.UP, () -> flag(Flag.MOVE_UP));
+        keyPressedBinds.put(Input.Keys.DOWN, () -> flag(Flag.MOVE_DOWN));
+        keyPressedBinds.put(Input.Keys.RIGHT, () -> flag(Flag.MOVE_RIGHT));
+        keyPressedBinds.put(Input.Keys.LEFT, () -> flag(Flag.MOVE_LEFT));
+    }
+
+    @Override
+    public void bindKeysUnpressed() {
+        keyUnpressedBinds.put(Input.Keys.UP, () -> unflag(Flag.MOVE_UP));
+        keyUnpressedBinds.put(Input.Keys.DOWN, () -> unflag(Flag.MOVE_DOWN));
+        keyUnpressedBinds.put(Input.Keys.RIGHT, () -> unflag(Flag.MOVE_RIGHT));
+        keyUnpressedBinds.put(Input.Keys.LEFT, () -> unflag(Flag.MOVE_LEFT));
     }
 
     @Override
@@ -94,12 +99,21 @@ public class Player implements PlayableCharacter {
     }
 
     @Override
-    public AbstractInt2ObjectMap<Runnable> getKeyBinds() {
-        if (keyBinds == null) {
-            keyBinds = new Int2ObjectOpenHashMap<>();
-            bindKeys();
+    public AbstractInt2ObjectMap<Runnable> getKeyPressedBinds() {
+        if (keyPressedBinds == null) {
+            keyPressedBinds = new Int2ObjectOpenHashMap<>();
+            bindKeysPressed();
         }
-        return keyBinds;
+        return keyPressedBinds;
+    }
+
+    @Override
+    public AbstractInt2ObjectMap<Runnable> getKeyUnpressedBinds() {
+        if (keyUnpressedBinds == null) {
+            keyUnpressedBinds = new Int2ObjectOpenHashMap<>();
+            bindKeysUnpressed();
+        }
+        return keyUnpressedBinds;
     }
 
     @Override
@@ -109,6 +123,63 @@ public class Player implements PlayableCharacter {
 
     @Override
     public void keyPressed(int keyPressed) {
-        keyBinds.get(keyPressed).run();
+        getKeyPressedBinds().get(keyPressed).run();
+    }
+
+    @Override
+    public void keyUnpressed(int keyUnpressed) {
+        getKeyUnpressedBinds().get(keyUnpressed).run();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (getKeyPressedBinds().containsKey(keycode)) {
+            val player = MoribundClient.getInstance().getPlayer();
+            val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+            val keyPressedPacket = new KeyPressedPacket(player.getPlayerId(), keycode);
+            packetDispatcher.sendTCP(keyPressedPacket);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        if (getKeyUnpressedBinds().containsKey(keycode)) {
+            val player = MoribundClient.getInstance().getPlayer();
+            val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+            val keyUnpressedPacket = new KeyUnpressedPacket(player.getPlayerId(), keycode);
+            packetDispatcher.sendTCP(keyUnpressedPacket);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

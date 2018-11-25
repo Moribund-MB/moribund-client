@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.KeyPressedResponsePacket;
+import com.github.moribund.net.packets.KeyUnpressedResponsePacket;
 import lombok.val;
 
 /**
@@ -17,6 +18,10 @@ public class KeyListener extends Listener {
             val keyPressedResponsePacket = (KeyPressedResponsePacket) object;
             val player = MoribundClient.getInstance().getPlayers().get(keyPressedResponsePacket.getPlayerId());
             player.keyPressed(keyPressedResponsePacket.getKeyPressed());
+        } else if (object instanceof KeyUnpressedResponsePacket) {
+            val keyUnpressedResponsePacket = (KeyUnpressedResponsePacket) object;
+            val player = MoribundClient.getInstance().getPlayers().get(keyUnpressedResponsePacket.getPlayerId());
+            player.keyUnpressed(keyUnpressedResponsePacket.getKeyUnpressed());
         }
     }
 }

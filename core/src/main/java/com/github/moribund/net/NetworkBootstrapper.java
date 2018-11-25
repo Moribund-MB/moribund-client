@@ -75,6 +75,8 @@ public class NetworkBootstrapper {
         kryo.register(Tile.class, new JavaSerializer());
         kryo.register(KeyPressedPacket.class);
         kryo.register(KeyPressedResponsePacket.class);
+        kryo.register(KeyUnpressedPacket.class);
+        kryo.register(KeyUnpressedResponsePacket.class);
     }
 
     /**

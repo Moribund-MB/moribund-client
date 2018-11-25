@@ -1,5 +1,6 @@
 package com.github.moribund.net;
 
+import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.github.moribund.MoribundClient;
@@ -33,6 +34,10 @@ public class AccountListener extends Listener {
     private void setClientPlayer(int playerId) {
         val player = MoribundClient.getInstance().getPlayers().get(playerId);
         MoribundClient.getInstance().setPlayer(player);
+        if (player instanceof Player) {
+            val actualPlayer = (Player) player;
+            Gdx.input.setInputProcessor(actualPlayer);
+        }
     }
 
     /**

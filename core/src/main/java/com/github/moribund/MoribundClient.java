@@ -1,10 +1,12 @@
 package com.github.moribund;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.entity.PlayableCharacter;
+import com.github.moribund.entity.Player;
 import com.github.moribund.images.SpriteDrawer;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;

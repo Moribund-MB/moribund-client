@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.images.SpriteDrawer;
 import com.github.moribund.net.packets.KeyPressedPacket;
+import com.github.moribund.net.packets.KeyUnpressedPacket;
 import lombok.val;
 
 public class GameScreen implements Screen {
@@ -57,16 +59,22 @@ public class GameScreen implements Screen {
      * Processes the movement of the {@link com.github.moribund.entity.PlayableCharacter}s.
      */
     private void processKeyInput() {
-        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+        /*val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
         val clientPlayer = MoribundClient.getInstance().getPlayer();
         if (clientPlayer != null) {
-            clientPlayer.getKeyBinds().forEach((key, action) -> {
+            clientPlayer.getKeyPressedBinds().forEach((key, action) -> {
                 if (Gdx.input.isKeyJustPressed(key)) {
                     val keyPressedPacket = new KeyPressedPacket(clientPlayer.getPlayerId(), key);
                     packetDispatcher.sendTCP(keyPressedPacket);
                 }
             });
-        }
+            clientPlayer.getKeyUnpressedBinds().forEach((key, action) -> {
+                if (!Gdx.input.isKeyPressed(key) && !clientPlayer.getFlags().isEmpty()) {
+                    val keyUnpressedPacket = new KeyUnpressedPacket(clientPlayer.getPlayerId(), key);
+                    packetDispatcher.sendTCP(keyUnpressedPacket);
+                }
+            });
+        }*/
     }
 
     private void processFlags() {
