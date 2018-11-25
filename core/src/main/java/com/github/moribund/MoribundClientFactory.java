@@ -9,8 +9,8 @@ import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.val;
 
-public class MoribundClientFactory {
-    public MoribundClient createMoribundClient() {
+class MoribundClientFactory {
+    MoribundClient createMoribundClient() {
         val players = createPlayersMap();
         val networkBootstrapper = createNetworkBootstrapper();
         val packetDispatcher = createPacketDispatcher(networkBootstrapper);
