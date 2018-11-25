@@ -20,7 +20,7 @@ public class DesktopLauncher {
 
     /**
      * Creates an application by making a new {@link LwjglApplication} using
-     * {@link MoribundClient} using the {@link LwjglApplicationConfiguration}
+     * {@link MoribundClient}'s singleton instance and the {@link LwjglApplicationConfiguration}
      * provided by {@link DesktopLauncher#getDefaultConfiguration()}.
      * @return The created {@link LwjglApplication}.
      */

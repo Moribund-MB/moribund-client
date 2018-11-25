@@ -44,12 +44,16 @@ public interface PlayableCharacter {
     int getPlayerId();
 
     /**
-     * Gets the respective {@link com.badlogic.gdx.Input.Keys} for the above actions
-     * and/or custom-defined ones.
+     * Gets the respective {@link PlayerAction} for the
+     * {@link com.badlogic.gdx.Input.Keys} value pressed.
      * @return The key binds defined by {@link PlayableCharacter#bindKeys()}.
      */
     AbstractInt2ObjectMap<PlayerAction> getKeyBinds();
 
+    /**
+     * Gets the current active {@link Flag}s on the {@code PlayableCharacter}.
+     * @return The current active {@link Flag}s.
+     */
     Set<Flag> getFlags();
 
     /**
@@ -59,5 +63,12 @@ public interface PlayableCharacter {
      *                   pressed.
      */
     void keyPressed(int keyPressed);
+
+    /**
+     * Handles the key being lifted by a player after it has gone through
+     * client-server latency.
+     * @param keyUnpressed The {@link com.badlogic.gdx.Input.Keys} value that
+     *                     was lifted.
+     */
     void keyUnpressed(int keyUnpressed);
 }

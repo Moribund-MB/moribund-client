@@ -1,6 +1,5 @@
 package com.github.moribund.entity;
 
-import javafx.util.Pair;
 import lombok.Data;
 import lombok.val;
 
@@ -13,6 +12,10 @@ import java.io.Serializable;
  */
 @Data
 public class Tile implements Serializable {
+    /**
+     * The unique serial version UID so that the client and server
+     * can send and receive Tiles with the same serialization.
+     */
     private static final long serialVersionUID = 3010849893269236310L;
     /**
      * The x-coordinate representation.
@@ -33,23 +36,33 @@ public class Tile implements Serializable {
         this.y = y;
     }
 
+    /**
+     * Generates a tile given x and y offsets based on the current {@code Tile}.
+     * @param x The x offset to give to the {@code Tile}'s x-coordinate.
+     * @param y The y offset to give to the {@code Tile}'s x-coordinate.
+     * @return The new {@code Tile} with the given offsets.
+     */
     public Tile transmorph(int x, int y) {
         val newX = this.x + x;
         val newY = this.y + y;
         return new Tile(newX, newY);
     }
 
+    /**
+     * A helper method that singularly transmorphs the x-axis.
+     * @param x The x offset to give to the {@code Tile}'s x-coordinate.
+     * @return The new {@code Tile} with the given x offset.
+     */
     public Tile transmorphX(int x) {
         return transmorph(x, 0);
     }
 
+    /**
+     * A helper method that singularly transmorphs the y-axis.
+     * @param y The y offset to give to the {@code Tile}'s y-coordinate.
+     * @return The new {@code Tile} with the given y offset.
+     */
     public Tile transmorphY(int y) {
         return transmorph(0, y);
-    }
-
-    public static Tile pairToCoordinate(Pair<Integer, Integer> coordinatePair) {
-        val x = coordinatePair.getKey();
-        val y = coordinatePair.getValue();
-        return new Tile(x, y);
     }
 }

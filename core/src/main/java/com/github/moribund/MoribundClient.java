@@ -25,12 +25,31 @@ public class MoribundClient extends Game {
      */
     @Getter
     private final AbstractInt2ObjectMap<PlayableCharacter> players;
+    /**
+     * The factory to make the title screen.
+     */
     private final ScreenFactory titleScreenFactory;
+    /**
+     * The network bootstrapper to start networking.
+     */
     private final NetworkBootstrapper networkBootstrapper;
+    /**
+     * The dispatcher to send packets to the server.
+     */
     private final PacketDispatcher packetDispatcher;
+    /**
+     * The {@link PlayableCharacter} that the user of this client is.
+     */
     @Getter @Setter
     private PlayableCharacter player;
 
+    /**
+     * Constructor that provides the {@code MoribundClient} its dependencies.
+     * @param players The list of players in the entire game.
+     * @param networkBootstrapper The network bootstrapper to start networking.
+     * @param packetDispatcher The packet dispatcher to send the server packets.
+     * @param titleScreenFactory The screen factory to create the title screen.
+     */
     MoribundClient(AbstractInt2ObjectMap<PlayableCharacter> players,
                            NetworkBootstrapper networkBootstrapper,
                            PacketDispatcher packetDispatcher,
@@ -80,6 +99,10 @@ public class MoribundClient extends Game {
         return instance;
     }
 
+    /**
+     * Gets the packet dispatcher.
+     * @return The packet dispatcher.
+     */
     public PacketDispatcher getPacketDispatcher() {
         return packetDispatcher;
     }

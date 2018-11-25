@@ -18,18 +18,35 @@ class MoribundClientFactory {
         return new MoribundClient(players, networkBootstrapper, packetDispatcher, titleScreenFactory);
     }
 
+    /**
+     * Creates the screen factory to make the title screen.
+     * @return The newly made factory.
+     */
     private ScreenFactory createTitleScreenFactory() {
         return new TitleScreenFactory();
     }
 
+    /**
+     * Creates the packet dispatcher using the network bootstrapper.
+     * @param networkBootstrapper The network bootstrapper that contains the KryoNet connection client.
+     * @return The newly created packet dispatcher that is made in the {@link NetworkBootstrapper}.
+     */
     private PacketDispatcher createPacketDispatcher(NetworkBootstrapper networkBootstrapper) {
-        return networkBootstrapper.getPacketDispatcher();
+        return networkBootstrapper.createPacketDispatcher();
     }
 
+    /**
+     * Creates a network bootstrapper.
+     * @return The newly made network bootstrapper.
+     */
     private NetworkBootstrapper createNetworkBootstrapper() {
         return new NetworkBootstrapper();
     }
 
+    /**
+     * Creates an empty map of all the players in the game.
+     * @return The newly made empty map of players.
+     */
     private AbstractInt2ObjectMap<PlayableCharacter> createPlayersMap() {
         return new Int2ObjectOpenHashMap<>();
     }

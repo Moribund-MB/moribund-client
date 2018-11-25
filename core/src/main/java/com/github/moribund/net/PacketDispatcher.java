@@ -23,9 +23,8 @@ public class PacketDispatcher {
     }
 
     /**
-     * Sends an {@link Object} through TCP.
-     * @param object The {@link Object}, or packet, to send.
-     * @apiNote This may be subject to change to singularly send a soon-to-be-created Packet interface.
+     * Sends a {@link Packet} through TCP.
+     * @param packet The {@link Packet} to send.
      */
     public void sendTCP(Packet packet) {
         client.sendTCP(packet);

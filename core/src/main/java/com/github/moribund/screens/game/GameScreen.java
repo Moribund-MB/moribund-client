@@ -9,14 +9,25 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteContainer;
 import lombok.val;
 
+/**
+ * The {@code GameScreen} is the screen of the main game.
+ */
 public class GameScreen implements Screen {
 
     /**
-     * A shortcut to the {@link MoribundClient}'s sprite batch.
+     * The sprite batch to display sprites.
      */
     private final SpriteBatch spriteBatch;
+    /**
+     * The camera to show the game on.
+     */
     private final Camera camera;
 
+    /**
+     * Constructor that provides the {@code GameScreen} its dependencies.
+     * @param spriteBatch The sprite batch to display sprites.
+     * @param camera The camera to show the game on.
+     */
     GameScreen(SpriteBatch spriteBatch, Camera camera) {
         this.spriteBatch = spriteBatch;
         this.camera = camera;
@@ -52,6 +63,10 @@ public class GameScreen implements Screen {
         MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> player.draw(spriteBatch));
     }
 
+    /**
+     * Processes all the {@link com.github.moribund.entity.Flag}s flagged on
+     * the {@link com.github.moribund.entity.PlayableCharacter}s of the game.
+     */
     private void processFlags() {
         val players = MoribundClient.getInstance().getPlayers().values();
         players.forEach(player -> player.getFlags().forEach(flag -> flag.applyToPlayer(player)));

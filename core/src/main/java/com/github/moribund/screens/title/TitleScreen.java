@@ -9,8 +9,6 @@ import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.LoginRequestPacket;
 import com.github.moribund.screens.ScreenFactory;
-import com.github.moribund.screens.game.GameScreen;
-import com.github.moribund.screens.game.GameScreenFactory;
 import lombok.val;
 
 /**
@@ -19,9 +17,20 @@ import lombok.val;
  */
 public class TitleScreen implements Screen {
 
+    /**
+     * The music player to play cached music.
+     */
     private final MusicPlayer musicPlayer;
+    /**
+     * The factory to create a {@link com.github.moribund.screens.game.GameScreen}.
+     */
     private final ScreenFactory gameScreenFactory;
 
+    /**
+     * Constructor that provides the {@code TitleScreen} its dependencies.
+     * @param musicPlayer The music player dependency.
+     * @param gameScreenFactory The game screen factory to make a game screen.
+     */
     TitleScreen(MusicPlayer musicPlayer, ScreenFactory gameScreenFactory) {
         this.musicPlayer = musicPlayer;
         this.gameScreenFactory = gameScreenFactory;

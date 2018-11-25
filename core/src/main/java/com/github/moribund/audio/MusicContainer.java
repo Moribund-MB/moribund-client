@@ -6,9 +6,8 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.val;
 
 /**
- * The {@code MusicContainer} class plays {@link MusicFile}s. It is set up
- * at the start of the program and populates a {@link java.util.HashMap}
- * to have readily available {@link Music}.
+ * The {@code MusicContainer} class contains {@link MusicFile}s. The music
+ * is populated lazily.
  */
 public class MusicContainer {
     /**
@@ -18,6 +17,9 @@ public class MusicContainer {
      * compared to vanilla Java's.
      */
     private final Object2ObjectOpenHashMap<MusicFile, Music> musicForFile;
+    /**
+     * The singleton instance of this container.
+     */
     private static MusicContainer instance;
 
     /**
@@ -41,10 +43,19 @@ public class MusicContainer {
         }
     }
 
+    /**
+     * Gets a music for the file given.
+     * @param musicFile The music track to play.
+     * @return The music for the track.
+     */
     public Music getMusic(MusicFile musicFile) {
         return musicForFile.get(musicFile);
     }
 
+    /**
+     * Gets the singleton instance or initializes it lazily if it is null.
+     * @return The singleton instance of the container.
+     */
     public static MusicContainer getInstance() {
         if (instance == null) {
             instance = new MusicContainer();

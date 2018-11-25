@@ -3,12 +3,8 @@ package com.github.moribund.images;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.entity.Tile;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.val;
-
-import javax.inject.Inject;
 
 /**
  * The {@code SpriteContainer} class displays {@link Sprite}s. It is set up
@@ -23,6 +19,9 @@ public class SpriteContainer {
      * fastutil library over the standard Java ones.
      */
     private final Object2ObjectOpenHashMap<SpriteFile, Sprite> spriteForFile;
+    /**
+     * The singleton instance of this container.
+     */
     private static SpriteContainer instance;
 
     /**
@@ -65,6 +64,10 @@ public class SpriteContainer {
         return spriteForFile.get(file);
     }
 
+    /**
+     * Gets the singleton instance or initializes it lazily if it is null.
+     * @return The singleton instance of the container.
+     */
     public static SpriteContainer getInstance() {
         if (instance == null) {
             instance = new SpriteContainer();

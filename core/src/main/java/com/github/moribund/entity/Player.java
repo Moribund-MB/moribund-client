@@ -18,7 +18,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The {@code Player} that is being controlled by a client.
+ * The {@code Player} that is being controlled by a client. The {@code Player}
+ * is a type of {@link InputProcessor} for it is bound to {@link Player#keyBinds}.
  */
 public class Player implements PlayableCharacter, InputProcessor {
     /**
@@ -40,6 +41,9 @@ public class Player implements PlayableCharacter, InputProcessor {
      * {@link Runnable} methods defined in this class.
      */
     private AbstractInt2ObjectMap<PlayerAction> keyBinds;
+    /**
+     * The currently active {@link Flag}s on the {@code Player}.
+     */
     private Set<Flag> flags;
 
     /**
@@ -54,14 +58,26 @@ public class Player implements PlayableCharacter, InputProcessor {
         flags = new HashSet<>();
     }
 
+    /**
+     * Flags a new {@link Flag} on the player.
+     * @param flag The {@link Flag} to flag.
+     */
     private void flag(Flag flag) {
         flags.add(flag);
     }
 
+    /**
+     * Removes a {@link Flag} on the player.
+     * @param flag The {@link Flag} that is not longer active.
+     */
     private void unflag(Flag flag) {
         flags.remove(flag);
     }
 
+    /**
+     * Sends the current position of the {@code Player} to the
+     * server so that positions can be updated server-sided.
+     */
     private void sendTilePacket() {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
         val tilePacket = new TilePacket(playerId, tile);

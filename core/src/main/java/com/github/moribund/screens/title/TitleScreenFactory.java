@@ -15,10 +15,18 @@ public class TitleScreenFactory implements ScreenFactory {
         return new TitleScreen(musicPlayer, gameScreenFactory);
     }
 
+    /**
+     * Creates a factory to make the game screen.
+     * @return The newly made factory.
+     */
     private ScreenFactory createGameScreenFactory() {
         return new GameScreenFactory();
     }
 
+    /**
+     * Creates a music player to play music.
+     * @return The newly made music player.
+     */
     private MusicPlayer createMusicPlayer() {
         return new MusicPlayer();
     }

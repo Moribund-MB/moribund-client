@@ -80,7 +80,11 @@ public class NetworkBootstrapper {
         kryo.register(TilePacket.class, new TilePacketSerializer());
     }
 
-    public PacketDispatcher getPacketDispatcher() {
+    /**
+     * Creates a new {@link PacketDispatcher} with the {@link NetworkBootstrapper#client}.
+     * @return The newly made packet dispatcher.
+     */
+    public PacketDispatcher createPacketDispatcher() {
         return new PacketDispatcher(client);
     }
 }

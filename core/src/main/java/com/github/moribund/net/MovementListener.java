@@ -9,8 +9,8 @@ import lombok.val;
 
 /**
  * The {@code MovementListener} listens to all packets relating
- * to multi-player rendering of movement.
- * @apiNote This listener class is not yet made to work.
+ * to the positions of {@link com.github.moribund.entity.PlayableCharacter}s
+ * due to movement.
  */
 public class MovementListener extends Listener {
     @Override

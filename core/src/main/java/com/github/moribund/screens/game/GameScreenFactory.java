@@ -15,10 +15,18 @@ public class GameScreenFactory implements ScreenFactory {
         return new GameScreen(spriteBatch, camera);
     }
 
+    /**
+     * Creates the {@link SpriteBatch} dependency.
+     * @return The newly made sprite batch.
+     */
     private SpriteBatch createSpriteBatch() {
         return new SpriteBatch();
     }
 
+    /**
+     * Creates a {@link OrthographicCamera} dependency.
+     * @return The newly made camera.
+     */
     private Camera createCamera() {
         val camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);

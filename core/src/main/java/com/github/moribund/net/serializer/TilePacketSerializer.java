@@ -8,6 +8,9 @@ import com.github.moribund.entity.Tile;
 import com.github.moribund.net.packets.TilePacket;
 import lombok.val;
 
+/**
+ * The {@link Serializer} for the {@link TilePacket}.
+ */
 public class TilePacketSerializer extends Serializer<TilePacket> {
     @Override
     public void write(Kryo kryo, Output output, TilePacket object) {
