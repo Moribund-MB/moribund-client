@@ -43,23 +43,19 @@ public class Player implements PlayableCharacter {
         sprite = MoribundClient.getInstance().getSpriteDrawer().getSprite(SpriteFile.DUMMY_PLAYER);
     }
 
-    @Override
-    public void moveUp() {
+    private void moveUp() {
         tile = tile.transmorphY(1);
     }
 
-    @Override
-    public void moveDown() {
+    private void moveDown() {
         tile = tile.transmorphY(-1);
     }
 
-    @Override
-    public void moveLeft() {
+    private void moveLeft() {
         tile = tile.transmorphX(-1);
     }
 
-    @Override
-    public void moveRight() {
+    private void moveRight() {
         tile = tile.transmorphX(1);
     }
 

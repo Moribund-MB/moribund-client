@@ -10,30 +10,6 @@ import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
  */
 public interface PlayableCharacter {
     /**
-     * Moves the playable character in the up direction.
-     * @apiNote This may be subject to removal.
-     */
-    void moveUp();
-
-    /**
-     * Moves the playable character in the down direction.
-     * @apiNote This may be subject to removal.
-     */
-    void moveDown();
-
-    /**
-     * Moves the playable character in the left direction.
-     * @apiNote This may be subject to removal.
-     */
-    void moveLeft();
-
-    /**
-     * Moves the playable character in the right direction.
-     * @apiNote This may be subject to removal.
-     */
-    void moveRight();
-
-    /**
      * Binds the keys to the {@code keyBinds} using the
      * {@link com.badlogic.gdx.Input.Keys} constants to delegate
      * {@link Runnable} actions.
