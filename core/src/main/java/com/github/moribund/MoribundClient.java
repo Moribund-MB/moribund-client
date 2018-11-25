@@ -4,10 +4,8 @@ import com.badlogic.gdx.Game;
 import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
-import com.github.moribund.screens.title.TitleScreenFactory;
-import com.github.moribund.util.Reference;
+import com.github.moribund.screens.ScreenFactory;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
@@ -21,18 +19,27 @@ public class MoribundClient extends Game {
      * The singleton instance of the client for all classes to access.
      */
     private static MoribundClient instance;
-    private TitleScreenFactory titleScreenFactory;
+
     /**
      * All the {@link PlayableCharacter}s in the game.
      */
     @Getter
-    private AbstractInt2ObjectMap<PlayableCharacter> players;
+    private final AbstractInt2ObjectMap<PlayableCharacter> players;
+    private final ScreenFactory titleScreenFactory;
+    private final NetworkBootstrapper networkBootstrapper;
+    private final PacketDispatcher packetDispatcher;
     @Getter @Setter
     private PlayableCharacter player;
-    /**
-     * The packet dispatcher to send packets to the server restrictively.
-     */
-    private Reference<PacketDispatcher> packetDispatcherReference;
+
+    MoribundClient(AbstractInt2ObjectMap<PlayableCharacter> players,
+                           NetworkBootstrapper networkBootstrapper,
+                           PacketDispatcher packetDispatcher,
+                           ScreenFactory titleScreenFactory) {
+        this.players = players;
+        this.networkBootstrapper = networkBootstrapper;
+        this.packetDispatcher = packetDispatcher;
+        this.titleScreenFactory = titleScreenFactory;
+    }
 
     /**
      * Sets the visual graphics to its initial state and starts the client
@@ -40,33 +47,16 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
-        instance = this;
-        initializePlayersMap();
-        initializeTitleScreenFactory();
-        setupNetworking();
-
+        connectNetworking();
         setScreen(titleScreenFactory.createScreen());
-    }
-
-    private void initializeTitleScreenFactory() {
-        titleScreenFactory = new TitleScreenFactory();
-    }
-
-    /**
-     * Initializes the map of players.
-     */
-    private void initializePlayersMap() {
-        players = new Int2ObjectOpenHashMap<>();
     }
 
     /**
      * Sets up the client to server connection.
      */
-    private void setupNetworking() {
+    private void connectNetworking() {
         val networkBootstrapper = new NetworkBootstrapper();
         networkBootstrapper.connect();
-        packetDispatcherReference = new Reference<>();
-        networkBootstrapper.initializePacketDispatcher(packetDispatcherReference);
     }
 
     /**
@@ -83,14 +73,14 @@ public class MoribundClient extends Game {
      * @return The singleton instance.
      */
     public static MoribundClient getInstance() {
+        if (instance == null) {
+            val moribundClientFactory = new MoribundClientFactory();
+            instance = moribundClientFactory.createMoribundClient();
+        }
         return instance;
     }
 
-    /**
-     * Gets the value of the pass-by-reference variable of {@link MoribundClient#packetDispatcherReference}.
-     * @return The packet dispatcher to securely send packets to the server.
-     */
     public PacketDispatcher getPacketDispatcher() {
-        return packetDispatcherReference.getVariable();
+        return packetDispatcher;
     }
 }

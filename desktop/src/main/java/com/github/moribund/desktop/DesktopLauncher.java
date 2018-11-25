@@ -25,7 +25,7 @@ public class DesktopLauncher {
      * @return The created {@link LwjglApplication}.
      */
     private static LwjglApplication createApplication() {
-        return new LwjglApplication(new MoribundClient(), getDefaultConfiguration());
+        return new LwjglApplication(MoribundClient.getInstance(), getDefaultConfiguration());
     }
 
     /**
