@@ -5,5 +5,5 @@ package com.github.moribund.net.packets;
  * an account, so it must register that request and follow instructions
  * to handle the player server-sided.
  */
-public class LoginRequestPacket {
+public class LoginRequestPacket implements Packet {
 }

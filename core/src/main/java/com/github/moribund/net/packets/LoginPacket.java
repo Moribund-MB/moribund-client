@@ -11,7 +11,7 @@ import java.util.List;
  * has logged in. This makes the client do instructions by this message's
  * arrival.
  */
-public class LoginPacket {
+public class LoginPacket implements Packet {
     /**
      * The unique player ID of the one who just logged in.
      */

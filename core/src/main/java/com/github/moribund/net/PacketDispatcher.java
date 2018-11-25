@@ -1,6 +1,7 @@
 package com.github.moribund.net;
 
 import com.esotericsoftware.kryonet.Client;
+import com.github.moribund.net.packets.Packet;
 
 /**
  * The {@code PacketDispatcher} class is responsible for {@link Client}
@@ -26,7 +27,7 @@ public class PacketDispatcher {
      * @param object The {@link Object}, or packet, to send.
      * @apiNote This may be subject to change to singularly send a soon-to-be-created Packet interface.
      */
-    public void sendTCP(Object object) {
-        client.sendTCP(object);
+    public void sendTCP(Packet packet) {
+        client.sendTCP(packet);
     }
 }

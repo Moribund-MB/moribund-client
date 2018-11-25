@@ -1,6 +1,6 @@
 package com.github.moribund.net.packets;
 
-public class KeyUnpressedPacket {
+public class KeyUnpressedPacket implements Packet {
     private final int playerId;
     private final int keyUnpressed;
 

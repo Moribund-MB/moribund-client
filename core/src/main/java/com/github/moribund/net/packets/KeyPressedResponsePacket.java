@@ -6,7 +6,7 @@ import lombok.Getter;
  * The {@link com.badlogic.gdx.Input.Keys} value pressed response back from
  * the server to start moving the player.
  */
-public class KeyPressedResponsePacket {
+public class KeyPressedResponsePacket implements Packet {
     /**
      * The unique player ID of who pressed the key.
      */

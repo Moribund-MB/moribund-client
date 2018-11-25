@@ -8,7 +8,7 @@ import com.github.moribund.entity.Tile;
 import lombok.Getter;
 
 // not really concerned about cheating, not sure if I should be?
-public class TilePacket {
+public class TilePacket implements Packet {
     @Getter
     private int playerId;
     @Getter

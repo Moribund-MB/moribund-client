@@ -7,7 +7,7 @@ import lombok.Getter;
  * An instruction by the server to the client to draw a new
  * {@link com.github.moribund.entity.Player} onto the screen.
  */
-public class DrawNewPlayerPacket {
+public class DrawNewPlayerPacket implements Packet {
     /**
      * The {@link com.github.moribund.entity.Player}'s unique ID.
      */

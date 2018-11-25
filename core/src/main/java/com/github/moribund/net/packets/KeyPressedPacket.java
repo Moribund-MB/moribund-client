@@ -7,7 +7,7 @@ package com.github.moribund.net.packets;
  * the {@link com.badlogic.gdx.Input.Keys} value pressed by the
  * {@link com.github.moribund.entity.Player} that owns this client.
  */
-public class KeyPressedPacket {
+public class KeyPressedPacket implements Packet {
     /**
      * The unique player ID of the player that owns this client.
      */
