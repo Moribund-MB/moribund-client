@@ -5,6 +5,7 @@ import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryonet.Client;
 import com.github.moribund.entity.Tile;
 import com.github.moribund.net.packets.*;
+import com.github.moribund.net.serializer.TilePacketSerializer;
 import com.github.moribund.util.Reference;
 import javafx.util.Pair;
 
@@ -77,6 +78,7 @@ public class NetworkBootstrapper {
         kryo.register(KeyPressedResponsePacket.class);
         kryo.register(KeyUnpressedPacket.class);
         kryo.register(KeyUnpressedResponsePacket.class);
+        kryo.register(TilePacket.class, new TilePacketSerializer());
     }
 
     /**

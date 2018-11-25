@@ -8,6 +8,7 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteFile;
 import com.github.moribund.net.packets.KeyPressedPacket;
 import com.github.moribund.net.packets.KeyUnpressedPacket;
+import com.github.moribund.net.packets.TilePacket;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.val;
@@ -61,6 +62,12 @@ public class Player implements PlayableCharacter, InputProcessor {
         flags.remove(flag);
     }
 
+    private void sendTilePacket() {
+        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+        val tilePacket = new TilePacket(playerId, tile);
+        packetDispatcher.sendTCP(tilePacket);
+    }
+
     @Override
     public void bindKeysPressed() {
         keyPressedBinds.put(Input.Keys.UP, () -> flag(Flag.MOVE_UP));
@@ -71,10 +78,22 @@ public class Player implements PlayableCharacter, InputProcessor {
 
     @Override
     public void bindKeysUnpressed() {
-        keyUnpressedBinds.put(Input.Keys.UP, () -> unflag(Flag.MOVE_UP));
-        keyUnpressedBinds.put(Input.Keys.DOWN, () -> unflag(Flag.MOVE_DOWN));
-        keyUnpressedBinds.put(Input.Keys.RIGHT, () -> unflag(Flag.MOVE_RIGHT));
-        keyUnpressedBinds.put(Input.Keys.LEFT, () -> unflag(Flag.MOVE_LEFT));
+        keyUnpressedBinds.put(Input.Keys.UP, () -> {
+            unflag(Flag.MOVE_UP);
+            sendTilePacket();
+        });
+        keyUnpressedBinds.put(Input.Keys.DOWN, () -> {
+            unflag(Flag.MOVE_DOWN);
+            sendTilePacket();
+        });
+        keyUnpressedBinds.put(Input.Keys.RIGHT, () -> {
+            unflag(Flag.MOVE_RIGHT);
+            sendTilePacket();
+        });
+        keyUnpressedBinds.put(Input.Keys.LEFT, () -> {
+            unflag(Flag.MOVE_LEFT);
+            sendTilePacket();
+        });
     }
 
     @Override
