@@ -22,8 +22,6 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         initializeSpriteBatch();
-        drawGameFrame();
-        drawPlayers();
     }
 
     /**
@@ -31,14 +29,6 @@ public class GameScreen implements Screen {
      */
     private void initializeSpriteBatch() {
         spriteBatch = MoribundClient.getInstance().getSpriteBatch();
-    }
-
-    private void drawPlayers() {
-        // todo multiplayer
-    }
-
-    private void drawGameFrame() {
-        // todo draw the game frame
     }
 
     /**
@@ -49,7 +39,8 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        processMovement();
+        processKeyInput();
+        processFlags();
         clearGl();
         drawSpriteBatch(this::drawVisibleEntities);
     }
@@ -65,17 +56,22 @@ public class GameScreen implements Screen {
     /**
      * Processes the movement of the {@link com.github.moribund.entity.PlayableCharacter}s.
      */
-    private void processMovement() {
+    private void processKeyInput() {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
         val clientPlayer = MoribundClient.getInstance().getPlayer();
         if (clientPlayer != null) {
             clientPlayer.getKeyBinds().forEach((key, action) -> {
-                if (Gdx.input.isKeyPressed(key)) {
+                if (Gdx.input.isKeyJustPressed(key)) {
                     val keyPressedPacket = new KeyPressedPacket(clientPlayer.getPlayerId(), key);
                     packetDispatcher.sendTCP(keyPressedPacket);
                 }
             });
         }
+    }
+
+    private void processFlags() {
+        val players = MoribundClient.getInstance().getPlayers().values();
+        players.forEach(player -> player.getFlags().forEach(flag -> flag.applyToPlayer(player)));
     }
 
     /**

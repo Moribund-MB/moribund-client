@@ -3,6 +3,8 @@ package com.github.moribund.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 
+import java.util.Set;
+
 /**
  * The {@code PlayableCharacter} interface is a template
  * for a character that can be interacted with by keys. All
@@ -47,6 +49,8 @@ public interface PlayableCharacter {
      * @return The key binds defined by {@link PlayableCharacter#bindKeys()}.
      */
     AbstractInt2ObjectMap<Runnable> getKeyBinds();
+
+    Set<Flag> getFlags();
 
     /**
      * Handles the key being pressed by a player after it has gone through
