@@ -38,8 +38,7 @@ public class Player implements PlayableCharacter, InputProcessor {
      * The respective {@link com.badlogic.gdx.Input.Keys} that are bound to
      * {@link Runnable} methods defined in this class.
      */
-    private AbstractInt2ObjectMap<Runnable> keyPressedBinds;
-    private AbstractInt2ObjectMap<Runnable> keyUnpressedBinds;
+    private AbstractInt2ObjectMap<PlayerAction> keyBinds;
     private Set<Flag> flags;
 
     /**
@@ -69,30 +68,54 @@ public class Player implements PlayableCharacter, InputProcessor {
     }
 
     @Override
-    public void bindKeysPressed() {
-        keyPressedBinds.put(Input.Keys.UP, () -> flag(Flag.MOVE_UP));
-        keyPressedBinds.put(Input.Keys.DOWN, () -> flag(Flag.MOVE_DOWN));
-        keyPressedBinds.put(Input.Keys.RIGHT, () -> flag(Flag.MOVE_RIGHT));
-        keyPressedBinds.put(Input.Keys.LEFT, () -> flag(Flag.MOVE_LEFT));
-    }
+    public void bindKeys() {
+        keyBinds.put(Input.Keys.UP, new PlayerAction() {
+            @Override
+            public void keyPressed() {
+                flag(Flag.MOVE_UP);
+            }
 
-    @Override
-    public void bindKeysUnpressed() {
-        keyUnpressedBinds.put(Input.Keys.UP, () -> {
-            unflag(Flag.MOVE_UP);
-            sendTilePacket();
+            @Override
+            public void keyUnpressed() {
+                unflag(Flag.MOVE_UP);
+                sendTilePacket();
+            }
         });
-        keyUnpressedBinds.put(Input.Keys.DOWN, () -> {
-            unflag(Flag.MOVE_DOWN);
-            sendTilePacket();
+        keyBinds.put(Input.Keys.DOWN, new PlayerAction() {
+            @Override
+            public void keyPressed() {
+                flag(Flag.MOVE_DOWN);
+            }
+
+            @Override
+            public void keyUnpressed() {
+                unflag(Flag.MOVE_DOWN);
+                sendTilePacket();
+            }
         });
-        keyUnpressedBinds.put(Input.Keys.RIGHT, () -> {
-            unflag(Flag.MOVE_RIGHT);
-            sendTilePacket();
+        keyBinds.put(Input.Keys.RIGHT, new PlayerAction() {
+            @Override
+            public void keyPressed() {
+                flag(Flag.MOVE_RIGHT);
+            }
+
+            @Override
+            public void keyUnpressed() {
+                unflag(Flag.MOVE_RIGHT);
+                sendTilePacket();
+            }
         });
-        keyUnpressedBinds.put(Input.Keys.LEFT, () -> {
-            unflag(Flag.MOVE_LEFT);
-            sendTilePacket();
+        keyBinds.put(Input.Keys.LEFT, new PlayerAction() {
+            @Override
+            public void keyPressed() {
+                flag(Flag.MOVE_LEFT);
+            }
+
+            @Override
+            public void keyUnpressed() {
+                unflag(Flag.MOVE_LEFT);
+                sendTilePacket();
+            }
         });
     }
 
@@ -118,21 +141,12 @@ public class Player implements PlayableCharacter, InputProcessor {
     }
 
     @Override
-    public AbstractInt2ObjectMap<Runnable> getKeyPressedBinds() {
-        if (keyPressedBinds == null) {
-            keyPressedBinds = new Int2ObjectOpenHashMap<>();
-            bindKeysPressed();
+    public AbstractInt2ObjectMap<PlayerAction> getKeyBinds() {
+        if (keyBinds == null) {
+            keyBinds = new Int2ObjectOpenHashMap<>();
+            bindKeys();
         }
-        return keyPressedBinds;
-    }
-
-    @Override
-    public AbstractInt2ObjectMap<Runnable> getKeyUnpressedBinds() {
-        if (keyUnpressedBinds == null) {
-            keyUnpressedBinds = new Int2ObjectOpenHashMap<>();
-            bindKeysUnpressed();
-        }
-        return keyUnpressedBinds;
+        return keyBinds;
     }
 
     @Override
@@ -142,17 +156,17 @@ public class Player implements PlayableCharacter, InputProcessor {
 
     @Override
     public void keyPressed(int keyPressed) {
-        getKeyPressedBinds().get(keyPressed).run();
+        getKeyBinds().get(keyPressed).keyPressed();
     }
 
     @Override
     public void keyUnpressed(int keyUnpressed) {
-        getKeyUnpressedBinds().get(keyUnpressed).run();
+        getKeyBinds().get(keyUnpressed).keyUnpressed();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (getKeyPressedBinds().containsKey(keycode)) {
+        if (getKeyBinds().containsKey(keycode)) {
             val player = MoribundClient.getInstance().getPlayer();
             val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
             val keyPressedPacket = new KeyPressedPacket(player.getPlayerId(), keycode);
@@ -163,7 +177,7 @@ public class Player implements PlayableCharacter, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (getKeyUnpressedBinds().containsKey(keycode)) {
+        if (getKeyBinds().containsKey(keycode)) {
             val player = MoribundClient.getInstance().getPlayer();
             val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
             val keyUnpressedPacket = new KeyUnpressedPacket(player.getPlayerId(), keycode);

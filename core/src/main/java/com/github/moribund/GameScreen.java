@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
         /*val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
         val clientPlayer = MoribundClient.getInstance().getPlayer();
         if (clientPlayer != null) {
-            clientPlayer.getKeyPressedBinds().forEach((key, action) -> {
+            clientPlayer.getKeyBinds().forEach((key, action) -> {
                 if (Gdx.input.isKeyJustPressed(key)) {
                     val keyPressedPacket = new KeyPressedPacket(clientPlayer.getPlayerId(), key);
                     packetDispatcher.sendTCP(keyPressedPacket);
