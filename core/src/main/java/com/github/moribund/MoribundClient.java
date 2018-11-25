@@ -12,6 +12,7 @@ import com.github.moribund.util.Reference;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.val;
 
 /**
@@ -48,6 +49,8 @@ public class MoribundClient extends Game {
      */
     @Getter
     private AbstractInt2ObjectMap<PlayableCharacter> players;
+    @Getter @Setter
+    private PlayableCharacter player;
     /**
      * The packet dispatcher to send packets to the server restrictively.
      */

@@ -26,7 +26,13 @@ public class AccountListener extends Listener {
                 val tile = pair.getValue();
                 makePlayer(playerId, tile);
             });
+            setClientPlayer(loginPacket.getPlayerId());
         }
+    }
+
+    private void setClientPlayer(int playerId) {
+        val player = MoribundClient.getInstance().getPlayers().get(playerId);
+        MoribundClient.getInstance().setPlayer(player);
     }
 
     /**

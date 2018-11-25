@@ -44,6 +44,7 @@ public class GameScreen implements Screen {
     /**
      * Renders the {@link Screen} by clearing the GL and drawing the sprites.
      * Essentially, this is the heart of the game's {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
+     *
      * @param delta As of now, unclassified usage.
      */
     @Override
@@ -66,14 +67,15 @@ public class GameScreen implements Screen {
      */
     private void processMovement() {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-        MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> {
-            player.getKeyBinds().forEach((key, action) -> {
+        val clientPlayer = MoribundClient.getInstance().getPlayer();
+        if (clientPlayer != null) {
+            clientPlayer.getKeyBinds().forEach((key, action) -> {
                 if (Gdx.input.isKeyPressed(key)) {
-                    val keyPressedPacket = new KeyPressedPacket(playerId, key);
+                    val keyPressedPacket = new KeyPressedPacket(clientPlayer.getPlayerId(), key);
                     packetDispatcher.sendTCP(keyPressedPacket);
                 }
             });
-        });
+        }
     }
 
     /**
@@ -88,6 +90,7 @@ public class GameScreen implements Screen {
      * Draws the {@link SpriteBatch} by enabling it for drawing and taking in
      * the drawing actions of drawing {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
      * It then closes the {@link SpriteBatch}.
+     *
      * @param drawing The {@link Runnable} drawing actions (typically using
      *                {@link SpriteDrawer} to draw them) executed just before the
      *                {@link SpriteBatch} ends.
