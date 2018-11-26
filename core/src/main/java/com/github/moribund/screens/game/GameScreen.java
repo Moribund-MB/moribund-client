@@ -53,6 +53,15 @@ public class GameScreen implements Screen {
         processFlags();
         clearGl();
         drawSpriteBatch(this::drawVisibleEntities);
+        cameraFollowPlayer();
+    }
+
+    private void cameraFollowPlayer() {
+        val player = MoribundClient.getInstance().getPlayer();
+        if (player != null) {
+            camera.position.set(player.getCurrentTile().getX(), player.getCurrentTile().getY(), 0);
+            camera.update();
+        }
     }
 
     /**
