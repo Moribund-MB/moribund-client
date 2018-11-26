@@ -12,6 +12,8 @@ import com.github.moribund.net.packets.KeyUnpressedPacket;
 import com.github.moribund.net.packets.TilePacket;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.val;
 
 import java.util.HashSet;
@@ -25,11 +27,13 @@ public class Player implements PlayableCharacter, InputProcessor {
     /**
      * The tile the {@code Player} currently resides on.
      */
+    @Setter
     private Tile tile;
     /**
      * The unique player ID based on the {@link com.esotericsoftware.kryonet.Connection} of
      * the client to the server.
      */
+    @Getter
     private int playerId;
     /**
      * The {@link Sprite} of this {@code Player} that represents the {@code Player}
@@ -44,6 +48,7 @@ public class Player implements PlayableCharacter, InputProcessor {
     /**
      * The currently active {@link Flag}s on the {@code Player}.
      */
+    @Getter
     private Set<Flag> flags;
 
     /**
@@ -142,19 +147,9 @@ public class Player implements PlayableCharacter, InputProcessor {
     }
 
     @Override
-    public void setTile(Tile tile) {
-        this.tile = tile;
-    }
-
-    @Override
     public void draw(SpriteBatch spriteBatch) {
         sprite.setPosition(tile.getX(), tile.getY());
         sprite.draw(spriteBatch);
-    }
-
-    @Override
-    public int getPlayerId() {
-        return playerId;
     }
 
     @Override
@@ -164,11 +159,6 @@ public class Player implements PlayableCharacter, InputProcessor {
             bindKeys();
         }
         return keyBinds;
-    }
-
-    @Override
-    public Set<Flag> getFlags() {
-        return flags;
     }
 
     @Override
