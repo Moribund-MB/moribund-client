@@ -1,7 +1,9 @@
 package com.github.moribund;
 
 import com.badlogic.gdx.Game;
+import com.github.moribund.audio.MusicContainer;
 import com.github.moribund.entity.PlayableCharacter;
+import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
 import com.github.moribund.screens.ScreenFactory;
@@ -67,6 +69,8 @@ public class MoribundClient extends Game {
     @Override
     public void create() {
         connectNetworking();
+        SpriteContainer.getInstance().setup();
+        MusicContainer.getInstance().setup();
         setScreen(titleScreenFactory.createScreen());
     }
 
@@ -74,7 +78,6 @@ public class MoribundClient extends Game {
      * Sets up the client to server connection.
      */
     private void connectNetworking() {
-        val networkBootstrapper = new NetworkBootstrapper();
         networkBootstrapper.connect();
     }
 

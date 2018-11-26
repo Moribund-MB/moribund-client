@@ -1,5 +1,5 @@
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-sourceSets.main.java.srcDirs += [ 'build/classes/java/main/', 'src/main/java' ]
+sourceSets.main.java.srcDirs += [ 'src/main/java' ]
 
 dependencies {
   compile "com.badlogicgames.gdx:gdx:$gdxVersion"

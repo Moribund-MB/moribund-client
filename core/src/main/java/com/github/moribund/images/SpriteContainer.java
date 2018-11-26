@@ -30,14 +30,13 @@ public class SpriteContainer {
      */
     private SpriteContainer() {
         spriteForFile = new Object2ObjectOpenHashMap<>();
-        setup();
     }
 
     /**
      * Populates the {@link SpriteContainer#spriteForFile}, using
      * {@link SpriteContainer#makeSprite(SpriteFile)} to make {@link Sprite}s.
      */
-    private void setup() {
+    public void setup() {
         for (SpriteFile spriteFile : SpriteFile.VALUES) {
             val sprite = makeSprite(spriteFile);
             spriteForFile.put(spriteFile, sprite);

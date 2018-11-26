@@ -28,7 +28,6 @@ public class MusicContainer {
      */
     private MusicContainer() {
         musicForFile = new Object2ObjectOpenHashMap<>();
-        setup();
     }
 
     /**
@@ -36,7 +35,7 @@ public class MusicContainer {
      * {@link MusicFile} value and using its {@link MusicFile#location} field and
      * {@code LibGDX}'s {@link com.badlogic.gdx.Audio} class to make a new {@link Music} instance.
      */
-    private void setup() {
+    public void setup() {
         for (MusicFile musicFile : MusicFile.VALUES) {
             val music = Gdx.audio.newMusic(Gdx.files.internal(musicFile.getLocation()));
             musicForFile.put(musicFile, music);
