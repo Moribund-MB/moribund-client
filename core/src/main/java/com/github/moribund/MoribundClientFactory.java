@@ -9,7 +9,15 @@ import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.val;
 
+/**
+ * The factory that produces the {@link MoribundClient} and all of its dependencies.
+ */
 class MoribundClientFactory {
+
+    /**
+     * Creates the {@link MoribundClient} and all of its dependencies.
+     * @return The newly made {@link MoribundClient}.
+     */
     MoribundClient createMoribundClient() {
         val players = createPlayersMap();
         val networkBootstrapper = createNetworkBootstrapper();

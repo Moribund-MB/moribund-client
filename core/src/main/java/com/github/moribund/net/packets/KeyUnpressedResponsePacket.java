@@ -13,7 +13,7 @@ public class KeyUnpressedResponsePacket implements Packet {
     @Getter
     private int playerId;
     /**
-     * The {@link com.badlogic.gdx.Input.Keys} value pressed.
+     * The {@link com.badlogic.gdx.Input.Keys} value released.
      */
     @Getter
     private int keyUnpressed;

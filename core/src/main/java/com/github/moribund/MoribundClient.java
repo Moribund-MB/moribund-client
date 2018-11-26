@@ -63,8 +63,9 @@ public class MoribundClient extends Game {
     }
 
     /**
-     * Sets the visual graphics to its initial state and starts the client
-     * to server connection.
+     * Instantiates the {@link SpriteContainer} and {@link MusicContainer},
+     * connects us to the {@link com.esotericsoftware.kryonet.Server}, then
+     * sets the screen to the {@link com.github.moribund.screens.title.TitleScreen}.
      */
     @Override
     public void create() {
@@ -75,7 +76,7 @@ public class MoribundClient extends Game {
     }
 
     /**
-     * Sets up the client to server connection.
+     * Connects the client to the {@link com.esotericsoftware.kryonet.Server}.
      */
     private void connectNetworking() {
         networkBootstrapper.connect();

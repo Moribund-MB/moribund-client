@@ -1,7 +1,5 @@
 package com.github.moribund.net.packets;
 
-// note: only sent if it is a viable key that is applicable to a player
-
 /**
  * Sends a packet to the server to allow for client-server latency of
  * the {@link com.badlogic.gdx.Input.Keys} value pressed by the
