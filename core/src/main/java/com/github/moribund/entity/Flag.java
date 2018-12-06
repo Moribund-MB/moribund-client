@@ -16,7 +16,7 @@ public enum Flag {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
             val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphY(1);
+            val newTile = currentTile.transmorphY(PlayableCharacter.SPEED);
             playableCharacter.setTile(newTile);
         }
     },
@@ -27,7 +27,7 @@ public enum Flag {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
             val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphX(-1);
+            val newTile = currentTile.transmorphX(-PlayableCharacter.SPEED);
             playableCharacter.setTile(newTile);
         }
     },
@@ -38,7 +38,7 @@ public enum Flag {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
             val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphY(-1);
+            val newTile = currentTile.transmorphY(-PlayableCharacter.SPEED);
             playableCharacter.setTile(newTile);
         }
     },
@@ -49,7 +49,7 @@ public enum Flag {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
             val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphX(1);
+            val newTile = currentTile.transmorphX(PlayableCharacter.SPEED);
             playableCharacter.setTile(newTile);
         }
     };

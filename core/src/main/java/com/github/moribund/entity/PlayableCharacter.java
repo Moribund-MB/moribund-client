@@ -11,6 +11,8 @@ import java.util.Set;
  * playable characters are assumed as visible and movable.
  */
 public interface PlayableCharacter {
+    int SPEED = 3;
+
     /**
      * Binds the keys to the {@code keyBinds} using the
      * {@link com.badlogic.gdx.Input.Keys} constants to delegate
