@@ -75,7 +75,7 @@ public class TitleScreen implements Screen {
         findMatchButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(gameScreenFactory);
+                MoribundClient.getInstance().switchToScreen(gameScreenFactory, true);
                 val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
                 packetDispatcher.sendTCP(new LoginRequestPacket());
             }
@@ -86,7 +86,7 @@ public class TitleScreen implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(settingsScreenFactory);
+                MoribundClient.getInstance().switchToScreen(settingsScreenFactory, false);
             }
         });
     }
