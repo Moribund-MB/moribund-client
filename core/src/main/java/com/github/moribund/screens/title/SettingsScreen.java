@@ -55,7 +55,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void hide() {
-
+        stage.dispose();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SettingsScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(titleScreenFactory);
+                MoribundClient.getInstance().switchToScreen(titleScreenFactory, false);
             }
         });
     }

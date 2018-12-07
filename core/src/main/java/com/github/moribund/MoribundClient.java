@@ -73,11 +73,17 @@ public class MoribundClient extends Game {
         connectNetworking();
         SpriteContainer.getInstance().setup();
         MusicContainer.getInstance().setup();
-        switchToScreen(titleScreenFactory);
+        switchToScreen(titleScreenFactory, true);
     }
 
-    public void switchToScreen(ScreenFactory screenFactory) {
-        if (screen != null) {
+    /**
+     * Switches the screen to a new {@link Screen}.
+     * @param screenFactory The screen factory that will create the desired screen.
+     * @param disposePreviousScreen If the previous screen should be disposed. Note: If this is false, the previous
+     *                              screen's {@link Screen#hide()} method will still be invoked!
+     */
+    public void switchToScreen(ScreenFactory screenFactory, boolean disposePreviousScreen) {
+        if (screen != null && disposePreviousScreen) {
             screen.dispose();
         }
         setScreen(screenFactory.createScreen());
@@ -85,7 +91,7 @@ public class MoribundClient extends Game {
 
     /**
      * Note: Do NOT use this method to switch screens. Instead, use
-     * {@link MoribundClient#switchToScreen(ScreenFactory)}!
+     * {@link MoribundClient#switchToScreen(ScreenFactory, boolean)}!
      */
     @Override
     public void setScreen(Screen screen) {
