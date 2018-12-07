@@ -14,6 +14,7 @@ import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.LoginRequestPacket;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.StageFactory;
+import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
 import java.util.ArrayList;
@@ -74,9 +75,9 @@ public class TitleScreen implements Screen {
         findMatchButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val client = MoribundClient.getInstance();
-                client.setScreen(gameScreenFactory.createScreen());
-                client.getPacketDispatcher().sendTCP(new LoginRequestPacket());
+                MoribundClient.getInstance().switchToScreen(gameScreenFactory);
+                val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+                packetDispatcher.sendTCP(new LoginRequestPacket());
             }
         });
     }
@@ -85,15 +86,14 @@ public class TitleScreen implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val client = MoribundClient.getInstance();
-                client.setScreen(settingsScreenFactory.createScreen());
-                stage.dispose();
+                MoribundClient.getInstance().switchToScreen(settingsScreenFactory);
             }
         });
     }
 
     @Override
     public void render(float delta) {
+        GLUtils.clearGL();
         stage.draw();
         // Draw your screen here. "delta" is the time since last render in seconds.
     }
@@ -121,6 +121,7 @@ public class TitleScreen implements Screen {
     @Override
     public void dispose() {
         musicPlayer.dispose();
+        stage.dispose();
     }
 
     private Stage createStage() {

@@ -1,12 +1,11 @@
 package com.github.moribund.screens.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteContainer;
+import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
 /**
@@ -51,7 +50,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         processFlags();
-        clearGl();
+        GLUtils.clearGL();
         drawSpriteBatch(this::drawVisibleEntities);
         cameraFollowPlayer();
     }
@@ -79,14 +78,6 @@ public class GameScreen implements Screen {
     private void processFlags() {
         val players = MoribundClient.getInstance().getPlayers().values();
         players.forEach(player -> player.getFlags().forEach(flag -> flag.applyToPlayer(player)));
-    }
-
-    /**
-     * Clears the GL buffer. This program, as proven by imports, uses OpenGL 2.0+.
-     */
-    private void clearGl() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     /**
@@ -127,6 +118,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        spriteBatch.dispose();
     }
 }

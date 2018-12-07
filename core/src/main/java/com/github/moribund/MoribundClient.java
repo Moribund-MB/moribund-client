@@ -1,6 +1,7 @@
 package com.github.moribund;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicContainer;
 import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.images.SpriteContainer;
@@ -72,7 +73,23 @@ public class MoribundClient extends Game {
         connectNetworking();
         SpriteContainer.getInstance().setup();
         MusicContainer.getInstance().setup();
-        setScreen(titleScreenFactory.createScreen());
+        switchToScreen(titleScreenFactory);
+    }
+
+    public void switchToScreen(ScreenFactory screenFactory) {
+        if (screen != null) {
+            screen.dispose();
+        }
+        setScreen(screenFactory.createScreen());
+    }
+
+    /**
+     * Note: Do NOT use this method to switch screens. Instead, use
+     * {@link MoribundClient#switchToScreen(ScreenFactory)}!
+     */
+    @Override
+    public void setScreen(Screen screen) {
+        super.setScreen(screen);
     }
 
     /**

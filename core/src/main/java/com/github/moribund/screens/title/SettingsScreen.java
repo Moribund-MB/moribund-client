@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.screens.StageFactory;
+import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        GLUtils.clearGL();
         stage.draw();
     }
 
@@ -58,7 +60,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.dispose();
+        stage.dispose();
     }
 
     private void addButtonListeners() {
@@ -69,8 +71,7 @@ public class SettingsScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val client = MoribundClient.getInstance();
-                client.setScreen(titleScreenFactory.createScreen());
+                MoribundClient.getInstance().switchToScreen(titleScreenFactory);
             }
         });
     }
@@ -84,7 +85,7 @@ public class SettingsScreen implements Screen {
     }
 
     private void createButtons(ArrayList<Button> buttons, TextButton.TextButtonStyle textButtonStyle) {
-        val backButtonText = "back";
+        val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
         buttons.addAll(Arrays.asList(backButton));
