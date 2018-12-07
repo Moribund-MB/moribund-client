@@ -115,7 +115,7 @@ public class TitleScreen implements Screen {
 
     @Override
     public void hide() {
-        // This method is called when another screen replaces this one.
+        stage.dispose();
     }
 
     @Override
