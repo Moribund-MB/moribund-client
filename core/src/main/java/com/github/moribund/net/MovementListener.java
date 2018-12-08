@@ -3,8 +3,7 @@ package com.github.moribund.net;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.entity.Tile;
-import com.github.moribund.net.packets.TilePacket;
+import com.github.moribund.net.packets.LocationPacket;
 import lombok.val;
 
 /**
@@ -15,17 +14,18 @@ import lombok.val;
 public class MovementListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
-        if (object instanceof TilePacket) {
-            val tilePacket = (TilePacket) object;
+        if (object instanceof LocationPacket) {
+            val tilePacket = (LocationPacket) object;
             val playerId = tilePacket.getPlayerId();
-            val tile = tilePacket.getTile();
-            setTileForPlayer(tile, playerId);
+            val x = tilePacket.getX();
+            val y = tilePacket.getY();
+            setLocationForPlayer(x, y, playerId);
         }
     }
 
-    private void setTileForPlayer(Tile tile, int playerId) {
+    private void setLocationForPlayer(float x, float y, int playerId) {
         val player = MoribundClient.getInstance().getPlayers().get(playerId);
-        player.setX(tile.getX());
-        player.setY(tile.getY());
+        player.setX(x);
+        player.setY(y);
     }
 }

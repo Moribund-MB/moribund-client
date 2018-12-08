@@ -10,11 +10,10 @@ import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
 import com.github.moribund.net.packets.KeyPressedPacket;
 import com.github.moribund.net.packets.KeyUnpressedPacket;
-import com.github.moribund.net.packets.TilePacket;
+import com.github.moribund.net.packets.LocationPacket;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.val;
 
 import java.util.HashSet;
@@ -29,11 +28,6 @@ public class Player extends PlayableCharacter {
     private static final int ROTATION_SPEED = 5;
     private static final int MOVEMENT_SPEED = 5;
 
-    /**
-     * The tile the {@code Player} currently resides on.
-     */
-    @Setter
-    private Tile tile;
     /**
      * The unique player ID based on the {@link com.esotericsoftware.kryonet.Connection} of
      * the client to the server.
@@ -89,10 +83,15 @@ public class Player extends PlayableCharacter {
      * Sends the current position of the {@code Player} to the
      * server so that positions can be updated server-sided.
      */
-    private void sendTilePacket() {
+    private void sendLocationPacket() {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-        val tilePacket = new TilePacket(playerId, tile);
+        val tilePacket = new LocationPacket(playerId, getX(), getY());
         packetDispatcher.sendTCP(tilePacket);
+    }
+
+    @Override
+    public void rotate(float angle) {
+        sprite.rotate(angle);
     }
 
     @Override
@@ -106,7 +105,7 @@ public class Player extends PlayableCharacter {
             @Override
             public void keyUnpressed() {
                 unflag(Flag.MOVE_UP);
-                sendTilePacket();
+                sendLocationPacket();
             }
         });
         keyBinds.put(Input.Keys.DOWN, new PlayerAction() {
@@ -118,7 +117,7 @@ public class Player extends PlayableCharacter {
             @Override
             public void keyUnpressed() {
                 unflag(Flag.MOVE_DOWN);
-                sendTilePacket();
+                sendLocationPacket();
             }
         });
         keyBinds.put(Input.Keys.RIGHT, new PlayerAction() {
@@ -130,7 +129,7 @@ public class Player extends PlayableCharacter {
             @Override
             public void keyUnpressed() {
                 unflag(Flag.MOVE_RIGHT);
-                sendTilePacket();
+                sendLocationPacket();
             }
         });
         keyBinds.put(Input.Keys.LEFT, new PlayerAction() {
@@ -142,7 +141,7 @@ public class Player extends PlayableCharacter {
             @Override
             public void keyUnpressed() {
                 unflag(Flag.MOVE_LEFT);
-                sendTilePacket();
+                sendLocationPacket();
             }
         });
     }

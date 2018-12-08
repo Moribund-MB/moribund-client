@@ -1,6 +1,5 @@
 package com.github.moribund.net.packets;
 
-import com.github.moribund.entity.Tile;
 import lombok.Getter;
 
 /**
@@ -13,13 +12,12 @@ public class DrawNewPlayerPacket implements Packet {
      */
     @Getter
     private int playerId;
-    /**
-     * The {@link Tile} the {@link com.github.moribund.entity.Player} resides on
-     * when this instruction is given.
-     */
     @Getter
-    private Tile tile;
-
+    private float x;
+    @Getter
+    private float y;
+    @Getter
+    private float rotation;
     /**
      * A private constructor to ensure the client cannot unexpectedly send this
      * request to the server.

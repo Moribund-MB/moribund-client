@@ -1,6 +1,5 @@
 package com.github.moribund.net.packets;
 
-import com.github.moribund.entity.Tile;
 import javafx.util.Pair;
 import lombok.Getter;
 
@@ -22,7 +21,9 @@ public class LoginPacket implements Packet {
      * game currently so that they may be rendered to this player logging in.
      */
     @Getter
-    private List<Pair<Integer, Tile>> playerLocations;
+    private List<Pair<Integer, Pair<Float, Float>>> playerLocations;
+    @Getter
+    private List<Pair<Integer, Float>> playerRotations;
 
     /**
      * A private constructor to ensure the client cannot unexpectedly send this
