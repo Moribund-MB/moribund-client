@@ -23,7 +23,7 @@ import java.util.Set;
  * The {@code Player} that is being controlled by a client. The {@code Player}
  * is a type of {@link InputProcessor} for it is bound to {@link Player#keyBinds}.
  */
-public class Player implements PlayableCharacter, InputProcessor {
+public class Player extends PlayableCharacter {
     /**
      * The tile the {@code Player} currently resides on.
      */
