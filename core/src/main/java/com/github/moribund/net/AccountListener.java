@@ -41,7 +41,7 @@ public class AccountListener extends Listener {
 
     private void rotatePlayer(int playerId, float rotation) {
         val playersMap = MoribundClient.getInstance().getPlayers();
-        playersMap.get(playerId).rotate(rotation);
+        playersMap.get(playerId).setRotation(rotation);
     }
 
     private void setClientPlayer(int playerId) {

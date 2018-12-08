@@ -75,6 +75,7 @@ public class NetworkBootstrapper {
         kryo.register(KeyUnpressedPacket.class);
         kryo.register(KeyUnpressedResponsePacket.class);
         kryo.register(LocationPacket.class);
+        kryo.register(RotationPacket.class);
     }
 
     /**

@@ -11,6 +11,7 @@ import com.github.moribund.images.SpriteFile;
 import com.github.moribund.net.packets.KeyPressedPacket;
 import com.github.moribund.net.packets.KeyUnpressedPacket;
 import com.github.moribund.net.packets.LocationPacket;
+import com.github.moribund.net.packets.RotationPacket;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
@@ -89,9 +90,15 @@ public class Player extends PlayableCharacter {
         packetDispatcher.sendTCP(tilePacket);
     }
 
+    private void sendRotationPacket() {
+        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+        val rotationPacket = new RotationPacket(playerId, sprite.getRotation());
+        packetDispatcher.sendTCP(rotationPacket);
+    }
+
     @Override
-    public void rotate(float angle) {
-        sprite.rotate(angle);
+    public void setRotation(float angle) {
+        sprite.setRotation(angle);
     }
 
     @Override
@@ -129,7 +136,7 @@ public class Player extends PlayableCharacter {
             @Override
             public void keyUnpressed() {
                 unflag(Flag.MOVE_RIGHT);
-                sendLocationPacket();
+                sendRotationPacket();
             }
         });
         keyBinds.put(Input.Keys.LEFT, new PlayerAction() {
@@ -141,7 +148,7 @@ public class Player extends PlayableCharacter {
             @Override
             public void keyUnpressed() {
                 unflag(Flag.MOVE_LEFT);
-                sendLocationPacket();
+                sendRotationPacket();
             }
         });
     }

@@ -28,7 +28,7 @@ public abstract class PlayableCharacter implements InputProcessor {
 
     public abstract void setY(float y);
 
-    public abstract void rotate(float angle);
+    public abstract void setRotation(float angle);
 
     /**
      * Draws the player onto the screen.

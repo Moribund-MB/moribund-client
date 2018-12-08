@@ -12,11 +12,11 @@ public class LocationPacket implements Packet {
      * The player ID of the player that is at the given tile.
      */
     @Getter
-    private final int playerId;
+    private int playerId;
     @Getter
-    private final float x;
+    private float x;
     @Getter
-    private final float y;
+    private float y;
 
     /**
      * The constructor to pass the player at the given tile.
@@ -27,4 +27,6 @@ public class LocationPacket implements Packet {
         this.x = x;
         this.y = y;
     }
+
+    public LocationPacket() { }
 }
