@@ -1,7 +1,6 @@
 package com.github.moribund.entity;
 
 import com.github.moribund.screens.game.GameScreen;
-import lombok.val;
 
 /**
  * A {code Flag} can describe the current state of a {@link PlayableCharacter}.
@@ -15,9 +14,7 @@ public enum Flag {
     MOVE_UP {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
-            val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphY(PlayableCharacter.SPEED);
-            playableCharacter.setTile(newTile);
+            playableCharacter.moveForward();
         }
     },
     /**
@@ -26,9 +23,7 @@ public enum Flag {
     MOVE_LEFT {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
-            val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphX(-PlayableCharacter.SPEED);
-            playableCharacter.setTile(newTile);
+            playableCharacter.rotateLeft();
         }
     },
     /**
@@ -37,9 +32,7 @@ public enum Flag {
     MOVE_DOWN {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
-            val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphY(-PlayableCharacter.SPEED);
-            playableCharacter.setTile(newTile);
+            playableCharacter.moveBack();
         }
     },
     /**
@@ -48,9 +41,7 @@ public enum Flag {
     MOVE_RIGHT {
         @Override
         public void applyToPlayer(PlayableCharacter playableCharacter) {
-            val currentTile = playableCharacter.getCurrentTile();
-            val newTile = currentTile.transmorphX(PlayableCharacter.SPEED);
-            playableCharacter.setTile(newTile);
+            playableCharacter.rotateRight();
         }
     };
 

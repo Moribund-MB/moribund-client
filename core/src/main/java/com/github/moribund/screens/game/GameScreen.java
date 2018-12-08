@@ -58,7 +58,7 @@ public class GameScreen implements Screen {
     private void cameraFollowPlayer() {
         val player = MoribundClient.getInstance().getPlayer();
         if (player != null) {
-            camera.position.set(player.getCurrentTile().getX(), player.getCurrentTile().getY(), 0);
+            camera.position.set(player.getX(), player.getY(), 0);
             camera.update();
         }
     }

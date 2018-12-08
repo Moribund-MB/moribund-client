@@ -2,7 +2,6 @@ package com.github.moribund.entity;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 
 import java.util.Set;
@@ -12,8 +11,7 @@ import java.util.Set;
  * for a character that can be interacted with by keys. All
  * playable characters are assumed as visible and movable.
  */
-public abstract class PlayableCharacter extends Actor implements InputProcessor {
-    static final int SPEED = 3;
+public abstract class PlayableCharacter implements InputProcessor {
 
     /**
      * Binds the keys to the {@code keyBinds} using the
@@ -22,17 +20,13 @@ public abstract class PlayableCharacter extends Actor implements InputProcessor 
      */
     public abstract void bindKeys();
 
-    /**
-     * Gets the current {@link Tile} the player is on.
-     * @return The {@link Tile} the player is on.
-     */
-    public abstract Tile getCurrentTile();
+    public abstract float getX();
 
-    /**
-     * Sets a new {@link Tile} for the player to now currently be on.
-     * @param tile The new {@link Tile} for the player.
-     */
-    public abstract void setTile(Tile tile);
+    public abstract float getY();
+
+    public abstract void setX(float x);
+
+    public abstract void setY(float y);
 
     /**
      * Draws the player onto the screen.
@@ -46,6 +40,14 @@ public abstract class PlayableCharacter extends Actor implements InputProcessor 
      * @return The Player's unique ID.
      */
     public abstract int getPlayerId();
+
+    public abstract void rotateLeft();
+
+    public abstract void rotateRight();
+
+    public abstract void moveForward();
+
+    public abstract void moveBack();
 
     /**
      * Gets the respective {@link PlayerAction} for the

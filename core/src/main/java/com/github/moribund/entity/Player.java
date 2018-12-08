@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
@@ -24,6 +25,10 @@ import java.util.Set;
  * is a type of {@link InputProcessor} for it is bound to {@link Player#keyBinds}.
  */
 public class Player extends PlayableCharacter {
+
+    private static final int ROTATION_SPEED = 5;
+    private static final int MOVEMENT_SPEED = 5;
+
     /**
      * The tile the {@code Player} currently resides on.
      */
@@ -39,6 +44,7 @@ public class Player extends PlayableCharacter {
      * The {@link Sprite} of this {@code Player} that represents the {@code Player}
      * in the live game visually.
      */
+    @Getter
     private Sprite sprite;
     /**
      * The respective {@link com.badlogic.gdx.Input.Keys} that are bound to
@@ -59,7 +65,7 @@ public class Player extends PlayableCharacter {
      */
     public Player(int playerId) {
         this.playerId = playerId;
-        sprite = SpriteContainer.getInstance().getSprite(SpriteFile.DUMMY_PLAYER);
+        sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.DUMMY_PLAYER));
         flags = new HashSet<>();
     }
 
@@ -142,14 +148,56 @@ public class Player extends PlayableCharacter {
     }
 
     @Override
-    public Tile getCurrentTile() {
-        return tile;
+    public float getX() {
+        return sprite.getX();
+    }
+
+    @Override
+    public float getY() {
+        return sprite.getY();
+    }
+
+    @Override
+    public void setX(float x) {
+        sprite.setX(x);
+    }
+
+    @Override
+    public void setY(float y) {
+        sprite.setY(y);
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-        sprite.setPosition(tile.getX(), tile.getY());
         sprite.draw(spriteBatch);
+    }
+
+    @Override
+    public void rotateLeft() {
+        sprite.rotate(ROTATION_SPEED);
+    }
+
+    @Override
+    public void rotateRight() {
+        sprite.rotate(-ROTATION_SPEED);
+    }
+
+    @Override
+    public void moveForward() {
+        val angle = sprite.getRotation();
+        val xVelocity = MOVEMENT_SPEED * MathUtils.cosDeg(angle);
+        val yVelocity = MOVEMENT_SPEED * MathUtils.sinDeg(angle);
+
+        sprite.translate(xVelocity, yVelocity);
+    }
+
+    @Override
+    public void moveBack() {
+        val angle = sprite.getRotation();
+        val xVelocity = -MOVEMENT_SPEED * MathUtils.cosDeg(angle);
+        val yVelocity = -MOVEMENT_SPEED * MathUtils.sinDeg(angle);
+
+        sprite.translate(xVelocity, yVelocity);
     }
 
     @Override

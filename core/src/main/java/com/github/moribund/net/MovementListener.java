@@ -25,6 +25,7 @@ public class MovementListener extends Listener {
 
     private void setTileForPlayer(Tile tile, int playerId) {
         val player = MoribundClient.getInstance().getPlayers().get(playerId);
-        player.setTile(tile);
+        player.setX(tile.getX());
+        player.setY(tile.getY());
     }
 }
