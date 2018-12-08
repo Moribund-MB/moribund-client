@@ -18,6 +18,10 @@ allprojects {
 configure(subprojects) {
   apply plugin: 'java'
   sourceCompatibility = 1.8
+  javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+  }
 }
 
 subprojects {
