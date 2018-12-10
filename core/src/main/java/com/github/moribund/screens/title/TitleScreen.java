@@ -69,6 +69,7 @@ public class TitleScreen implements Screen {
     private void addButtonListeners() {
         addFindMatchButtonListener();
         addSettingsButtonListener();
+        addExitButtonListener();
     }
 
     private void addFindMatchButtonListener() {
@@ -87,6 +88,15 @@ public class TitleScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MoribundClient.getInstance().switchToScreen(settingsScreenFactory, false);
+            }
+        });
+    }
+
+    private void addExitButtonListener() {
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
             }
         });
     }

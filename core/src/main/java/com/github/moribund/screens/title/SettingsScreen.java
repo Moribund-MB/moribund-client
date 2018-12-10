@@ -5,9 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
@@ -21,6 +23,7 @@ public class SettingsScreen implements Screen {
 
     private final Stage stage;
     private TextButton backButton;
+    private Slider audioSlider;
 
     public SettingsScreen(TitleScreenFactory titleScreenFactory) {
         this.titleScreenFactory = titleScreenFactory;
@@ -64,10 +67,11 @@ public class SettingsScreen implements Screen {
     }
 
     private void addButtonListeners() {
-        addBackButtonLitener();
+        addBackButtonListener();
+        addAudioSliderListener();
     }
 
-    private void addBackButtonLitener() {
+    private void addBackButtonListener() {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -76,9 +80,21 @@ public class SettingsScreen implements Screen {
         });
     }
 
+    private void addAudioSliderListener() {
+        audioSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float sliderValue = audioSlider.getValue();
+                MusicPlayer.setVol(sliderValue);
+            }
+        });
+
+    }
+
     private Stage createStage() {
         val stageFactory = new StageFactory();
-        val stage = stageFactory.createStage(this::createButtons);
+        val stage = stageFactory.createStage(this::createButtons, this::createSlider);
+
 
         Gdx.input.setInputProcessor(stage);
         return stage;
@@ -90,4 +106,24 @@ public class SettingsScreen implements Screen {
         backButton = new TextButton(backButtonText, textButtonStyle);
         buttons.addAll(Arrays.asList(backButton));
     }
+
+    private void createSlider(ArrayList<Slider> sliders, Slider.SliderStyle sliderStyle) {
+
+        float audioMinimumValue = 0;
+        float audioMaximumValue = 1;
+        float audioStepSize = (float)0.01;
+
+        audioSlider = new Slider(audioMinimumValue, audioMaximumValue, audioStepSize, false, sliderStyle);
+        setSliderValue(audioSlider, audioMaximumValue);
+
+        sliders.addAll(Arrays.asList(audioSlider));
+
+    }
+
+    private float setSliderValue(Slider slider, float value)
+    {
+        audioSlider.setValue(value);
+        return value;
+    }
+
 }
