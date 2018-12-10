@@ -22,11 +22,7 @@ public class PacketDispatcher {
         this.client = client;
     }
 
-    /**
-     * Sends a {@link Packet} through TCP.
-     * @param packet The {@link Packet} to send.
-     */
-    public void sendTCP(Packet packet) {
-        client.sendTCP(packet);
+    public void sendUDP(Packet packet){
+        client.sendUDP(packet);
     }
 }

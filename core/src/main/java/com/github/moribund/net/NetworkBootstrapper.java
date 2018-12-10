@@ -52,7 +52,7 @@ public class NetworkBootstrapper {
 
         client.start();
         try {
-            client.connect(INITIAL_TIMEOUT, IP_ADDRESS, PORT);
+            client.connect(INITIAL_TIMEOUT, IP_ADDRESS, PORT, PORT);
         } catch (IOException e) {
             e.printStackTrace();
         }

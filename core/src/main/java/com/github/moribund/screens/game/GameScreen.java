@@ -77,7 +77,11 @@ public class GameScreen implements Screen {
      */
     private void processFlags() {
         val players = MoribundClient.getInstance().getPlayers().values();
-        players.forEach(player -> player.getFlags().forEach(flag -> flag.applyToPlayer(player)));
+        players.forEach(player -> {
+            player.getFlags().removeAll(player.getFlagsToRemove());
+            player.getFlagsToRemove().clear();
+            player.getFlags().forEach(flag -> flag.applyToPlayer(player));
+        });
     }
 
     /**
