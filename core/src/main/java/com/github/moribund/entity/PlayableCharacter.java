@@ -64,6 +64,8 @@ public abstract class PlayableCharacter implements InputProcessor {
      */
     public abstract Set<Flag> getFlags();
 
+    public abstract Set<Flag> getFlagsToRemove();
+
     /**
      * Handles the key being pressed by a player after it has gone through
      * client-server latency.

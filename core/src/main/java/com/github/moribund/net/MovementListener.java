@@ -20,12 +20,14 @@ public class MovementListener extends Listener {
             val playerId = locationPacket.getPlayerId();
             val x = locationPacket.getX();
             val y = locationPacket.getY();
+
             setLocationForPlayer(x, y, playerId);
             // todo perhaps the 100 ms check for locations
         } else if (object instanceof RotationPacket) {
             val rotationPacket = (RotationPacket) object;
             val playerId = rotationPacket.getPlayerId();
             val angle = rotationPacket.getAngle();
+
             setRotationForPlayer(angle, playerId);
         }
     }

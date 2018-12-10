@@ -77,7 +77,7 @@ public class TitleScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 MoribundClient.getInstance().switchToScreen(gameScreenFactory, true);
                 val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-                packetDispatcher.sendTCP(new LoginRequestPacket());
+                packetDispatcher.sendUDP(new LoginRequestPacket());
             }
         });
     }
