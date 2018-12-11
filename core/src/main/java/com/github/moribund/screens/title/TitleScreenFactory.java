@@ -13,8 +13,8 @@ public class TitleScreenFactory implements ScreenFactory {
         val musicPlayer = createMusicPlayer();
         val gameScreenFactory = createGameScreenFactory();
         val settingsScreenFactory = createSettingsScreenFactory();
-        //return new TitleScreen(musicPlayer, gameScreenFactory, settingsScreenFactory);
-        return new TitleScreen(musicPlayer, gameScreenFactory, settingsScreenFactory);
+        val privateMatchOptionScreenFactory = createPrivateMatchOptionScreenFactory();
+        return new TitleScreen(musicPlayer, gameScreenFactory, settingsScreenFactory, privateMatchOptionScreenFactory);
     }
 
     /**
@@ -28,6 +28,8 @@ public class TitleScreenFactory implements ScreenFactory {
     private ScreenFactory createSettingsScreenFactory() {
         return new SettingsScreenFactory();
     }
+
+    private ScreenFactory createPrivateMatchOptionScreenFactory() { return new PrivateMatchOptionScreenFactory(); }
 
     /**
      * Creates a music player to play music.

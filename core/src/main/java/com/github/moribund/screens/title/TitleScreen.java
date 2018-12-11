@@ -35,6 +35,7 @@ public class TitleScreen implements Screen {
      */
     private final ScreenFactory gameScreenFactory;
     private final ScreenFactory settingsScreenFactory;
+    private final ScreenFactory privateMatchScreenFactory;
 
     private final Stage stage;
     private TextButton findMatchButton, settingsButton, privateMatchButton, exitButton;
@@ -45,10 +46,11 @@ public class TitleScreen implements Screen {
      * @param musicPlayer The music player dependency.
      * @param gameScreenFactory The game screen factory to make a game screen.
      */
-    TitleScreen(MusicPlayer musicPlayer, ScreenFactory gameScreenFactory, ScreenFactory settingsScreenFactory) {
+    TitleScreen(MusicPlayer musicPlayer, ScreenFactory gameScreenFactory, ScreenFactory settingsScreenFactory, ScreenFactory privateMatchScreenFactory) {
         this.musicPlayer = musicPlayer;
         this.gameScreenFactory = gameScreenFactory;
         this.settingsScreenFactory = settingsScreenFactory;
+        this.privateMatchScreenFactory = privateMatchScreenFactory;
         stage = createStage();
     }
 
@@ -69,6 +71,7 @@ public class TitleScreen implements Screen {
     private void addButtonListeners() {
         addFindMatchButtonListener();
         addSettingsButtonListener();
+        addPrivateMatchButtonListener();
         addExitButtonListener();
     }
 
@@ -81,6 +84,17 @@ public class TitleScreen implements Screen {
                 packetDispatcher.sendUDP(new LoginRequestPacket());
             }
         });
+    }
+
+    private void addPrivateMatchButtonListener() {
+
+        privateMatchButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                MoribundClient.getInstance().switchToScreen(privateMatchScreenFactory, false);
+            }
+        });
+
     }
 
     private void addSettingsButtonListener() {
