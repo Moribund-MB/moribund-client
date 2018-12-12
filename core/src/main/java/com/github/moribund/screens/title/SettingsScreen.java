@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -12,6 +11,7 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
+import com.github.moribund.utils.StyleUtils;
 import lombok.val;
 
 import java.util.ArrayList;
@@ -95,19 +95,20 @@ public class SettingsScreen implements Screen {
         val stageFactory = new StageFactory();
         val stage = stageFactory.createStage(this::createButtons, this::createSlider);
 
-
         Gdx.input.setInputProcessor(stage);
         return stage;
     }
 
-    private void createButtons(ArrayList<Button> buttons, TextButton.TextButtonStyle textButtonStyle) {
+    private void createButtons(ArrayList<Actor> buttons) {
+        val textButtonStyle = StyleUtils.getTextButtonStyle();
         val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
         buttons.addAll(Arrays.asList(backButton));
     }
 
-    private void createSlider(ArrayList<Slider> sliders, Slider.SliderStyle sliderStyle) {
+    private void createSlider(ArrayList<Actor> sliders) {
+        val sliderStyle = StyleUtils.getSliderStyle();
 
         float audioMinimumValue = 0;
         float audioMaximumValue = 1;
@@ -117,13 +118,10 @@ public class SettingsScreen implements Screen {
         setSliderValue(audioSlider, audioMaximumValue);
 
         sliders.addAll(Arrays.asList(audioSlider));
-
     }
 
-    private float setSliderValue(Slider slider, float value)
-    {
-        audioSlider.setValue(value);
+    private float setSliderValue(Slider slider, float value) {
+        slider.setValue(value);
         return value;
     }
-
 }

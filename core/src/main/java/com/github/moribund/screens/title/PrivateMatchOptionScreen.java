@@ -4,13 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
+import com.github.moribund.utils.StyleUtils;
 import lombok.val;
 
 import java.util.ArrayList;
@@ -96,19 +96,20 @@ public class PrivateMatchOptionScreen implements Screen {
         val stageFactory = new StageFactory();
         val stage = stageFactory.createStage(this::createButtons);
 
-
         Gdx.input.setInputProcessor(stage);
         return stage;
     }
 
-    private void createButtons(ArrayList<Button> buttons, TextButton.TextButtonStyle textButtonStyle) {
+    private void createButtons(ArrayList<Actor> buttons) {
+        val textButtonStyle = StyleUtils.getTextButtonStyle();
         val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
         buttons.addAll(Arrays.asList(backButton));
     }
 
-    private void createTextFields(ArrayList<TextField> textFields, TextField.TextFieldStyle textFieldStyle) {
+    private void createTextFields(ArrayList<Actor> textFields) {
+        val textFieldStyle = StyleUtils.getTextFieldStyle();
         val privateMatchCodePrompt = "Enter Match Code Here";
 
         privateMatchCodeInput = new TextField(privateMatchCodePrompt, textFieldStyle);
