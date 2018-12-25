@@ -4,8 +4,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 
-import java.util.Set;
-
 /**
  * The {@code PlayableCharacter} interface is a template
  * for a character that can be interacted with by keys. All
@@ -29,6 +27,13 @@ public abstract class PlayableCharacter implements InputProcessor {
     public abstract void setY(float y);
 
     public abstract void setRotation(float angle);
+
+    public abstract float getRotation();
+
+    /**
+     * Processes players per LibGDX game cycle.
+     */
+    public abstract void process();
 
     /**
      * Draws the player onto the screen.
@@ -57,14 +62,6 @@ public abstract class PlayableCharacter implements InputProcessor {
      * @return The key binds defined by {@link PlayableCharacter#bindKeys()}.
      */
     public abstract AbstractInt2ObjectMap<PlayerAction> getKeyBinds();
-
-    /**
-     * Gets the current active {@link Flag}s on the {@code PlayableCharacter}.
-     * @return The current active {@link Flag}s.
-     */
-    public abstract Set<Flag> getFlags();
-
-    public abstract Set<Flag> getFlagsToRemove();
 
     /**
      * Handles the key being pressed by a player after it has gone through

@@ -5,13 +5,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.github.moribund.MoribundClient;
+import com.github.moribund.entity.flags.Flag;
+import com.github.moribund.entity.flags.FlagConstants;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
-import com.github.moribund.net.packets.key.KeyPressedPacket;
-import com.github.moribund.net.packets.key.KeyUnpressedPacket;
-import com.github.moribund.net.packets.movement.LocationPacket;
-import com.github.moribund.net.packets.movement.RotationPacket;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
@@ -49,10 +46,7 @@ public class Player extends PlayableCharacter {
     /**
      * The currently active {@link Flag}s on the {@code Player}.
      */
-    @Getter
     private Set<Flag> flags;
-
-    @Getter
     private Set<Flag> flagsToRemove;
 
     /**
@@ -84,20 +78,18 @@ public class Player extends PlayableCharacter {
         flagsToRemove.add(flag);
     }
 
-    /**
-     * Sends the current position of the {@code Player} to the
-     * server so that positions can be updated server-sided.
-     */
-    private void sendLocationPacket() {
-        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-        val tilePacket = new LocationPacket(playerId, getX(), getY());
-        packetDispatcher.sendUDP(tilePacket);
+    public void process() {
+        removeUnusedFlags();
+        processFlags();
     }
 
-    private void sendRotationPacket() {
-        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-        val rotationPacket = new RotationPacket(playerId, sprite.getRotation());
-        packetDispatcher.sendUDP(rotationPacket);
+    private void removeUnusedFlags() {
+        flags.removeAll(flagsToRemove);
+        flagsToRemove.clear();
+    }
+
+    private void processFlags() {
+        flags.forEach(flag -> flag.processFlag(this));
     }
 
     @Override
@@ -106,53 +98,54 @@ public class Player extends PlayableCharacter {
     }
 
     @Override
+    public float getRotation() {
+        return sprite.getRotation();
+    }
+
+    @Override
     public void bindKeys() {
         keyBinds.put(Input.Keys.UP, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(Flag.MOVE_UP);
+                flag(FlagConstants.MOVE_FORWARD_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(Flag.MOVE_UP);
-                sendLocationPacket();
+                flagToRemove(FlagConstants.MOVE_FORWARD_FLAG);
             }
         });
         keyBinds.put(Input.Keys.DOWN, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(Flag.MOVE_DOWN);
+                flag(FlagConstants.MOVE_BACKWARD_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(Flag.MOVE_DOWN);
-                sendLocationPacket();
+                flagToRemove(FlagConstants.MOVE_BACKWARD_FLAG);
             }
         });
         keyBinds.put(Input.Keys.RIGHT, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(Flag.MOVE_RIGHT);
+                flag(FlagConstants.ROTATE_RIGHT_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(Flag.MOVE_RIGHT);
-                sendRotationPacket();
+                flagToRemove(FlagConstants.ROTATE_RIGHT_FLAG);
             }
         });
         keyBinds.put(Input.Keys.LEFT, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(Flag.MOVE_LEFT);
+                flag(FlagConstants.ROTATE_LEFT_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(Flag.MOVE_LEFT);
-                sendRotationPacket();
+                flagToRemove(FlagConstants.ROTATE_LEFT_FLAG);
             }
         });
     }
@@ -232,10 +225,7 @@ public class Player extends PlayableCharacter {
     @Override
     public boolean keyDown(int keycode) {
         if (getKeyBinds().containsKey(keycode)) {
-            val player = MoribundClient.getInstance().getPlayer();
-            val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-            val keyPressedPacket = new KeyPressedPacket(player.getPlayerId(), keycode);
-            packetDispatcher.sendUDP(keyPressedPacket);
+            getKeyBinds().get(keycode).keyPressed();
         }
         return true;
     }
@@ -243,10 +233,7 @@ public class Player extends PlayableCharacter {
     @Override
     public boolean keyUp(int keycode) {
         if (getKeyBinds().containsKey(keycode)) {
-            val player = MoribundClient.getInstance().getPlayer();
-            val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-            val keyUnpressedPacket = new KeyUnpressedPacket(player.getPlayerId(), keycode);
-            packetDispatcher.sendUDP(keyUnpressedPacket);
+            getKeyBinds().get(keycode).keyUnpressed();
         }
         return true;
     }

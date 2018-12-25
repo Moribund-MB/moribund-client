@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
@@ -49,7 +50,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        processFlags();
+        processPlayer();
         GLUtils.clearGL();
         drawSpriteBatch(this::drawVisibleEntities);
         cameraFollowPlayer();
@@ -72,16 +73,11 @@ public class GameScreen implements Screen {
     }
 
     /**
-     * Processes all the {@link com.github.moribund.entity.Flag}s flagged on
-     * the {@link com.github.moribund.entity.PlayableCharacter}s of the game.
+     * Makes the player process itself for the game render cycle.
      */
-    private void processFlags() {
+    private void processPlayer() {
         val players = MoribundClient.getInstance().getPlayers().values();
-        players.forEach(player -> {
-            player.getFlags().removeAll(player.getFlagsToRemove());
-            player.getFlagsToRemove().clear();
-            player.getFlags().forEach(flag -> flag.applyToPlayer(player));
-        });
+        players.forEach(PlayableCharacter::process);
     }
 
     /**
