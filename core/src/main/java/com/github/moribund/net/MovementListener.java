@@ -3,8 +3,8 @@ package com.github.moribund.net;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.net.packets.LocationPacket;
-import com.github.moribund.net.packets.RotationPacket;
+import com.github.moribund.net.packets.movement.LocationPacket;
+import com.github.moribund.net.packets.movement.RotationPacket;
 import lombok.val;
 
 /**

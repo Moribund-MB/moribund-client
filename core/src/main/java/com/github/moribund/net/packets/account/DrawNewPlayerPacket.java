@@ -1,5 +1,6 @@
-package com.github.moribund.net.packets;
+package com.github.moribund.net.packets.account;
 
+import com.github.moribund.net.packets.Packet;
 import lombok.Getter;
 
 /**

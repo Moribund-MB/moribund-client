@@ -3,7 +3,15 @@ package com.github.moribund.net;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryonet.Client;
-import com.github.moribund.net.packets.*;
+import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
+import com.github.moribund.net.packets.account.LoginPacket;
+import com.github.moribund.net.packets.account.LoginRequestPacket;
+import com.github.moribund.net.packets.key.KeyPressedPacket;
+import com.github.moribund.net.packets.key.KeyPressedResponsePacket;
+import com.github.moribund.net.packets.key.KeyUnpressedPacket;
+import com.github.moribund.net.packets.key.KeyUnpressedResponsePacket;
+import com.github.moribund.net.packets.movement.LocationPacket;
+import com.github.moribund.net.packets.movement.RotationPacket;
 import javafx.util.Pair;
 
 import java.io.IOException;

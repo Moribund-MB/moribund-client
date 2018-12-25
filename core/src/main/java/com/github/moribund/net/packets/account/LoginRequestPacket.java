@@ -1,4 +1,6 @@
-package com.github.moribund.net.packets;
+package com.github.moribund.net.packets.account;
+
+import com.github.moribund.net.packets.Packet;
 
 /**
  * The request sent by the client to the server that a person is making

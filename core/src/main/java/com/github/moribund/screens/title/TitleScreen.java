@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
-import com.github.moribund.net.packets.LoginRequestPacket;
+import com.github.moribund.net.packets.account.LoginRequestPacket;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;

@@ -1,4 +1,6 @@
-package com.github.moribund.net.packets;
+package com.github.moribund.net.packets.key;
+
+import com.github.moribund.net.packets.Packet;
 
 /**
  * Sends a packet to the server to allow for client-server latency of
