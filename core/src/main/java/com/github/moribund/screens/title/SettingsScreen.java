@@ -20,13 +20,15 @@ import java.util.Arrays;
 public class SettingsScreen implements Screen {
 
     private final TitleScreenFactory titleScreenFactory;
+    private final MusicPlayer musicPlayer;
 
     private final Stage stage;
     private TextButton backButton;
     private Slider audioSlider;
 
-    public SettingsScreen(TitleScreenFactory titleScreenFactory) {
+    SettingsScreen(TitleScreenFactory titleScreenFactory, MusicPlayer musicPlayer) {
         this.titleScreenFactory = titleScreenFactory;
+        this.musicPlayer = musicPlayer;
         stage = createStage();
     }
 
@@ -85,7 +87,7 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 float sliderValue = audioSlider.getValue();
-                MusicPlayer.setVol(sliderValue);
+                musicPlayer.setVolume(sliderValue);
             }
         });
 
@@ -120,8 +122,7 @@ public class SettingsScreen implements Screen {
         sliders.addAll(Arrays.asList(audioSlider));
     }
 
-    private float setSliderValue(Slider slider, float value) {
+    private void setSliderValue(Slider slider, float value) {
         slider.setValue(value);
-        return value;
     }
 }

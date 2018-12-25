@@ -12,8 +12,6 @@ import java.util.List;
  */
 public class MusicPlayer {
 
-    private static Music music;
-
     /**
      * The list of {@link Music} playing to keep track of them for disposal.
      */
@@ -32,14 +30,14 @@ public class MusicPlayer {
      * @param looping If this {@link Music} will loop or not.
      */
     public void play(MusicFile musicFile, boolean looping) {
-        music = MusicContainer.getInstance().getMusic(musicFile);
+        val music = MusicContainer.getInstance().getMusic(musicFile);
         music.setLooping(looping);
         music.play();
         musicPlaying.add(music);
     }
 
-    public static void setVol(float volume) {
-        music.setVolume(volume);
+    public void setVolume(float volume) {
+        musicPlaying.forEach(music -> music.setVolume(volume));
     }
 
     /**
