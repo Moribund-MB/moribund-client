@@ -5,10 +5,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.github.moribund.MoribundClient;
 import com.github.moribund.entity.flags.Flag;
 import com.github.moribund.entity.flags.FlagConstants;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
+import com.github.moribund.net.packets.key.KeyPressedPacket;
+import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
@@ -225,7 +228,10 @@ public class Player extends PlayableCharacter {
     @Override
     public boolean keyDown(int keycode) {
         if (getKeyBinds().containsKey(keycode)) {
-            getKeyBinds().get(keycode).keyPressed();
+            val player = MoribundClient.getInstance().getPlayer();
+            val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+            val keyPressedPacket = new KeyPressedPacket(player.getPlayerId(), keycode);
+            packetDispatcher.sendUDP(keyPressedPacket);
         }
         return true;
     }
@@ -233,7 +239,10 @@ public class Player extends PlayableCharacter {
     @Override
     public boolean keyUp(int keycode) {
         if (getKeyBinds().containsKey(keycode)) {
-            getKeyBinds().get(keycode).keyUnpressed();
+            val player = MoribundClient.getInstance().getPlayer();
+            val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+            val keyUnpressedPacket = new KeyUnpressedPacket(player.getPlayerId(), keycode);
+            packetDispatcher.sendUDP(keyUnpressedPacket);
         }
         return true;
     }
