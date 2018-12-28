@@ -11,7 +11,7 @@ import lombok.val;
  * The {@code KeyListener} listens to all packets relating
  * to key presses.
  */
-public class KeyListener extends Listener {
+class KeyListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof KeyPressedResponsePacket) {

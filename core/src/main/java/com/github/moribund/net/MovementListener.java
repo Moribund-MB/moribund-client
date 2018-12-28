@@ -12,7 +12,7 @@ import lombok.val;
  * to the positions of {@link com.github.moribund.entity.PlayableCharacter}s
  * due to movement.
  */
-public class MovementListener extends Listener {
+class MovementListener extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof LocationPacket) {

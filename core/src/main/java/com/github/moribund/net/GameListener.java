@@ -11,7 +11,7 @@ import lombok.val;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class GameListener extends Listener {
+class GameListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {

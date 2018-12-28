@@ -15,7 +15,7 @@ public enum SpriteFile {
      * A static, final singleton for the {@link SpriteFile#values()} method so
      * that it does not constantly build a new array of values.
      */
-    public static final SpriteFile[] VALUES = values();
+    static final SpriteFile[] VALUES = values();
 
     /**
      * The location of the file related to this particular value.

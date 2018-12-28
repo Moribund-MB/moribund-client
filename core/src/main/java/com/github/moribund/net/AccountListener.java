@@ -13,7 +13,7 @@ import lombok.val;
  * The {@code AccountListener} listens to all packets relating
  * to accounts (account creation, etc).
  */
-public class AccountListener extends Listener {
+class AccountListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {

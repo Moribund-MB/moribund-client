@@ -12,7 +12,7 @@ import lombok.val;
 /**
  * The {@code GameScreen} is the screen of the main game.
  */
-public class GameScreen implements Screen {
+class GameScreen implements Screen {
 
     /**
      * The sprite batch to display sprites.

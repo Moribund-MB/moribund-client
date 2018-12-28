@@ -106,15 +106,6 @@ public class MoribundClient extends Game {
     }
 
     /**
-     * Cleans up all the client for optimal performance after the termination
-     * of the game.
-     */
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    /**
      * Gets the singleton instance of the client.
      * @return The singleton instance.
      */

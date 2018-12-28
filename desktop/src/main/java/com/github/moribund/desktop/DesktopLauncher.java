@@ -9,7 +9,7 @@ import lombok.val;
 /**
  * The {@code DesktopLauncher} class launches the desktop (LWJGL) application.
  */
-public class DesktopLauncher {
+class DesktopLauncher {
     /**
      * The start point of the desktop client.
      * @param args The program arguments.

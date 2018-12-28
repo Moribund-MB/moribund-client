@@ -14,8 +14,9 @@ import lombok.val;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
-public class SettingsScreen implements Screen {
+class SettingsScreen implements Screen {
 
     private final TitleScreenFactory titleScreenFactory;
 
@@ -88,6 +89,6 @@ public class SettingsScreen implements Screen {
         val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
-        buttons.addAll(Arrays.asList(backButton));
+        buttons.addAll(Collections.singletonList(backButton));
     }
 }
