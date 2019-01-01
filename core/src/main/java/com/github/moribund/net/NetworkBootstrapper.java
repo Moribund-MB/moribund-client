@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
 import com.github.moribund.net.packets.account.LoginPacket;
 import com.github.moribund.net.packets.account.LoginRequestPacket;
+import com.github.moribund.net.packets.account.LogoutPacket;
 import com.github.moribund.net.packets.game.GameStatePacket;
 import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyPressedResponsePacket;
@@ -84,6 +85,7 @@ public class NetworkBootstrapper {
         kryo.register(LocationPacket.class);
         kryo.register(RotationPacket.class);
         kryo.register(GameStatePacket.class);
+        kryo.register(LogoutPacket.class);
     }
 
     /**

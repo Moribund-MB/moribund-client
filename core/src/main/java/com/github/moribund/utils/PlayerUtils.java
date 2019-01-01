@@ -37,4 +37,13 @@ public class PlayerUtils {
         player.setX(x);
         player.setY(y);
     }
+
+    public void deletePlayer(int playerId) {
+        val client = MoribundClient.getInstance();
+        val player = client.getPlayers().get(playerId);
+
+        client.getDrawables().remove(player);
+        client.getFlaggables().remove(player);
+        client.getPlayers().remove(playerId);
+    }
 }
