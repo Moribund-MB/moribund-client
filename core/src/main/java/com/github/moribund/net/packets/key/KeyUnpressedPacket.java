@@ -5,7 +5,7 @@ import com.github.moribund.net.packets.OutgoingPacket;
 /**
  * Sends a packet to the server to allow for client-server latency of
  * the {@link com.badlogic.gdx.Input.Keys} value released by the
- * {@link com.github.moribund.entity.Player} that owns this client.
+ * {@link com.github.moribund.objects.Player} that owns this client.
  */
 public class KeyUnpressedPacket implements OutgoingPacket {
     /**

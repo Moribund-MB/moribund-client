@@ -1,8 +1,8 @@
 package com.github.moribund.net.packets.game;
 
 import com.github.moribund.MoribundClient;
-import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.net.packets.IncomingPacket;
+import com.github.moribund.objects.PlayableCharacter;
 import javafx.util.Pair;
 import lombok.Getter;
 import lombok.val;

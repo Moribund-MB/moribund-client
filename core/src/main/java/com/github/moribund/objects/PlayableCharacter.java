@@ -1,4 +1,4 @@
-package com.github.moribund.entity;
+package com.github.moribund.objects;
 
 import com.badlogic.gdx.InputProcessor;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;

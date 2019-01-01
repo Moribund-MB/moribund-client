@@ -1,6 +1,6 @@
-package com.github.moribund.entity.flags.movement;
+package com.github.moribund.objects.flags.movement;
 
-import com.github.moribund.entity.PlayableCharacter;
+import com.github.moribund.objects.PlayableCharacter;
 
 public class MoveBackwardFlag extends MovementFlag {
     @Override

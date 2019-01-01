@@ -6,11 +6,11 @@ import lombok.Getter;
 
 /**
  * An instruction by the server to the client to draw a new
- * {@link com.github.moribund.entity.Player} onto the screen.
+ * {@link com.github.moribund.objects.Player} onto the screen.
  */
 public class DrawNewPlayerPacket implements IncomingPacket {
     /**
-     * The {@link com.github.moribund.entity.Player}'s unique ID.
+     * The {@link com.github.moribund.objects.Player}'s unique ID.
      */
     @Getter
     private int playerId;

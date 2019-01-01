@@ -1,10 +1,10 @@
 package com.github.moribund;
 
-import com.github.moribund.entity.Drawable;
-import com.github.moribund.entity.Flaggable;
-import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
+import com.github.moribund.objects.Drawable;
+import com.github.moribund.objects.Flaggable;
+import com.github.moribund.objects.PlayableCharacter;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.title.TitleScreenFactory;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;

@@ -1,4 +1,4 @@
-package com.github.moribund.entity;
+package com.github.moribund.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

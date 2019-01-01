@@ -1,4 +1,4 @@
-package com.github.moribund.entity;
+package com.github.moribund.objects;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.entity.flags.Flag;
-import com.github.moribund.entity.flags.FlagConstants;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
 import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedPacket;
+import com.github.moribund.objects.flags.Flag;
+import com.github.moribund.objects.flags.FlagConstants;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;

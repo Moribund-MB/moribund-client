@@ -1,4 +1,4 @@
-package com.github.moribund.entity;
+package com.github.moribund.objects;
 
 /**
  * A {@link PlayerAction} triggered by a {@link com.badlogic.gdx.Input.Keys}

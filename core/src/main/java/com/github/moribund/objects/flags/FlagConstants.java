@@ -1,9 +1,9 @@
-package com.github.moribund.entity.flags;
+package com.github.moribund.objects.flags;
 
-import com.github.moribund.entity.flags.movement.MoveBackwardFlag;
-import com.github.moribund.entity.flags.movement.MoveForwardFlag;
-import com.github.moribund.entity.flags.rotating.RotateLeftFlag;
-import com.github.moribund.entity.flags.rotating.RotateRightFlag;
+import com.github.moribund.objects.flags.movement.MoveBackwardFlag;
+import com.github.moribund.objects.flags.movement.MoveForwardFlag;
+import com.github.moribund.objects.flags.rotating.RotateLeftFlag;
+import com.github.moribund.objects.flags.rotating.RotateRightFlag;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

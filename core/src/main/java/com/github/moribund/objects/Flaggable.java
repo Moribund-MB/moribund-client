@@ -1,4 +1,4 @@
-package com.github.moribund.entity;
+package com.github.moribund.objects;
 
 public interface Flaggable {
     /**
