@@ -81,17 +81,9 @@ public class Player extends PlayableCharacter {
         flagsToRemove.add(flag);
     }
 
-    public void process() {
-        removeUnusedFlags();
-        processFlags();
-    }
-
-    private void removeUnusedFlags() {
+    public void processFlags() {
         flags.removeAll(flagsToRemove);
         flagsToRemove.clear();
-    }
-
-    public void processFlags() {
         flags.forEach(flag -> flag.processFlag(this));
     }
 
