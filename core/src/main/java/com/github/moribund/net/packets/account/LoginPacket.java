@@ -1,8 +1,10 @@
 package com.github.moribund.net.packets.account;
 
-import com.github.moribund.net.packets.Packet;
+import com.github.moribund.net.packets.IncommingPacket;
+import com.github.moribund.utils.PlayerUtils;
 import javafx.util.Pair;
 import lombok.Getter;
+import lombok.val;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  * has logged in. This makes the client do instructions by this message's
  * arrival.
  */
-public class LoginPacket implements Packet {
+public class LoginPacket implements IncommingPacket {
     /**
      * The unique player ID of the one who just logged in.
      */
@@ -31,4 +33,21 @@ public class LoginPacket implements Packet {
      * request to the server.
      */
     private LoginPacket() { }
+
+    @Override
+    public void process() {
+        playerLocations.forEach(pair -> {
+            val playerId = pair.getKey();
+            val location = pair.getValue();
+            val x = location.getKey();
+            val y = location.getValue();
+            PlayerUtils.makePlayer(playerId, x, y);
+        });
+        playerRotations.forEach(pair -> {
+            val playerId = pair.getKey();
+            val rotation = pair.getValue();
+            PlayerUtils.rotatePlayer(playerId, rotation);
+        });
+        PlayerUtils.setClientPlayer(playerId);
+    }
 }

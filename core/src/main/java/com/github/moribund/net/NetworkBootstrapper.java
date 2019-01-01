@@ -54,10 +54,7 @@ public class NetworkBootstrapper {
      * {@link com.esotericsoftware.kryonet.Connection}.
      */
     public void connect() {
-        client.addListener(new MovementListener());
-        client.addListener(new AccountListener());
-        client.addListener(new KeyListener());
-        client.addListener(new GameListener());
+        client.addListener(new PacketListener());
         registerPackets(client.getKryo());
 
         client.start();

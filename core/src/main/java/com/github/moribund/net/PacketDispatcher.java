@@ -1,7 +1,7 @@
 package com.github.moribund.net;
 
 import com.esotericsoftware.kryonet.Client;
-import com.github.moribund.net.packets.Packet;
+import com.github.moribund.net.packets.OutgoingPacket;
 
 /**
  * The {@code PacketDispatcher} class is responsible for {@link Client}
@@ -22,7 +22,7 @@ public class PacketDispatcher {
         this.client = client;
     }
 
-    public void sendUDP(Packet packet){
+    public void sendUDP(OutgoingPacket packet){
         client.sendUDP(packet);
     }
 }

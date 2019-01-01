@@ -1,13 +1,14 @@
 package com.github.moribund.net.packets.account;
 
-import com.github.moribund.net.packets.Packet;
+import com.github.moribund.net.packets.IncommingPacket;
+import com.github.moribund.utils.PlayerUtils;
 import lombok.Getter;
 
 /**
  * An instruction by the server to the client to draw a new
  * {@link com.github.moribund.entity.Player} onto the screen.
  */
-public class DrawNewPlayerPacket implements Packet {
+public class DrawNewPlayerPacket implements IncommingPacket {
     /**
      * The {@link com.github.moribund.entity.Player}'s unique ID.
      */
@@ -24,4 +25,10 @@ public class DrawNewPlayerPacket implements Packet {
      * request to the server.
      */
     private DrawNewPlayerPacket() { }
+
+    @Override
+    public void process() {
+        PlayerUtils.makePlayer(playerId, x, y);
+        PlayerUtils.rotatePlayer(playerId, rotation);
+    }
 }
