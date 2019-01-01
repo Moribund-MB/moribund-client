@@ -195,8 +195,8 @@ public class Player extends PlayableCharacter {
     @Override
     public void moveForward() {
         val angle = sprite.getRotation();
-        val xVelocity = MOVEMENT_SPEED * MathUtils.cosDeg(angle);
-        val yVelocity = MOVEMENT_SPEED * MathUtils.sinDeg(angle);
+        val xVelocity = getXVelocity(false, angle);
+        val yVelocity = getYVelocity(false, angle);
 
         sprite.translate(xVelocity, yVelocity);
     }
@@ -204,10 +204,32 @@ public class Player extends PlayableCharacter {
     @Override
     public void moveBack() {
         val angle = sprite.getRotation();
-        val xVelocity = -MOVEMENT_SPEED * MathUtils.cosDeg(angle);
-        val yVelocity = -MOVEMENT_SPEED * MathUtils.sinDeg(angle);
+        val xVelocity = getXVelocity(true, angle);
+        val yVelocity = getYVelocity(true, angle);
 
         sprite.translate(xVelocity, yVelocity);
+    }
+
+    private float getXVelocity(boolean back, float angle) {
+        val xVelocity = (back ? -1 : 1) * MOVEMENT_SPEED * MathUtils.cosDeg(angle);
+        val xBound = SpriteContainer.getInstance().getSprite(SpriteFile.BACKGROUND).getWidth() / 2;
+        return getVelocityWithLimitations(xVelocity, getX(), xBound, -xBound);
+    }
+
+    private float getYVelocity(boolean back, float angle) {
+        val yVelocity = (back ? -1 : 1) * MOVEMENT_SPEED * MathUtils.sinDeg(angle);
+        val yBound = SpriteContainer.getInstance().getSprite(SpriteFile.BACKGROUND).getHeight() / 2;
+        return getVelocityWithLimitations(yVelocity, getY(), yBound, -yBound);
+    }
+
+    private float getVelocityWithLimitations(float velocity, float dependentVariable, float upperBound, float lowerBound) {
+        val balancingConstant = 50;
+        if (velocity < 0 && dependentVariable <= lowerBound) {
+            velocity = 0;
+        } else if (velocity > 0 && dependentVariable >= upperBound - balancingConstant) {
+            velocity = 0;
+        }
+        return velocity;
     }
 
     @Override
