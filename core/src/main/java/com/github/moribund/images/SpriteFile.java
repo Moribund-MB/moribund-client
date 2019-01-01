@@ -9,7 +9,11 @@ public enum SpriteFile {
     /**
      * A dummy player character.
      */
-    DUMMY_PLAYER("images/player.png");
+    DUMMY_PLAYER("images/player.png"),
+    /**
+     * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
+     */
+    BACKGROUND("images/background.png");
 
     /**
      * A static, final singleton for the {@link SpriteFile#values()} method so

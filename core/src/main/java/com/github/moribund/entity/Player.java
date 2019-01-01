@@ -143,6 +143,18 @@ public class Player extends PlayableCharacter {
                 flagToRemove(FlagConstants.ROTATE_LEFT_FLAG);
             }
         });
+        keyBinds.put(Input.Keys.T, new PlayerAction() {
+            @Override
+            public void keyPressed() {
+                System.out.println("getX() = " + getX());
+                System.out.println("getY() = " + getY());
+            }
+
+            @Override
+            public void keyUnpressed() {
+
+            }
+        });
     }
 
     @Override

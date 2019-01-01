@@ -3,7 +3,10 @@ package com.github.moribund.screens.game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.moribund.images.SpriteContainer;
+import com.github.moribund.images.SpriteFile;
 import com.github.moribund.screens.ScreenFactory;
 import lombok.val;
 
@@ -12,7 +15,14 @@ public class GameScreenFactory implements ScreenFactory {
     public Screen createScreen() {
         val spriteBatch = createSpriteBatch();
         val camera = createCamera();
-        return new GameScreen(spriteBatch, camera);
+        val backgroundSprite = createBackgroundSprite();
+        return new GameScreen(spriteBatch, camera, backgroundSprite);
+    }
+
+    private Sprite createBackgroundSprite() {
+        val backgroundSprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.BACKGROUND));
+        backgroundSprite.setPosition(-(backgroundSprite.getWidth() / 2), -(backgroundSprite.getHeight() / 2));
+        return backgroundSprite;
     }
 
     /**

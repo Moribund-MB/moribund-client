@@ -2,9 +2,11 @@ package com.github.moribund.screens.game;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.entity.Flaggable;
+import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
@@ -22,15 +24,20 @@ class GameScreen implements Screen {
      * The camera to show the game on.
      */
     private final Camera camera;
+    /**
+     * The sprite that represents the background image.
+     */
+    private final Sprite background;
 
     /**
      * Constructor that provides the {@code GameScreen} its dependencies.
      * @param spriteBatch The sprite batch to display sprites.
      * @param camera The camera to show the game on.
      */
-    GameScreen(SpriteBatch spriteBatch, Camera camera) {
+    GameScreen(SpriteBatch spriteBatch, Camera camera, Sprite background) {
         this.spriteBatch = spriteBatch;
         this.camera = camera;
+        this.background = background;
     }
 
     /**
@@ -52,16 +59,48 @@ class GameScreen implements Screen {
     public void render(float delta) {
         processFlags();
         GLUtils.clearGL();
-        drawSpriteBatch(this::drawVisibleEntities);
+        drawSpriteBatch(this::drawBackground, this::drawVisibleEntities);
         cameraFollowPlayer();
+    }
+
+    private void drawBackground() {
+        background.draw(spriteBatch);
     }
 
     private void cameraFollowPlayer() {
         val player = MoribundClient.getInstance().getPlayer();
         if (player != null) {
-            camera.position.set(player.getX(), player.getY(), 0);
+            camera.position.set(getCameraPositionX(player), getCameraPositionY(player), 0);
             camera.update();
         }
+    }
+
+    private float getCameraPositionX(PlayableCharacter player) {
+        val playerX = player.getX();
+        val balancingConstant = 400;
+        val furthestLeftBound = -(background.getWidth() / 2) + balancingConstant;
+        val furthestRightBound = background.getWidth() / 2 - balancingConstant;
+
+        if (playerX >= furthestRightBound) {
+            return furthestRightBound;
+        } else if (playerX <= furthestLeftBound) {
+            return furthestLeftBound;
+        }
+        return playerX;
+    }
+
+    private float getCameraPositionY(PlayableCharacter player) {
+        val playerY = player.getY();
+        val balancingConstant = 240;
+        val furthestLowerBound = -(background.getHeight() / 2) + balancingConstant;
+        val furthestUpperBound = background.getHeight() / 2 - balancingConstant;
+
+        if (playerY >= furthestUpperBound) {
+            return furthestUpperBound;
+        } else if (playerY <= furthestLowerBound) {
+            return furthestLowerBound;
+        }
+        return playerY;
     }
 
     /**
@@ -88,9 +127,12 @@ class GameScreen implements Screen {
      *                {@link SpriteContainer} to draw them) executed just before the
      *                {@link SpriteBatch} ends.
      */
-    private void drawSpriteBatch(Runnable drawing) {
+    private void drawSpriteBatch(Runnable background, Runnable drawing) {
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
+        spriteBatch.disableBlending();
+        background.run();
+        spriteBatch.enableBlending();
         drawing.run();
         spriteBatch.end();
     }
