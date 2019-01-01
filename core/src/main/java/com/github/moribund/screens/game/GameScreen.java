@@ -50,7 +50,7 @@ class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        processPlayer();
+        processFlags();
         GLUtils.clearGL();
         drawSpriteBatch(this::drawVisibleEntities);
         cameraFollowPlayer();
@@ -65,19 +65,18 @@ class GameScreen implements Screen {
     }
 
     /**
-     * Draws all the {@link com.github.moribund.entity.PlayableCharacter}'s
+     * Draws all the {@link com.github.moribund.entity.Drawable}'s
      * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
      */
     private void drawVisibleEntities() {
-        MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> player.draw(spriteBatch));
+        MoribundClient.getInstance().getDrawables().forEach(drawable -> drawable.draw(spriteBatch));
     }
 
     /**
-     * Makes the player process itself for the game render cycle.
+     * Processes all flaggables.
      */
-    private void processPlayer() {
-        val players = MoribundClient.getInstance().getPlayers().values();
-        players.forEach(Flaggable::processFlags);
+    private void processFlags() {
+        MoribundClient.getInstance().getFlaggables().forEach(Flaggable::processFlags);
     }
 
     /**

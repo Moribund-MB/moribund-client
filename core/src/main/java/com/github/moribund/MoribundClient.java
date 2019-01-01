@@ -3,12 +3,15 @@ package com.github.moribund;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicContainer;
+import com.github.moribund.entity.Drawable;
+import com.github.moribund.entity.Flaggable;
 import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
 import com.github.moribund.screens.ScreenFactory;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
+import it.unimi.dsi.fastutil.objects.AbstractObjectList;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
@@ -28,6 +31,10 @@ public class MoribundClient extends Game {
      */
     @Getter
     private final AbstractInt2ObjectMap<PlayableCharacter> players;
+    @Getter
+    private final AbstractObjectList<Drawable> drawables;
+    @Getter
+    private final AbstractObjectList<Flaggable> flaggables;
     /**
      * The factory to make the title screen.
      */
@@ -54,10 +61,14 @@ public class MoribundClient extends Game {
      * @param titleScreenFactory The screen factory to create the title screen.
      */
     MoribundClient(AbstractInt2ObjectMap<PlayableCharacter> players,
+                           AbstractObjectList<Drawable> drawables,
+                           AbstractObjectList<Flaggable> flaggables,
                            NetworkBootstrapper networkBootstrapper,
                            PacketDispatcher packetDispatcher,
                            ScreenFactory titleScreenFactory) {
         this.players = players;
+        this.drawables = drawables;
+        this.flaggables = flaggables;
         this.networkBootstrapper = networkBootstrapper;
         this.packetDispatcher = packetDispatcher;
         this.titleScreenFactory = titleScreenFactory;

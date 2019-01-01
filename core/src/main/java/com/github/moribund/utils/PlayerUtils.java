@@ -28,9 +28,12 @@ public class PlayerUtils {
      */
     public void makePlayer(int playerId, float x, float y) {
         val player = new Player(playerId);
-        val playersMap = MoribundClient.getInstance().getPlayers();
+        val client = MoribundClient.getInstance();
 
-        playersMap.put(playerId, player);
+        client.getPlayers().put(playerId, player);
+        client.getDrawables().add(player);
+        client.getFlaggables().add(player);
+
         player.setX(x);
         player.setY(y);
     }
