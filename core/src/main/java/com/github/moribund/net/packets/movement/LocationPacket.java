@@ -1,7 +1,7 @@
 package com.github.moribund.net.packets.movement;
 
 import com.github.moribund.MoribundClient;
-import com.github.moribund.net.packets.IncommingPacket;
+import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.net.packets.OutgoingPacket;
 import lombok.Getter;
 import lombok.val;
@@ -11,7 +11,7 @@ import lombok.val;
  * This is an easy-to-manipulate packet should the client be decompiled
  * and abused, however.
  */
-public class LocationPacket implements IncommingPacket, OutgoingPacket {
+public class LocationPacket implements IncomingPacket, OutgoingPacket {
     /**
      * The player ID of the player that is at the given tile.
      */

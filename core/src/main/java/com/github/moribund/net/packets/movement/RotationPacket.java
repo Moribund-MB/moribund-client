@@ -1,12 +1,12 @@
 package com.github.moribund.net.packets.movement;
 
 import com.github.moribund.MoribundClient;
-import com.github.moribund.net.packets.IncommingPacket;
+import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.net.packets.OutgoingPacket;
 import lombok.Getter;
 import lombok.val;
 
-public class RotationPacket implements IncommingPacket, OutgoingPacket {
+public class RotationPacket implements IncomingPacket, OutgoingPacket {
     /**
      * The player ID of the player that is finished rotating.
      */

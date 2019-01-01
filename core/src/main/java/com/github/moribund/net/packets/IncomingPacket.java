@@ -1,5 +1,5 @@
 package com.github.moribund.net.packets;
 
-public interface IncommingPacket {
+public interface IncomingPacket {
     void process();
 }
