@@ -9,9 +9,4 @@ public interface Drawable {
      *                    {@link com.badlogic.gdx.graphics.g2d.Sprite} to.
      */
     void draw(SpriteBatch spriteBatch);
-
-    /**
-     * Processes players per LibGDX game cycle.
-     */
-    void process();
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.entity.PlayableCharacter;
+import com.github.moribund.entity.Flaggable;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
@@ -77,7 +77,7 @@ class GameScreen implements Screen {
      */
     private void processPlayer() {
         val players = MoribundClient.getInstance().getPlayers().values();
-        players.forEach(PlayableCharacter::process);
+        players.forEach(Flaggable::processFlags);
     }
 
     /**
