@@ -1,6 +1,7 @@
 package com.github.moribund.net.packets.account;
 
 import com.github.moribund.net.packets.IncomingPacket;
+import com.github.moribund.objects.playable.Player;
 import com.github.moribund.utils.PlayerUtils;
 import javafx.util.Pair;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.val;
 import java.util.List;
 
 /**
- * The response from the server that a {@link com.github.moribund.objects.Player}
+ * The response from the server that a {@link Player}
  * has logged in. This makes the client do instructions by this message's
  * arrival.
  */
@@ -20,7 +21,7 @@ public class LoginPacket implements IncomingPacket {
     @Getter
     private int playerId;
     /**
-     * The locations of all the {@link com.github.moribund.objects.Player}s in the
+     * The locations of all the {@link Player}s in the
      * game currently so that they may be rendered to this player logging in.
      */
     @Getter

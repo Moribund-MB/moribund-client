@@ -1,7 +1,7 @@
 package com.github.moribund.objects.flags;
 
-import com.github.moribund.objects.PlayableCharacter;
+import com.github.moribund.objects.attributes.Flaggable;
 
 public interface Flag {
-    void processFlag(PlayableCharacter playableCharacter);
+    void processFlag(Flaggable flaggable);
 }

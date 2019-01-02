@@ -1,16 +1,17 @@
 package com.github.moribund.net.packets.account;
 
 import com.github.moribund.net.packets.IncomingPacket;
+import com.github.moribund.objects.playable.Player;
 import com.github.moribund.utils.PlayerUtils;
 import lombok.Getter;
 
 /**
  * An instruction by the server to the client to draw a new
- * {@link com.github.moribund.objects.Player} onto the screen.
+ * {@link Player} onto the screen.
  */
 public class DrawNewPlayerPacket implements IncomingPacket {
     /**
-     * The {@link com.github.moribund.objects.Player}'s unique ID.
+     * The {@link Player}'s unique ID.
      */
     @Getter
     private int playerId;

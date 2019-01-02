@@ -1,6 +1,9 @@
-package com.github.moribund.objects;
+package com.github.moribund.objects.playable;
 
 import com.badlogic.gdx.InputProcessor;
+import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.Flaggable;
+import com.github.moribund.objects.attributes.Movable;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 
 /**

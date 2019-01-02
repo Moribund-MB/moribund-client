@@ -1,4 +1,4 @@
-package com.github.moribund.objects;
+package com.github.moribund.objects.playable;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;

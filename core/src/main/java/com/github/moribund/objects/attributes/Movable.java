@@ -1,4 +1,4 @@
-package com.github.moribund.objects;
+package com.github.moribund.objects.attributes;
 
 public interface Movable {
     float getX();

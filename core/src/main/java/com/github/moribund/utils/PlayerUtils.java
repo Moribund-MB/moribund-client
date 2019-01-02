@@ -2,7 +2,7 @@ package com.github.moribund.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.objects.Player;
+import com.github.moribund.objects.playable.Player;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 

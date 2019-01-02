@@ -2,8 +2,8 @@ package com.github.moribund.objects.flags.movement;
 
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.movement.LocationPacket;
-import com.github.moribund.objects.PlayableCharacter;
 import com.github.moribund.objects.flags.Flag;
+import com.github.moribund.objects.playable.PlayableCharacter;
 import lombok.val;
 
 abstract class MovementFlag implements Flag {

@@ -6,8 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteContainer;
-import com.github.moribund.objects.Flaggable;
-import com.github.moribund.objects.PlayableCharacter;
+import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.Flaggable;
+import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
@@ -104,7 +105,7 @@ class GameScreen implements Screen {
     }
 
     /**
-     * Draws all the {@link com.github.moribund.objects.Drawable}'s
+     * Draws all the {@link Drawable}'s
      * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
      */
     private void drawVisibleEntities() {
