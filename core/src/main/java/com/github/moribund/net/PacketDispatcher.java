@@ -22,6 +22,13 @@ public class PacketDispatcher {
         this.client = client;
     }
 
+    /**
+     * Sends a UDP packet to the server. With the server now having a game state
+     * (see {@link com.github.moribund.net.packets.game.GameStatePacket}), UDP is
+     * now optimal as, though packets may be lost, it requires less overhead.
+     * @param packet The {@link OutgoingPacket} packet. See the documentation for {@link OutgoingPacket}s for more
+     *               details.
+     */
     public void sendUDP(OutgoingPacket packet){
         client.sendUDP(packet);
     }

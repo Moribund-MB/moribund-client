@@ -50,6 +50,10 @@ public class Player extends PlayableCharacter {
      * The currently active {@link Flag}s on the {@code Player}.
      */
     private ObjectSet<Flag> flags;
+    /**
+     * The currently active {@link Flag}s on the {@code Player} that will soon be removed. This is cleared whenever
+     * the respective {@link Player#flags} have been removed from their {@link ObjectSet}.
+     */
     private ObjectSet<Flag> flagsToRemove;
 
     /**
@@ -81,6 +85,7 @@ public class Player extends PlayableCharacter {
         flagsToRemove.add(flag);
     }
 
+    @Override
     public void processFlags() {
         flags.removeAll(flagsToRemove);
         flagsToRemove.clear();

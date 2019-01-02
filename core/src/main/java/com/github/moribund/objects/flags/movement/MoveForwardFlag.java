@@ -4,6 +4,9 @@ import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
 import com.github.moribund.objects.playable.PlayableCharacter;
 
+/**
+ * The {@link com.github.moribund.objects.flags.Flag} that signifies that a {@link Movable} is moving forward.
+ */
 public class MoveForwardFlag extends MovementFlag {
     @Override
     public void processFlag(Flaggable flaggable) {

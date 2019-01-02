@@ -64,10 +64,18 @@ class GameScreen implements Screen {
         cameraFollowPlayer();
     }
 
+    /**
+     * Draws the {@link com.github.moribund.images.SpriteFile#BACKGROUND} {@link Sprite}.
+     */
     private void drawBackground() {
         background.draw(spriteBatch);
     }
 
+    /**
+     * Follows the player using the {@link GameScreen#getCameraPositionX(PlayableCharacter)} and
+     * {@link GameScreen#getCameraPositionY(PlayableCharacter)} coordinates. The camera follows the player
+     * until they are at an extreme coordinate in the map, to which the camera is static over that area.
+     */
     private void cameraFollowPlayer() {
         val player = MoribundClient.getInstance().getPlayer();
         if (player != null) {
@@ -76,6 +84,11 @@ class GameScreen implements Screen {
         }
     }
 
+    /**
+     * Gets the optimal x-position for the camera given the {@link GameScreen#background} and {@link MoribundClient#player}.
+     * @param player The {@link MoribundClient#player}.
+     * @return The optimal x-position for the camera.
+     */
     private float getCameraPositionX(PlayableCharacter player) {
         val playerX = player.getX();
         val balancingConstant = 400;
@@ -90,6 +103,11 @@ class GameScreen implements Screen {
         return playerX;
     }
 
+    /**
+     * Gets the optimal y-position for the camera given the {@link GameScreen#background} and {@link MoribundClient#player}.
+     * @param player The {@link MoribundClient#player}.
+     * @return The optimal y-position for the camera.
+     */
     private float getCameraPositionY(PlayableCharacter player) {
         val playerY = player.getY();
         val balancingConstant = 240;

@@ -13,9 +13,19 @@ public final class DrawNewPlayerPacket implements IncomingPacket {
      * The {@link Player}'s unique ID.
      */
     private int playerId;
+    /**
+     * The x location of the new player.
+     */
     private float x;
+    /**
+     * The y location of the new player.
+     */
     private float y;
+    /**
+     * The angle of rotation of the new player.
+     */
     private float rotation;
+
     /**
      * A private constructor to ensure the client cannot unexpectedly send this
      * request to the server.

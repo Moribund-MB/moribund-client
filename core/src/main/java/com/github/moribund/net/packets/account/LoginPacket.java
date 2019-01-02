@@ -22,6 +22,10 @@ public final class LoginPacket implements IncomingPacket {
      * game currently so that they may be rendered to this player logging in.
      */
     private ObjectList<Pair<Integer, Pair<Float, Float>>> playerLocations;
+    /**
+     * The rotations of all the {@link Player}s in the
+     * game currently so that they may be rendered to this player logging in.
+     */
     private ObjectList<Pair<Integer, Float>> playerRotations;
 
     /**

@@ -1,13 +1,12 @@
 package com.github.moribund.net.packets.key;
 
 import com.github.moribund.net.packets.OutgoingPacket;
-import com.github.moribund.objects.playable.Player;
 import lombok.Value;
 
 /**
- * Sends a packet to the server to allow for client-server latency of
- * the {@link com.badlogic.gdx.Input.Keys} value pressed by the
- * {@link Player} that owns this client.
+ * Sends a packet to the server as soon as a key is pressed. Key sending is
+ * synchronous, meaning that it is sent to the server as soon as it happens,
+ * not in accordance to the 100 MS game state.
  */
 @Value
 public class KeyPressedPacket implements OutgoingPacket {

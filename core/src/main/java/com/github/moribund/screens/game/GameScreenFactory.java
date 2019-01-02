@@ -10,6 +10,9 @@ import com.github.moribund.images.SpriteFile;
 import com.github.moribund.screens.ScreenFactory;
 import lombok.val;
 
+/**
+ * A factory that creates a {@link GameScreen} and its dependencies.
+ */
 public class GameScreenFactory implements ScreenFactory {
     @Override
     public Screen createScreen() {
@@ -19,6 +22,10 @@ public class GameScreenFactory implements ScreenFactory {
         return new GameScreen(spriteBatch, camera, backgroundSprite);
     }
 
+    /**
+     * Creates a singular instance of the {@link SpriteFile#BACKGROUND} sprite.
+     * @return The background sprite created.
+     */
     private Sprite createBackgroundSprite() {
         val backgroundSprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.BACKGROUND));
         backgroundSprite.setPosition(-(backgroundSprite.getWidth() / 2), -(backgroundSprite.getHeight() / 2));
