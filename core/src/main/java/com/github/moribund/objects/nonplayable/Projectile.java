@@ -7,6 +7,7 @@ import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
 import com.github.moribund.objects.flags.Flag;
+import com.github.moribund.objects.flags.FlagConstants;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import lombok.val;
@@ -28,6 +29,7 @@ public class Projectile implements Movable, Drawable, Flaggable {
         this.rotationSpeed = rotationSpeed;
         this.movingSpeed = movingSpeed;
         flags = new ObjectArraySet<>();
+        flags.add(FlagConstants.MOVE_FORWARD_FLAG);
         sprite.setX(startingX);
         sprite.setY(startingY);
     }
