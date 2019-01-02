@@ -14,10 +14,10 @@ import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedResponsePacket;
 import com.github.moribund.net.packets.movement.LocationPacket;
 import com.github.moribund.net.packets.movement.RotationPacket;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * The {@code NetworkBootstrapper} class is responsible for giving the
@@ -75,7 +75,7 @@ public class NetworkBootstrapper {
         kryo.register(DrawNewPlayerPacket.class);
         kryo.register(LoginPacket.class);
         kryo.register(LoginRequestPacket.class);
-        kryo.register(ArrayList.class, new JavaSerializer());
+        kryo.register(ObjectList.class, new JavaSerializer());
         kryo.register(Pair.class, new JavaSerializer());
         kryo.register(Integer.class, new JavaSerializer());
         kryo.register(KeyPressedPacket.class);

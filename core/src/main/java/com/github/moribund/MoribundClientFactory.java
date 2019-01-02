@@ -7,10 +7,10 @@ import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.title.TitleScreenFactory;
-import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.AbstractObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
 /**
@@ -32,11 +32,11 @@ class MoribundClientFactory {
         return new MoribundClient(players, drawables, flaggables, networkBootstrapper, packetDispatcher, titleScreenFactory);
     }
 
-    private AbstractObjectList<Flaggable> createFlaggablesList() {
+    private ObjectList<Flaggable> createFlaggablesList() {
         return new ObjectArrayList<>();
     }
 
-    private AbstractObjectList<Drawable> createDrawablesList() {
+    private ObjectList<Drawable> createDrawablesList() {
         return new ObjectArrayList<>();
     }
 
@@ -69,7 +69,7 @@ class MoribundClientFactory {
      * Creates an empty map of all the players in the game.
      * @return The newly made empty map of players.
      */
-    private AbstractInt2ObjectMap<PlayableCharacter> createPlayersMap() {
+    private Int2ObjectMap<PlayableCharacter> createPlayersMap() {
         return new Int2ObjectOpenHashMap<>();
     }
 }

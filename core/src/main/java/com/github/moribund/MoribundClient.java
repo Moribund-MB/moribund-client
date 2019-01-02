@@ -10,8 +10,8 @@ import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.screens.ScreenFactory;
-import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
-import it.unimi.dsi.fastutil.objects.AbstractObjectList;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
@@ -30,11 +30,11 @@ public class MoribundClient extends Game {
      * All the {@link PlayableCharacter}s in the game.
      */
     @Getter
-    private final AbstractInt2ObjectMap<PlayableCharacter> players;
+    private final Int2ObjectMap<PlayableCharacter> players;
     @Getter
-    private final AbstractObjectList<Drawable> drawables;
+    private final ObjectList<Drawable> drawables;
     @Getter
-    private final AbstractObjectList<Flaggable> flaggables;
+    private final ObjectList<Flaggable> flaggables;
     /**
      * The factory to make the title screen.
      */
@@ -60,9 +60,9 @@ public class MoribundClient extends Game {
      * @param packetDispatcher The packet dispatcher to send the server packets.
      * @param titleScreenFactory The screen factory to create the title screen.
      */
-    MoribundClient(AbstractInt2ObjectMap<PlayableCharacter> players,
-                           AbstractObjectList<Drawable> drawables,
-                           AbstractObjectList<Flaggable> flaggables,
+    MoribundClient(Int2ObjectMap<PlayableCharacter> players,
+                           ObjectList<Drawable> drawables,
+                           ObjectList<Flaggable> flaggables,
                            NetworkBootstrapper networkBootstrapper,
                            PacketDispatcher packetDispatcher,
                            ScreenFactory titleScreenFactory) {

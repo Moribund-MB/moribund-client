@@ -3,11 +3,10 @@ package com.github.moribund.net.packets.account;
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.objects.playable.Player;
 import com.github.moribund.utils.PlayerUtils;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
 import lombok.Getter;
 import lombok.val;
-
-import java.util.List;
 
 /**
  * The response from the server that a {@link Player}
@@ -25,9 +24,9 @@ public class LoginPacket implements IncomingPacket {
      * game currently so that they may be rendered to this player logging in.
      */
     @Getter
-    private List<Pair<Integer, Pair<Float, Float>>> playerLocations;
+    private ObjectList<Pair<Integer, Pair<Float, Float>>> playerLocations;
     @Getter
-    private List<Pair<Integer, Float>> playerRotations;
+    private ObjectList<Pair<Integer, Float>> playerRotations;
 
     /**
      * A private constructor to ensure the client cannot unexpectedly send this

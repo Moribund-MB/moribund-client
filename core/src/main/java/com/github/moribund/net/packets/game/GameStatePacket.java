@@ -3,6 +3,7 @@ package com.github.moribund.net.packets.game;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.objects.playable.PlayableCharacter;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
 import lombok.Getter;
 import lombok.val;
@@ -12,9 +13,9 @@ import java.util.function.BiConsumer;
 
 public class GameStatePacket implements IncomingPacket {
     @Getter
-    private List<Pair<Integer, Pair<Float, Float>>> playerLocations;
+    private ObjectList<Pair<Integer, Pair<Float, Float>>> playerLocations;
     @Getter
-    private List<Pair<Integer, Float>> playerRotations;
+    private ObjectList<Pair<Integer, Float>> playerRotations;
 
     private GameStatePacket() { }
 

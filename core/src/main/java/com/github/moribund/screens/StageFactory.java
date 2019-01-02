@@ -8,18 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
-import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
 public class StageFactory {
 
-    public Stage createStage(BiConsumer<ArrayList<Button>, TextButton.TextButtonStyle> createButtons) {
+    public Stage createStage(BiConsumer<ObjectList<Button>, TextButton.TextButtonStyle> createButtons) {
         val stage = new Stage();
         val skin = createSkin();
         val textButtonStyle = createTextButtonStyle(skin);
-        val buttonContainer = new ArrayList<Button>();
+        val buttonContainer = new ObjectArrayList<Button>();
 
         createButtons.accept(buttonContainer, textButtonStyle);
 
@@ -36,7 +37,7 @@ public class StageFactory {
         return skin;
     }
 
-    private Table createMenuTable(ArrayList<Button> buttonContainer) {
+    private Table createMenuTable(ObjectList<Button> buttonContainer) {
         val menuTable = new Table();
 
         for (Button button : buttonContainer) {

@@ -4,7 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
-import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 
 /**
  * The {@code PlayableCharacter} interface is a template
@@ -32,7 +32,7 @@ public abstract class PlayableCharacter implements Flaggable, Drawable, Movable,
      * {@link com.badlogic.gdx.Input.Keys} value pressed.
      * @return The key binds defined by {@link PlayableCharacter#bindKeys()}.
      */
-    public abstract AbstractInt2ObjectMap<PlayerAction> getKeyBinds();
+    public abstract Int2ObjectMap<PlayerAction> getKeyBinds();
 
     /**
      * Handles the key being pressed by a player after it has gone through

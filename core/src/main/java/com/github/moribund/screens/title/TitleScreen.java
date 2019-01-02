@@ -15,9 +15,9 @@ import com.github.moribund.net.packets.account.LoginRequestPacket;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -130,7 +130,7 @@ public class TitleScreen implements Screen {
         return stage;
     }
 
-    private void createButtons(ArrayList<Button> buttons, TextButton.TextButtonStyle textButtonStyle) {
+    private void createButtons(ObjectList<Button> buttons, TextButton.TextButtonStyle textButtonStyle) {
         val findMatchText = "Find Match";
         val settingsText = "Settings";
         val privateMatchText = "Private Match";
