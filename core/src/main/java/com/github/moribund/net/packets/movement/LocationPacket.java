@@ -3,7 +3,6 @@ package com.github.moribund.net.packets.movement;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.net.packets.OutgoingPacket;
-import lombok.Getter;
 import lombok.val;
 
 /**
@@ -11,28 +10,25 @@ import lombok.val;
  * This is an easy-to-manipulate packet should the client be decompiled
  * and abused, however.
  */
-public class LocationPacket implements IncomingPacket, OutgoingPacket {
+public final class LocationPacket implements IncomingPacket, OutgoingPacket {
     /**
      * The player ID of the player that is at the given tile.
      */
-    @Getter
-    private int playerId;
-    @Getter
-    private float x;
-    @Getter
-    private float y;
+    private final int playerId;
+    private final float x;
+    private final float y;
 
-    /**
-     * The constructor to pass the player at the given tile.
-     * @param playerId The player at the given tile.
-     */
     public LocationPacket(int playerId, float x, float y) {
         this.playerId = playerId;
         this.x = x;
         this.y = y;
     }
 
-    public LocationPacket() { }
+    LocationPacket() {
+        playerId = -1;
+        x = 0;
+        y = 0;
+    }
 
     @Override
     public void process() {

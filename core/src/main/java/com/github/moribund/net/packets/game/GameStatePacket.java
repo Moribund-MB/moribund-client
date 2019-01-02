@@ -5,16 +5,14 @@ import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.objects.playable.PlayableCharacter;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
-import lombok.Getter;
 import lombok.val;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class GameStatePacket implements IncomingPacket {
-    @Getter
+public final class GameStatePacket implements IncomingPacket {
+
     private ObjectList<Pair<Integer, Pair<Float, Float>>> playerLocations;
-    @Getter
     private ObjectList<Pair<Integer, Float>> playerRotations;
 
     private GameStatePacket() { }

@@ -2,28 +2,21 @@ package com.github.moribund.net.packets.key;
 
 import com.github.moribund.net.packets.OutgoingPacket;
 import com.github.moribund.objects.playable.Player;
+import lombok.Value;
 
 /**
  * Sends a packet to the server to allow for client-server latency of
  * the {@link com.badlogic.gdx.Input.Keys} value released by the
  * {@link Player} that owns this client.
  */
+@Value
 public class KeyUnpressedPacket implements OutgoingPacket {
     /**
      * The unique player ID of the player that owns this client.
      */
-    private final int playerId;
+    private int playerId;
     /**
      * The {@link com.badlogic.gdx.Input.Keys} value released.
      */
-    private final int keyUnpressed;
-    /**
-     * The constructor to instantiate the above values.
-     * @param playerId The unique player ID.
-     * @param keyUnpressed The {@link com.badlogic.gdx.Input.Keys} value released.
-     */
-    public KeyUnpressedPacket(int playerId, int keyUnpressed) {
-        this.playerId = playerId;
-        this.keyUnpressed = keyUnpressed;
-    }
+    private int keyUnpressed;
 }

@@ -3,24 +3,24 @@ package com.github.moribund.net.packets.movement;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.net.packets.OutgoingPacket;
-import lombok.Getter;
 import lombok.val;
 
-public class RotationPacket implements IncomingPacket, OutgoingPacket {
+public final class RotationPacket implements IncomingPacket, OutgoingPacket {
     /**
      * The player ID of the player that is finished rotating.
      */
-    @Getter
-    private int playerId;
-    @Getter
-    private float angle;
+    private final int playerId;
+    private final float angle;
 
     public RotationPacket(int playerId, float angle) {
         this.playerId = playerId;
         this.angle = angle;
     }
 
-    public RotationPacket() { }
+    RotationPacket() {
+        playerId = -1;
+        angle = 0;
+    }
 
     @Override
     public void process() {
