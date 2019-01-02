@@ -12,6 +12,7 @@ import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
+import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
@@ -146,8 +147,13 @@ public class Player extends PlayableCharacter {
         keyBinds.put(Input.Keys.T, new PlayerAction() {
             @Override
             public void keyPressed() {
-                System.out.println("getX() = " + getX());
-                System.out.println("getY() = " + getY());
+                val projectile = Projectile.builder()
+                        .withSprite(SpriteFile.DUMMY_PLAYER)
+                        .withMovementSpeed(10)
+                        .withAngle(getRotation())
+                        .atXY(getX(), getY())
+                        .create();
+                Projectile.launchProjectile(projectile);
             }
 
             @Override

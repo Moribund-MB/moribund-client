@@ -1,8 +1,9 @@
-package com.github.moribund.objects.nonplayable;
+package com.github.moribund.objects.nonplayable.projectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.github.moribund.MoribundClient;
 import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
@@ -22,16 +23,26 @@ public class Projectile implements Movable, Drawable, Flaggable {
     private final ObjectSet<Flag> flags;
     private final Sprite sprite;
     private final float rotationSpeed;
-    private final float movingSpeed;
+    private final float movementSpeed;
 
-    public Projectile(Sprite sprite, float startingX, float startingY, float rotationSpeed, float movingSpeed) {
+    Projectile(Sprite sprite, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed) {
         this.sprite = sprite;
         this.rotationSpeed = rotationSpeed;
-        this.movingSpeed = movingSpeed;
+        this.movementSpeed = movementSpeed;
         flags = new ObjectArraySet<>();
         flags.add(FlagConstants.MOVE_FORWARD_FLAG);
         sprite.setX(startingX);
         sprite.setY(startingY);
+        sprite.setRotation(startingAngle);
+    }
+
+    public static void launchProjectile(Projectile projectile) {
+        MoribundClient.getInstance().getFlaggables().add(projectile);
+        MoribundClient.getInstance().getDrawables().add(projectile);
+    }
+
+    public static ProjectileBuilder builder() {
+        return new ProjectileBuilder();
     }
 
     @Override
@@ -87,8 +98,8 @@ public class Projectile implements Movable, Drawable, Flaggable {
     @Override
     public void moveForward() {
         val angle = sprite.getRotation();
-        val xVelocity = movingSpeed * MathUtils.cosDeg(angle);
-        val yVelocity = movingSpeed * MathUtils.sinDeg(angle);
+        val xVelocity = movementSpeed * MathUtils.cosDeg(angle);
+        val yVelocity = movementSpeed * MathUtils.sinDeg(angle);
 
         sprite.translate(xVelocity, yVelocity);
     }
@@ -96,8 +107,8 @@ public class Projectile implements Movable, Drawable, Flaggable {
     @Override
     public void moveBack() {
         val angle = sprite.getRotation();
-        val xVelocity = -movingSpeed * MathUtils.cosDeg(angle);
-        val yVelocity = -movingSpeed * MathUtils.sinDeg(angle);
+        val xVelocity = -movementSpeed * MathUtils.cosDeg(angle);
+        val yVelocity = -movementSpeed * MathUtils.sinDeg(angle);
 
         sprite.translate(xVelocity, yVelocity);
     }
