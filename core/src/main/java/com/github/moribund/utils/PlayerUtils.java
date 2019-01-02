@@ -6,13 +6,25 @@ import com.github.moribund.objects.playable.Player;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 
+/**
+ * The utility methods that aid in the handling of players.
+ */
 @UtilityClass
 public class PlayerUtils {
+    /**
+     * Rotates a player.
+     * @param playerId The player ID of the rotating player.
+     * @param rotation The angle to rotate about its current angle.
+     */
     public void rotatePlayer(int playerId, float rotation) {
         val playersMap = MoribundClient.getInstance().getPlayers();
         playersMap.get(playerId).setRotation(rotation);
     }
 
+    /**
+     * Sets the {@link MoribundClient#player} to a given player ID.
+     * @param playerId The ID of the {@link MoribundClient#player} controlling this {@link MoribundClient}.
+     */
     public void setClientPlayer(int playerId) {
         val player = MoribundClient.getInstance().getPlayers().get(playerId);
         MoribundClient.getInstance().setPlayer(player);
@@ -38,6 +50,10 @@ public class PlayerUtils {
         player.setY(y);
     }
 
+    /**
+     * Deletes a player from the {@link MoribundClient#players} map.
+     * @param playerId The player ID (or key) of the player to delete.
+     */
     public void deletePlayer(int playerId) {
         val client = MoribundClient.getInstance();
         val player = client.getPlayers().get(playerId);
