@@ -46,7 +46,7 @@ public class GameScreenFactory implements ScreenFactory {
      */
     private Camera createCamera() {
         val camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 1000, 700);
         return camera;
     }
 }
