@@ -1,5 +1,7 @@
 package com.github.moribund.images;
 
+import com.github.moribund.objects.nonplayable.projectile.Projectile;
+import com.github.moribund.screens.game.GameScreen;
 import lombok.Getter;
 
 /**
@@ -7,11 +9,19 @@ import lombok.Getter;
  */
 public enum SpriteFile {
     /**
-     * A dummy player character.
+     * A player character that isn't equipping any items.
      */
-    DUMMY_PLAYER("images/player.png"),
+    PLAYER("images/players/default.png"),
     /**
-     * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
+     * A player character that is equipping a bow.
+     */
+    PLAYER_WITH_BOW("images/players/player_with_bow.png"),
+    /**
+     * A {@link Projectile} sprite for arrows.
+     */
+    ARROW_PROJECTILE("images/items/projectile/arrow.png"),
+    /**
+     * The {@link GameScreen}'s background image.
      */
     BACKGROUND("images/background.png");
 

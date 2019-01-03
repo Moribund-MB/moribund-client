@@ -64,7 +64,7 @@ public class Player extends PlayableCharacter {
      */
     public Player(int playerId) {
         this.playerId = playerId;
-        sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.DUMMY_PLAYER));
+        sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.PLAYER));
         flags = new ObjectArraySet<>();
         flagsToRemove = new ObjectArraySet<>();
     }
@@ -148,11 +148,25 @@ public class Player extends PlayableCharacter {
                 flagToRemove(FlagConstants.ROTATE_LEFT_FLAG);
             }
         });
+        keyBinds.put(Input.Keys.B, new PlayerAction() {
+            @Override
+            public void keyPressed() {
+                val newSprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.PLAYER_WITH_BOW));
+                newSprite.setPosition(sprite.getX(), sprite.getY());
+                newSprite.setRotation(sprite.getRotation());
+                sprite = newSprite;
+            }
+
+            @Override
+            public void keyUnpressed() {
+
+            }
+        });
         keyBinds.put(Input.Keys.T, new PlayerAction() {
             @Override
             public void keyPressed() {
                 val projectile = Projectile.builder()
-                        .withSprite(SpriteFile.DUMMY_PLAYER)
+                        .withSprite(SpriteFile.ARROW_PROJECTILE)
                         .withMovementSpeed(10)
                         .withAngle(getRotation())
                         .atXY(getX(), getY())
