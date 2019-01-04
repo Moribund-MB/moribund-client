@@ -1,7 +1,6 @@
 package com.github.moribund.images;
 
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
-import com.github.moribund.screens.game.GameScreen;
 import lombok.Getter;
 
 /**
@@ -21,7 +20,7 @@ public enum SpriteFile {
      */
     ARROW_PROJECTILE("images/items/projectile/arrow.png"),
     /**
-     * The {@link GameScreen}'s background image.
+     * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
      */
     BACKGROUND("images/background.png");
 
