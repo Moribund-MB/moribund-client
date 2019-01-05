@@ -1,1 +1,1 @@
-include 'desktop', 'core', 'jooq'
+include 'desktop', 'core'

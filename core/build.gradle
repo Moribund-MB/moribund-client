@@ -2,7 +2,6 @@
 sourceSets.main.java.srcDirs += [ 'src/main/java' ]
 
 dependencies {
-  compile project(':jooq')
   compile "com.badlogicgames.gdx:gdx:$gdxVersion"
   compile group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
   compileOnly 'org.projectlombok:lombok:1.18.4'
