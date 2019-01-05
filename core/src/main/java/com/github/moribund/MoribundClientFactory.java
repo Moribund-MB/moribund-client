@@ -4,6 +4,7 @@ import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
 import com.github.moribund.screens.ScreenFactory;
+import com.github.moribund.screens.login.LoginScreenFactory;
 import com.github.moribund.screens.title.TitleScreenFactory;
 import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -22,8 +23,16 @@ class MoribundClientFactory {
         val players = createPlayersMap();
         val networkBootstrapper = createNetworkBootstrapper();
         val packetDispatcher = createPacketDispatcher(networkBootstrapper);
-        val titleScreenFactory = createTitleScreenFactory();
-        return new MoribundClient(players, networkBootstrapper, packetDispatcher, titleScreenFactory);
+        val screenFactory = createLoginScreenFactory();
+        return new MoribundClient(players, networkBootstrapper, packetDispatcher, screenFactory);
+    }
+
+    /**
+     * Creates the screen factory to make the login screen.
+     * @return The newly made factory.
+     */
+    private ScreenFactory createLoginScreenFactory() {
+        return new LoginScreenFactory();
     }
 
     /**
