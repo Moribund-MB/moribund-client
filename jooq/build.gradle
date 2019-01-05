@@ -1,0 +1,63 @@
+import groovy.xml.MarkupBuilder
+import org.jooq.codegen.GenerationTool
+
+// Configure the Java plugin and the dependencies
+// ----------------------------------------------
+apply plugin: 'java'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+sourceSets.main.java.srcDirs += [ 'src/main/java' ]
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.jooq:jooq:3.11.9'
+    runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+
+    testCompile 'junit:junit:4.11'
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jooq:jooq-codegen:3.11.9'
+        classpath group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+
+    }
+}
+
+// Use your favourite XML builder to construct the code generation configuration file
+// ----------------------------------------------------------------------------------
+task generate << {
+    def writer = new StringWriter()
+    def xml = new MarkupBuilder(writer)
+            .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd') {
+        jdbc() {
+            driver('org.postgresql.Driver')
+            url('jdbc:postgresql://localhost:5432/moribund')
+            user('moribund-user')
+            password('moribund-pass')
+        }
+        generator() {
+            database() {
+            }
+
+            generate([:]) {
+                pojos true
+                daos true
+            }
+            target() {
+                packageName('com.github.moribund.jooq')
+                directory('jooq/src/main/java')
+            }
+        }
+    }
+
+    GenerationTool.generate(writer.toString())
+}
