@@ -1,7 +1,7 @@
 package com.github.moribund.net;
 
 import com.esotericsoftware.kryonet.Client;
-import com.github.moribund.net.packets.Packet;
+import com.github.moribund.net.packets.OutgoingPacket;
 
 /**
  * The {@code PacketDispatcher} class is responsible for {@link Client}
@@ -22,7 +22,14 @@ public class PacketDispatcher {
         this.client = client;
     }
 
-    public void sendUDP(Packet packet){
+    /**
+     * Sends a UDP packet to the server. With the server now having a game state
+     * (see {@link com.github.moribund.net.packets.game.GameStatePacket}), UDP is
+     * now optimal as, though packets may be lost, it requires less overhead.
+     * @param packet The {@link OutgoingPacket} packet. See the documentation for {@link OutgoingPacket}s for more
+     *               details.
+     */
+    public void sendUDP(OutgoingPacket packet){
         client.sendUDP(packet);
     }
 }

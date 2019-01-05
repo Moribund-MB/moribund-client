@@ -16,7 +16,7 @@ public enum MusicFile {
      * A static, final singleton for the {@link MusicFile#values()} method so
      * that it does not constantly build a new array of values.
      */
-    public static final MusicFile[] VALUES = values();
+    static final MusicFile[] VALUES = values();
 
     /**
      * The location of the file related to this particular value.

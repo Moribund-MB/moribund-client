@@ -1,13 +1,17 @@
 package com.github.moribund;
 
-import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
+import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.Flaggable;
+import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.login.LoginScreenFactory;
 import com.github.moribund.screens.title.TitleScreenFactory;
-import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
 /**
@@ -21,8 +25,20 @@ class MoribundClientFactory {
      */
     MoribundClient createMoribundClient() {
         val players = createPlayersMap();
+        val drawables = createDrawablesList();
+        val flaggables = createFlaggablesList();
         val networkBootstrapper = createNetworkBootstrapper();
         val packetDispatcher = createPacketDispatcher(networkBootstrapper);
+        val screenFactory = createLoginScreenFactory();
+        return new MoribundClient(players, drawables, flaggables, networkBootstrapper, packetDispatcher, screenFactory);
+    }
+
+    private ObjectList<Flaggable> createFlaggablesList() {
+        return new ObjectArrayList<>();
+    }
+
+    private ObjectList<Drawable> createDrawablesList() {
+        return new ObjectArrayList<>();
         val screenFactory = createLoginScreenFactory();
         return new MoribundClient(players, networkBootstrapper, packetDispatcher, screenFactory);
     }
@@ -64,7 +80,7 @@ class MoribundClientFactory {
      * Creates an empty map of all the players in the game.
      * @return The newly made empty map of players.
      */
-    private AbstractInt2ObjectMap<PlayableCharacter> createPlayersMap() {
+    private Int2ObjectMap<PlayableCharacter> createPlayersMap() {
         return new Int2ObjectOpenHashMap<>();
     }
 }

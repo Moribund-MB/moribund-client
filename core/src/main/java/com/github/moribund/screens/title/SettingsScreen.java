@@ -12,12 +12,12 @@ import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
-public class SettingsScreen implements Screen {
+class SettingsScreen implements Screen {
 
     private final TitleScreenFactory titleScreenFactory;
     private final MusicPlayer musicPlayer;
@@ -101,7 +101,7 @@ public class SettingsScreen implements Screen {
         return stage;
     }
 
-    private void createButtons(ArrayList<Actor> buttons) {
+    private void createButtons(ObjectList<Actor> buttons) {
         val textButtonStyle = StyleUtils.getTextButtonStyle();
         val backButtonText = "Back";
 

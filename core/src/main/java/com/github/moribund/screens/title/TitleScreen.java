@@ -10,14 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
-import com.github.moribund.net.packets.LoginRequestPacket;
+import com.github.moribund.net.packets.account.LoginRequestPacket;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import com.github.moribund.utils.StyleUtils;
 import lombok.val;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -154,7 +154,7 @@ public class TitleScreen implements Screen {
         return stage;
     }
 
-    private void createButtons(ArrayList<Actor> buttons) {
+    private void createButtons(ObjectList<Actor> buttons) {
         val textButtonStyle = StyleUtils.getTextButtonStyle();
 
         val findMatchText = "Find Match";

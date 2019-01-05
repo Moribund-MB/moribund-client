@@ -1,5 +1,6 @@
 package com.github.moribund.images;
 
+import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import lombok.Getter;
 
 /**
@@ -7,15 +8,27 @@ import lombok.Getter;
  */
 public enum SpriteFile {
     /**
-     * A dummy player character.
+     * A player character that isn't equipping any items.
      */
-    DUMMY_PLAYER("images/player.png");
+    PLAYER("images/players/default.png"),
+    /**
+     * A player character that is equipping a bow.
+     */
+    PLAYER_WITH_BOW("images/players/player_with_bow.png"),
+    /**
+     * A {@link Projectile} sprite for arrows.
+     */
+    ARROW_PROJECTILE("images/items/projectile/arrow.png"),
+    /**
+     * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
+     */
+    BACKGROUND("images/background.png");
 
     /**
      * A static, final singleton for the {@link SpriteFile#values()} method so
      * that it does not constantly build a new array of values.
      */
-    public static final SpriteFile[] VALUES = values();
+    static final SpriteFile[] VALUES = values();
 
     /**
      * The location of the file related to this particular value.

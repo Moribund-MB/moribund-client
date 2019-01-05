@@ -1,10 +1,9 @@
 package com.github.moribund.audio;
 
 import com.badlogic.gdx.audio.Music;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The {@code MusicPlayer} class plays {@link MusicFile}s using the
@@ -15,13 +14,13 @@ public class MusicPlayer {
     /**
      * The list of {@link Music} playing to keep track of them for disposal.
      */
-    private List<Music> musicPlaying;
+    private ObjectList<Music> musicPlaying;
 
     /**
      * The constructor to make a new music player dependency.
      */
     public MusicPlayer() {
-        musicPlaying = new ArrayList<>();
+        musicPlaying = new ObjectArrayList<>();
     }
 
     /**

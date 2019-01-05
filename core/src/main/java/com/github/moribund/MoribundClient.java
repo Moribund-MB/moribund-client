@@ -3,12 +3,15 @@ package com.github.moribund;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicContainer;
-import com.github.moribund.entity.PlayableCharacter;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
+import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.Flaggable;
+import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.screens.ScreenFactory;
-import it.unimi.dsi.fastutil.ints.AbstractInt2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
@@ -27,7 +30,11 @@ public class MoribundClient extends Game {
      * All the {@link PlayableCharacter}s in the game.
      */
     @Getter
-    private final AbstractInt2ObjectMap<PlayableCharacter> players;
+    private final Int2ObjectMap<PlayableCharacter> players;
+    @Getter
+    private final ObjectList<Drawable> drawables;
+    @Getter
+    private final ObjectList<Flaggable> flaggables;
     /**
      * The factory to make the title screen.
      */
@@ -53,11 +60,15 @@ public class MoribundClient extends Game {
      * @param packetDispatcher The packet dispatcher to send the server packets.
      * @param titleScreenFactory The screen factory to create the title screen.
      */
-    MoribundClient(AbstractInt2ObjectMap<PlayableCharacter> players,
+    MoribundClient(Int2ObjectMap<PlayableCharacter> players,
+                           ObjectList<Drawable> drawables,
+                           ObjectList<Flaggable> flaggables,
                            NetworkBootstrapper networkBootstrapper,
                            PacketDispatcher packetDispatcher,
                            ScreenFactory titleScreenFactory) {
         this.players = players;
+        this.drawables = drawables;
+        this.flaggables = flaggables;
         this.networkBootstrapper = networkBootstrapper;
         this.packetDispatcher = packetDispatcher;
         this.titleScreenFactory = titleScreenFactory;
@@ -103,15 +114,6 @@ public class MoribundClient extends Game {
      */
     private void connectNetworking() {
         networkBootstrapper.connect();
-    }
-
-    /**
-     * Cleans up all the client for optimal performance after the termination
-     * of the game.
-     */
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     /**

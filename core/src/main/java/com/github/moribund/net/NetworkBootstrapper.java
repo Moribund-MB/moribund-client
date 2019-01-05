@@ -3,11 +3,21 @@ package com.github.moribund.net;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryonet.Client;
-import com.github.moribund.net.packets.*;
+import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
+import com.github.moribund.net.packets.account.LoginPacket;
+import com.github.moribund.net.packets.account.LoginRequestPacket;
+import com.github.moribund.net.packets.account.LogoutPacket;
+import com.github.moribund.net.packets.game.GameStatePacket;
+import com.github.moribund.net.packets.key.KeyPressedPacket;
+import com.github.moribund.net.packets.key.KeyPressedResponsePacket;
+import com.github.moribund.net.packets.key.KeyUnpressedPacket;
+import com.github.moribund.net.packets.key.KeyUnpressedResponsePacket;
+import com.github.moribund.net.packets.movement.LocationPacket;
+import com.github.moribund.net.packets.movement.RotationPacket;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * The {@code NetworkBootstrapper} class is responsible for giving the
@@ -45,9 +55,7 @@ public class NetworkBootstrapper {
      * {@link com.esotericsoftware.kryonet.Connection}.
      */
     public void connect() {
-        client.addListener(new MovementListener());
-        client.addListener(new AccountListener());
-        client.addListener(new KeyListener());
+        client.addListener(new PacketListener());
         registerPackets(client.getKryo());
 
         client.start();
@@ -67,7 +75,7 @@ public class NetworkBootstrapper {
         kryo.register(DrawNewPlayerPacket.class);
         kryo.register(LoginPacket.class);
         kryo.register(LoginRequestPacket.class);
-        kryo.register(ArrayList.class, new JavaSerializer());
+        kryo.register(ObjectList.class, new JavaSerializer());
         kryo.register(Pair.class, new JavaSerializer());
         kryo.register(Integer.class, new JavaSerializer());
         kryo.register(KeyPressedPacket.class);
@@ -76,6 +84,8 @@ public class NetworkBootstrapper {
         kryo.register(KeyUnpressedResponsePacket.class);
         kryo.register(LocationPacket.class);
         kryo.register(RotationPacket.class);
+        kryo.register(GameStatePacket.class);
+        kryo.register(LogoutPacket.class);
     }
 
     /**

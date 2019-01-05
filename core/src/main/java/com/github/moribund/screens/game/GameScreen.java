@@ -2,16 +2,20 @@ package com.github.moribund.screens.game;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteContainer;
+import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.Flaggable;
+import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
 /**
  * The {@code GameScreen} is the screen of the main game.
  */
-public class GameScreen implements Screen {
+class GameScreen implements Screen {
 
     /**
      * The sprite batch to display sprites.
@@ -21,15 +25,20 @@ public class GameScreen implements Screen {
      * The camera to show the game on.
      */
     private final Camera camera;
+    /**
+     * The sprite that represents the background image.
+     */
+    private final Sprite background;
 
     /**
      * Constructor that provides the {@code GameScreen} its dependencies.
      * @param spriteBatch The sprite batch to display sprites.
      * @param camera The camera to show the game on.
      */
-    GameScreen(SpriteBatch spriteBatch, Camera camera) {
+    GameScreen(SpriteBatch spriteBatch, Camera camera, Sprite background) {
         this.spriteBatch = spriteBatch;
         this.camera = camera;
+        this.background = background;
     }
 
     /**
@@ -51,37 +60,81 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         processFlags();
         GLUtils.clearGL();
-        drawSpriteBatch(this::drawVisibleEntities);
+        drawSpriteBatch(this::drawBackground, this::drawVisibleEntities);
         cameraFollowPlayer();
     }
 
+    /**
+     * Draws the {@link com.github.moribund.images.SpriteFile#BACKGROUND} {@link Sprite}.
+     */
+    private void drawBackground() {
+        background.draw(spriteBatch);
+    }
+
+    /**
+     * Follows the player using the {@link GameScreen#getCameraPositionX(PlayableCharacter)} and
+     * {@link GameScreen#getCameraPositionY(PlayableCharacter)} coordinates. The camera follows the player
+     * until they are at an extreme coordinate in the map, to which the camera is static over that area.
+     */
     private void cameraFollowPlayer() {
         val player = MoribundClient.getInstance().getPlayer();
         if (player != null) {
-            camera.position.set(player.getX(), player.getY(), 0);
+            camera.position.set(getCameraPositionX(player), getCameraPositionY(player), 0);
             camera.update();
         }
     }
 
     /**
-     * Draws all the {@link com.github.moribund.entity.PlayableCharacter}'s
-     * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
+     * Gets the optimal x-position for the camera given the {@link GameScreen#background} and {@link MoribundClient#player}.
+     * @param player The {@link MoribundClient#player}.
+     * @return The optimal x-position for the camera.
      */
-    private void drawVisibleEntities() {
-        MoribundClient.getInstance().getPlayers().forEach((playerId, player) -> player.draw(spriteBatch));
+    private float getCameraPositionX(PlayableCharacter player) {
+        val playerX = player.getX();
+        val balancingConstant = 400;
+        val furthestLeftBound = -(background.getWidth() / 2) + balancingConstant;
+        val furthestRightBound = background.getWidth() / 2 - balancingConstant;
+
+        if (playerX >= furthestRightBound) {
+            return furthestRightBound;
+        } else if (playerX <= furthestLeftBound) {
+            return furthestLeftBound;
+        }
+        return playerX;
     }
 
     /**
-     * Processes all the {@link com.github.moribund.entity.Flag}s flagged on
-     * the {@link com.github.moribund.entity.PlayableCharacter}s of the game.
+     * Gets the optimal y-position for the camera given the {@link GameScreen#background} and {@link MoribundClient#player}.
+     * @param player The {@link MoribundClient#player}.
+     * @return The optimal y-position for the camera.
+     */
+    private float getCameraPositionY(PlayableCharacter player) {
+        val playerY = player.getY();
+        val balancingConstant = 240;
+        val furthestLowerBound = -(background.getHeight() / 2) + balancingConstant;
+        val furthestUpperBound = background.getHeight() / 2 - balancingConstant;
+
+        if (playerY >= furthestUpperBound) {
+            return furthestUpperBound;
+        } else if (playerY <= furthestLowerBound) {
+            return furthestLowerBound;
+        }
+        return playerY;
+    }
+
+    /**
+     * Draws all the {@link Drawable}'s
+     * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
+     */
+    private void drawVisibleEntities() {
+        MoribundClient.getInstance().getDrawables().forEach(drawable -> drawable.draw(spriteBatch));
+    }
+
+    /**
+     * Processes all flaggables.
      */
     private void processFlags() {
-        val players = MoribundClient.getInstance().getPlayers().values();
-        players.forEach(player -> {
-            player.getFlags().removeAll(player.getFlagsToRemove());
-            player.getFlagsToRemove().clear();
-            player.getFlags().forEach(flag -> flag.applyToPlayer(player));
-        });
+        MoribundClient.getInstance().getFlaggables().forEach(Flaggable::processFlags);
     }
 
     /**
@@ -93,9 +146,12 @@ public class GameScreen implements Screen {
      *                {@link SpriteContainer} to draw them) executed just before the
      *                {@link SpriteBatch} ends.
      */
-    private void drawSpriteBatch(Runnable drawing) {
+    private void drawSpriteBatch(Runnable background, Runnable drawing) {
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
+        spriteBatch.disableBlending();
+        background.run();
+        spriteBatch.enableBlending();
         drawing.run();
         spriteBatch.end();
     }
