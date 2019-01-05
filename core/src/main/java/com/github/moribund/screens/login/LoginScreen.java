@@ -12,9 +12,9 @@ import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LoginScreen implements Screen {
@@ -43,7 +43,7 @@ public class LoginScreen implements Screen {
         return stage;
     }
 
-    private void createCredentialTextFields(ArrayList<Actor> textFields) {
+    private void createCredentialTextFields(ObjectList<Actor> textFields) {
         val textFieldStyle = StyleUtils.getTextFieldStyle();
 
         usernameTextField = new TextField("", textFieldStyle);
@@ -55,7 +55,7 @@ public class LoginScreen implements Screen {
         textFields.addAll(Arrays.asList(usernameTextField, passwordTextField));
     }
 
-    private void createButtons(ArrayList<Actor> buttons) {
+    private void createButtons(ObjectList<Actor> buttons) {
         val textButtonStyle = StyleUtils.getTextButtonStyle();
 
         loginButton = new TextButton("Login", textButtonStyle);

@@ -11,9 +11,9 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PrivateMatchOptionScreen implements Screen {
@@ -100,7 +100,7 @@ public class PrivateMatchOptionScreen implements Screen {
         return stage;
     }
 
-    private void createButtons(ArrayList<Actor> buttons) {
+    private void createButtons(ObjectList<Actor> buttons) {
         val textButtonStyle = StyleUtils.getTextButtonStyle();
         val backButtonText = "Back";
 
@@ -108,7 +108,7 @@ public class PrivateMatchOptionScreen implements Screen {
         buttons.addAll(Arrays.asList(backButton));
     }
 
-    private void createTextFields(ArrayList<Actor> textFields) {
+    private void createTextFields(ObjectList<Actor> textFields) {
         val textFieldStyle = StyleUtils.getTextFieldStyle();
         val privateMatchCodePrompt = "Enter Match Code Here";
 

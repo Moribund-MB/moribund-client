@@ -15,7 +15,7 @@ import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 class SettingsScreen implements Screen {
 
@@ -109,7 +109,7 @@ class SettingsScreen implements Screen {
         buttons.addAll(Arrays.asList(backButton));
     }
 
-    private void createSlider(ArrayList<Actor> sliders) {
+    private void createSlider(ObjectList<Actor> sliders) {
         val sliderStyle = StyleUtils.getSliderStyle();
 
         float audioMinimumValue = 0;

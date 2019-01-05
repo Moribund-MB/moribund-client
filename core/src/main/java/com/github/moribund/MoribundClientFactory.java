@@ -39,8 +39,6 @@ class MoribundClientFactory {
 
     private ObjectList<Drawable> createDrawablesList() {
         return new ObjectArrayList<>();
-        val screenFactory = createLoginScreenFactory();
-        return new MoribundClient(players, networkBootstrapper, packetDispatcher, screenFactory);
     }
 
     /**
