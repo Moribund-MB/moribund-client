@@ -38,7 +38,7 @@ public class MoribundClient extends Game {
     /**
      * The factory to make the title screen.
      */
-    private final ScreenFactory titleScreenFactory;
+    private final ScreenFactory screenFactory;
     /**
      * The network bootstrapper to start networking.
      */
@@ -58,20 +58,20 @@ public class MoribundClient extends Game {
      * @param players The list of players in the entire game.
      * @param networkBootstrapper The network bootstrapper to start networking.
      * @param packetDispatcher The packet dispatcher to send the server packets.
-     * @param titleScreenFactory The screen factory to create the title screen.
+     * @param screenFactory The screen factory to create the title screen.
      */
     MoribundClient(Int2ObjectMap<PlayableCharacter> players,
                            ObjectList<Drawable> drawables,
                            ObjectList<Flaggable> flaggables,
                            NetworkBootstrapper networkBootstrapper,
                            PacketDispatcher packetDispatcher,
-                           ScreenFactory titleScreenFactory) {
+                           ScreenFactory screenFactory) {
         this.players = players;
         this.drawables = drawables;
         this.flaggables = flaggables;
         this.networkBootstrapper = networkBootstrapper;
         this.packetDispatcher = packetDispatcher;
-        this.titleScreenFactory = titleScreenFactory;
+        this.screenFactory = screenFactory;
     }
 
     /**
@@ -84,7 +84,7 @@ public class MoribundClient extends Game {
         connectNetworking();
         SpriteContainer.getInstance().setup();
         MusicContainer.getInstance().setup();
-        switchToScreen(titleScreenFactory, true);
+        switchToScreen(screenFactory, true);
     }
 
     /**
