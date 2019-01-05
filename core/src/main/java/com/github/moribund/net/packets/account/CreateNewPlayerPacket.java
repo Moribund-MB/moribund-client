@@ -12,7 +12,7 @@ import lombok.val;
  * has logged in. This makes the client do instructions by this message's
  * arrival.
  */
-public final class LoginPacket implements IncomingPacket {
+public final class CreateNewPlayerPacket implements IncomingPacket {
     /**
      * The unique player ID of the one who just logged in.
      */
@@ -32,7 +32,7 @@ public final class LoginPacket implements IncomingPacket {
      * A private constructor to ensure the client cannot unexpectedly send this
      * request to the server.
      */
-    private LoginPacket() { }
+    private CreateNewPlayerPacket() { }
 
     @Override
     public void process() {

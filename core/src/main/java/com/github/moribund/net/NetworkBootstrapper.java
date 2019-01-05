@@ -3,9 +3,9 @@ package com.github.moribund.net;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryonet.Client;
+import com.github.moribund.net.packets.account.CreateNewPlayerPacket;
+import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
 import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
-import com.github.moribund.net.packets.account.LoginPacket;
-import com.github.moribund.net.packets.account.LoginRequestPacket;
 import com.github.moribund.net.packets.account.LogoutPacket;
 import com.github.moribund.net.packets.game.GameStatePacket;
 import com.github.moribund.net.packets.key.KeyPressedPacket;
@@ -73,8 +73,8 @@ public class NetworkBootstrapper {
      */
     private void registerPackets(Kryo kryo) {
         kryo.register(DrawNewPlayerPacket.class);
-        kryo.register(LoginPacket.class);
-        kryo.register(LoginRequestPacket.class);
+        kryo.register(CreateNewPlayerPacket.class);
+        kryo.register(CreateNewPlayerRequestPacket.class);
         kryo.register(ObjectList.class, new JavaSerializer());
         kryo.register(Pair.class, new JavaSerializer());
         kryo.register(Integer.class, new JavaSerializer());

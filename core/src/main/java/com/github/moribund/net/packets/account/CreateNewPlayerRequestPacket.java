@@ -7,5 +7,5 @@ import com.github.moribund.net.packets.OutgoingPacket;
  * an account, so it must register that request and follow instructions
  * to handle the player server-sided.
  */
-public final class LoginRequestPacket implements OutgoingPacket {
+public final class CreateNewPlayerRequestPacket implements OutgoingPacket {
 }
