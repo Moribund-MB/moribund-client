@@ -1,15 +1,21 @@
 package com.github.moribund.screens.login;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.screens.StageFactory;
+import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -25,7 +31,7 @@ public class LoginScreen implements Screen {
     private Button loginButton;
     private Stage stage;
 
-    public LoginScreen(MusicPlayer musicPlayer) {
+    LoginScreen(MusicPlayer musicPlayer) {
         this.musicPlayer = musicPlayer;
         stage = createStage();
     }
@@ -33,6 +39,58 @@ public class LoginScreen implements Screen {
     @Override
     public void show() {
         playTitleScreenMusic();
+        addTextFieldListeners();
+        addLoginButtonListener();
+        setActiveTextField();
+    }
+
+    private void setActiveTextField() {
+        stage.setKeyboardFocus(usernameTextField);
+    }
+
+    private void addLoginButtonListener() {
+        loginButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                login();
+            }
+        });
+    }
+
+    private void addTextFieldListeners() {
+        val tabKey = 9;
+        usernameTextField.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                switch (keycode) {
+                    case tabKey:
+                    case Input.Keys.ENTER:
+                        usernameTextField.next(false);
+                        return true;
+                }
+                return true;
+            }
+        });
+        passwordTextField.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                switch (keycode) {
+                    case Input.Keys.ENTER:
+                        login();
+                        return true;
+                    case tabKey:
+                        passwordTextField.next(true);
+                        return true;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void login() {
+        // todo remember to .trim() username
+        System.out.println("logging in with " + usernameTextField.getText() + " and " + passwordTextField.getText());
+        MoribundClient.getInstance().switchToScreen(new TitleScreenFactory(), false);
     }
 
     private Stage createStage() {
@@ -51,6 +109,9 @@ public class LoginScreen implements Screen {
 
         usernameTextField.setMessageText("Username");
         passwordTextField.setMessageText("Password");
+
+        passwordTextField.setPasswordMode(true);
+        passwordTextField.setPasswordCharacter('x');
 
         textFields.addAll(Arrays.asList(usernameTextField, passwordTextField));
     }
