@@ -1,6 +1,7 @@
 package com.github.moribund.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -23,6 +24,7 @@ public final class StyleUtils {
         val textFieldStyle = new TextField.TextFieldStyle();
 
         textFieldStyle.font = new BitmapFont(Gdx.files.internal("skins/clean-crispy/raw/font-export.fnt"));
+        textFieldStyle.fontColor = Color.BLACK;
         textFieldStyle.background = skin.getDrawable("textfield");
         return textFieldStyle;
     }
