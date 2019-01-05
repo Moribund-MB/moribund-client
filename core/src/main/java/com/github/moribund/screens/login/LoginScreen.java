@@ -14,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
+import com.github.moribund.net.packets.login.LoginPacket;
 import com.github.moribund.screens.StageFactory;
-import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -88,9 +88,10 @@ public class LoginScreen implements Screen {
     }
 
     private void login() {
-        // todo remember to .trim() username
         System.out.println("logging in with " + usernameTextField.getText() + " and " + passwordTextField.getText());
-        MoribundClient.getInstance().switchToScreen(new TitleScreenFactory(), false);
+        val username = usernameTextField.getText().trim();
+        val password = passwordTextField.getText();
+        MoribundClient.getInstance().getPacketDispatcher().sendUDP(new LoginPacket(username, password));
     }
 
     private Stage createStage() {

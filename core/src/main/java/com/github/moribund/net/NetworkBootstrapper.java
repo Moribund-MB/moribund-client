@@ -12,6 +12,9 @@ import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyPressedResponsePacket;
 import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedResponsePacket;
+import com.github.moribund.net.packets.login.LoginPacket;
+import com.github.moribund.net.packets.login.LoginResponse;
+import com.github.moribund.net.packets.login.LoginResponsePacket;
 import com.github.moribund.net.packets.movement.LocationPacket;
 import com.github.moribund.net.packets.movement.RotationPacket;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -86,6 +89,9 @@ public class NetworkBootstrapper {
         kryo.register(RotationPacket.class);
         kryo.register(GameStatePacket.class);
         kryo.register(LogoutPacket.class);
+        kryo.register(LoginPacket.class);
+        kryo.register(LoginResponse.class, new JavaSerializer());
+        kryo.register(LoginResponsePacket.class);
     }
 
     /**
