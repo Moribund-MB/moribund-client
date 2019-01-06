@@ -11,8 +11,8 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
-import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.StageFactory;
+import com.github.moribund.screens.game.GameScreenFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -30,27 +30,16 @@ public class TitleScreen implements Screen {
      * The music player to play cached music.
      */
     private final MusicPlayer musicPlayer;
-    /**
-     * The factory to create a {@link com.github.moribund.screens.game.GameScreen}.
-     */
-    private final ScreenFactory gameScreenFactory;
-    private final ScreenFactory settingsScreenFactory;
-    private final ScreenFactory privateMatchScreenFactory;
-
     private final Stage stage;
-    private TextButton findMatchButton, settingsButton, privateMatchButton, exitButton;
 
+    private TextButton findMatchButton, settingsButton, privateMatchButton, exitButton;
 
     /**
      * Constructor that provides the {@code TitleScreen} its dependencies.
      * @param musicPlayer The music player dependency.
-     * @param gameScreenFactory The game screen factory to make a game screen.
      */
-    TitleScreen(MusicPlayer musicPlayer, ScreenFactory gameScreenFactory, ScreenFactory settingsScreenFactory, ScreenFactory privateMatchScreenFactory) {
+    public TitleScreen(MusicPlayer musicPlayer) {
         this.musicPlayer = musicPlayer;
-        this.gameScreenFactory = gameScreenFactory;
-        this.settingsScreenFactory = settingsScreenFactory;
-        this.privateMatchScreenFactory = privateMatchScreenFactory;
         stage = createStage();
     }
 
@@ -79,7 +68,8 @@ public class TitleScreen implements Screen {
         findMatchButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(gameScreenFactory, true);
+                val gameScreenFactory = new GameScreenFactory();
+                MoribundClient.getInstance().switchToScreen(gameScreenFactory.createScreen(), true);
                 val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
                 packetDispatcher.sendUDP(new CreateNewPlayerRequestPacket());
             }
@@ -90,7 +80,8 @@ public class TitleScreen implements Screen {
         privateMatchButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(privateMatchScreenFactory, true);
+                val privateMatchScreen = new PrivateMatchOptionScreen(TitleScreen.this);
+                MoribundClient.getInstance().switchToScreen(privateMatchScreen, false);
             }
         });
 
@@ -100,7 +91,8 @@ public class TitleScreen implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(settingsScreenFactory, true);
+                val settingsScreen = new SettingsScreen(TitleScreen.this, musicPlayer);
+                MoribundClient.getInstance().switchToScreen(settingsScreen, false);
             }
         });
     }

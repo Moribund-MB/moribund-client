@@ -5,10 +5,6 @@ import com.github.moribund.net.PacketDispatcher;
 import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.PlayableCharacter;
-import com.github.moribund.screens.ScreenFactory;
-import com.github.moribund.screens.login.LoginScreenFactory;
-import com.github.moribund.screens.login.LoginScreenState;
-import com.github.moribund.screens.title.TitleScreenFactory;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -30,8 +26,7 @@ class MoribundClientFactory {
         val flaggables = createFlaggablesList();
         val networkBootstrapper = createNetworkBootstrapper();
         val packetDispatcher = createPacketDispatcher(networkBootstrapper);
-        val screenFactory = createLoginScreenFactory();
-        return new MoribundClient(players, drawables, flaggables, networkBootstrapper, packetDispatcher, screenFactory);
+        return new MoribundClient(players, drawables, flaggables, networkBootstrapper, packetDispatcher);
     }
 
     private ObjectList<Flaggable> createFlaggablesList() {
@@ -40,22 +35,6 @@ class MoribundClientFactory {
 
     private ObjectList<Drawable> createDrawablesList() {
         return new ObjectArrayList<>();
-    }
-
-    /**
-     * Creates the screen factory to make the login screen.
-     * @return The newly made factory.
-     */
-    private ScreenFactory createLoginScreenFactory() {
-        return new LoginScreenFactory(LoginScreenState.INPUT);
-    }
-
-    /**
-     * Creates the screen factory to make the title screen.
-     * @return The newly made factory.
-     */
-    private ScreenFactory createTitleScreenFactory() {
-        return new TitleScreenFactory();
     }
 
     /**

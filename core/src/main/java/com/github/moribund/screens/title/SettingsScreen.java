@@ -19,15 +19,15 @@ import java.util.Arrays;
 
 class SettingsScreen implements Screen {
 
-    private final TitleScreenFactory titleScreenFactory;
+    private final Screen previousScreen;
     private final MusicPlayer musicPlayer;
 
     private final Stage stage;
     private TextButton backButton;
     private Slider audioSlider;
 
-    SettingsScreen(TitleScreenFactory titleScreenFactory, MusicPlayer musicPlayer) {
-        this.titleScreenFactory = titleScreenFactory;
+    SettingsScreen(Screen previousScreen, MusicPlayer musicPlayer) {
+        this.previousScreen = previousScreen;
         this.musicPlayer = musicPlayer;
         stage = createStage();
     }
@@ -77,7 +77,7 @@ class SettingsScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(titleScreenFactory, false);
+                MoribundClient.getInstance().switchToScreen(previousScreen, false);
             }
         });
     }

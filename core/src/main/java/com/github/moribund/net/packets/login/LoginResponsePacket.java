@@ -5,7 +5,7 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.screens.login.LoginScreen;
 import com.github.moribund.screens.login.LoginScreenState;
-import com.github.moribund.screens.title.TitleScreenFactory;
+import com.github.moribund.screens.title.TitleScreen;
 
 public final class LoginResponsePacket implements IncomingPacket {
     private LoginResponse loginResponse;
@@ -14,18 +14,18 @@ public final class LoginResponsePacket implements IncomingPacket {
 
     @Override
     public void process() {
-        switch (loginResponse) {
-            case NEW_ACCOUNT:
-            case SUCCESS:
-                Gdx.app.postRunnable(() -> MoribundClient.getInstance().switchToScreen(new TitleScreenFactory(), true));
-                break;
-            case INCORRECT_PASSWORD:
-                if (MoribundClient.getInstance().getScreen() instanceof LoginScreen) {
-                    LoginScreen loginScreen = (LoginScreen) MoribundClient.getInstance().getScreen();
+        if (MoribundClient.getInstance().getScreen() instanceof LoginScreen) {
+            LoginScreen loginScreen = (LoginScreen) MoribundClient.getInstance().getScreen();
+            switch (loginResponse) {
+                case NEW_ACCOUNT:
+                case SUCCESS:
+                    Gdx.app.postRunnable(() -> MoribundClient.getInstance().switchToScreen(new TitleScreen(loginScreen.getMusicPlayer()), false));
+                    break;
+                case INCORRECT_PASSWORD:
                     loginScreen.setLoginScreenState(LoginScreenState.INPUT);
                     MoribundClient.getInstance().terminateNetworking();
-                }
-                break;
+                    break;
+            }
         }
     }
 }

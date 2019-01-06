@@ -3,13 +3,15 @@ package com.github.moribund;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicContainer;
+import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
 import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.PlayableCharacter;
-import com.github.moribund.screens.ScreenFactory;
+import com.github.moribund.screens.login.LoginScreen;
+import com.github.moribund.screens.login.LoginScreenState;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
@@ -36,10 +38,6 @@ public class MoribundClient extends Game {
     @Getter
     private final ObjectList<Flaggable> flaggables;
     /**
-     * The factory to make the title screen.
-     */
-    private final ScreenFactory screenFactory;
-    /**
      * The network bootstrapper to start networking.
      */
     private final NetworkBootstrapper networkBootstrapper;
@@ -58,20 +56,17 @@ public class MoribundClient extends Game {
      * @param players The list of players in the entire game.
      * @param networkBootstrapper The network bootstrapper to start networking.
      * @param packetDispatcher The packet dispatcher to send the server packets.
-     * @param screenFactory The screen factory to create the title screen.
      */
     MoribundClient(Int2ObjectMap<PlayableCharacter> players,
-                           ObjectList<Drawable> drawables,
-                           ObjectList<Flaggable> flaggables,
-                           NetworkBootstrapper networkBootstrapper,
-                           PacketDispatcher packetDispatcher,
-                           ScreenFactory screenFactory) {
+                   ObjectList<Drawable> drawables,
+                   ObjectList<Flaggable> flaggables,
+                   NetworkBootstrapper networkBootstrapper,
+                   PacketDispatcher packetDispatcher) {
         this.players = players;
         this.drawables = drawables;
         this.flaggables = flaggables;
         this.networkBootstrapper = networkBootstrapper;
         this.packetDispatcher = packetDispatcher;
-        this.screenFactory = screenFactory;
     }
 
     /**
@@ -81,28 +76,30 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
+        val initialScreen = new LoginScreen(new MusicPlayer(), LoginScreenState.INPUT);
+
         //connectNetworking();
         SpriteContainer.getInstance().setup();
         MusicContainer.getInstance().setup();
-        switchToScreen(screenFactory, true);
+        switchToScreen(initialScreen, true);
     }
 
     /**
      * Switches the screen to a new {@link Screen}.
-     * @param screenFactory The screen factory that will create the desired screen.
+     * @param screen The screen to switch to.
      * @param disposePreviousScreen If the previous screen should be disposed. Note: If this is false, the previous
      *                              screen's {@link Screen#hide()} method will still be invoked!
      */
-    public void switchToScreen(ScreenFactory screenFactory, boolean disposePreviousScreen) {
-        if (screen != null && disposePreviousScreen) {
-            screen.dispose();
+    public void switchToScreen(Screen screen, boolean disposePreviousScreen) {
+        if (this.screen != null && disposePreviousScreen) {
+            this.screen.dispose();
         }
-        setScreen(screenFactory.createScreen());
+        setScreen(screen);
     }
 
     /**
      * Note: Do NOT use this method to switch screens. Instead, use
-     * {@link MoribundClient#switchToScreen(ScreenFactory, boolean)}!
+     * {@link MoribundClient#switchToScreen(Screen, boolean)}!
      */
     @Override
     public void setScreen(Screen screen) {

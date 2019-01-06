@@ -20,6 +20,7 @@ import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
 
@@ -27,6 +28,7 @@ import java.util.Arrays;
 
 public class LoginScreen implements Screen {
 
+    @Getter
     private final MusicPlayer musicPlayer;
     @Setter
     private LoginScreenState loginScreenState;
@@ -36,7 +38,7 @@ public class LoginScreen implements Screen {
     private Stage inputStage;
     private Stage attemptStage;
 
-    LoginScreen(MusicPlayer musicPlayer, LoginScreenState loginScreenState) {
+    public LoginScreen(MusicPlayer musicPlayer, LoginScreenState loginScreenState) {
         this.musicPlayer = musicPlayer;
         this.loginScreenState = loginScreenState;
         inputStage = createInputStage();

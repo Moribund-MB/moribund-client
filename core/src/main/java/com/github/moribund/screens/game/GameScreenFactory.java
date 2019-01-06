@@ -7,14 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
-import com.github.moribund.screens.ScreenFactory;
 import lombok.val;
 
 /**
  * A factory that creates a {@link GameScreen} and its dependencies.
  */
-public class GameScreenFactory implements ScreenFactory {
-    @Override
+public class GameScreenFactory {
     public Screen createScreen() {
         val spriteBatch = createSpriteBatch();
         val camera = createCamera();

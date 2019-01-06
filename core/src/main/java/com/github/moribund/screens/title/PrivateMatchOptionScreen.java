@@ -17,15 +17,13 @@ import lombok.val;
 import java.util.Arrays;
 
 public class PrivateMatchOptionScreen implements Screen {
-
-    private final TitleScreenFactory titleScreenFactory;
-
     private final Stage stage;
+    private final Screen previousScreen;
     private TextButton backButton;
     private TextField privateMatchCodeInput;
 
-    public PrivateMatchOptionScreen(TitleScreenFactory titleScreenFactory) {
-        this.titleScreenFactory = titleScreenFactory;
+    public PrivateMatchOptionScreen(Screen previousScreen) {
+        this.previousScreen = previousScreen;
         stage = createStage();
     }
 
@@ -78,7 +76,7 @@ public class PrivateMatchOptionScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(titleScreenFactory, false);
+                MoribundClient.getInstance().switchToScreen(previousScreen, false);
             }
         });
     }
