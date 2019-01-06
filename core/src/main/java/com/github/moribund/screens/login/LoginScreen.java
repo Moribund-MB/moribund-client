@@ -95,7 +95,6 @@ public class LoginScreen implements Screen {
     }
 
     private void attemptLogin() {
-        System.out.println("logging in with " + usernameTextField.getText() + " and " + passwordTextField.getText());
         val username = usernameTextField.getText().trim();
         val password = passwordTextField.getText();
 
