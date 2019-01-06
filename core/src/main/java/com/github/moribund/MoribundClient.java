@@ -81,7 +81,7 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
-        connectNetworking();
+        //connectNetworking();
         SpriteContainer.getInstance().setup();
         MusicContainer.getInstance().setup();
         switchToScreen(screenFactory, true);
@@ -112,8 +112,12 @@ public class MoribundClient extends Game {
     /**
      * Connects the client to the {@link com.esotericsoftware.kryonet.Server}.
      */
-    private void connectNetworking() {
+    public void connectNetworking() {
         networkBootstrapper.connect();
+    }
+
+    public void terminateNetworking() {
+        networkBootstrapper.getClient().close();
     }
 
     /**

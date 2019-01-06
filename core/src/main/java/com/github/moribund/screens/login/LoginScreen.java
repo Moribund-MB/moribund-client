@@ -94,6 +94,7 @@ public class LoginScreen implements Screen {
         val username = usernameTextField.getText().trim();
         val password = passwordTextField.getText();
 
+        MoribundClient.getInstance().connectNetworking();
         loginScreenState = LoginScreenState.ATTEMPTING;
         MoribundClient.getInstance().getPacketDispatcher().sendUDP(new LoginPacket(username, password));
     }
@@ -169,6 +170,7 @@ public class LoginScreen implements Screen {
 
     @Override
     public void dispose() {
+        musicPlayer.dispose();
         inputStage.dispose();
     }
 }

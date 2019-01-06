@@ -87,11 +87,10 @@ public class TitleScreen implements Screen {
     }
 
     private void addPrivateMatchButtonListener() {
-
         privateMatchButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(privateMatchScreenFactory, false);
+                MoribundClient.getInstance().switchToScreen(privateMatchScreenFactory, true);
             }
         });
 
@@ -101,7 +100,7 @@ public class TitleScreen implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(settingsScreenFactory, false);
+                MoribundClient.getInstance().switchToScreen(settingsScreenFactory, true);
             }
         });
     }

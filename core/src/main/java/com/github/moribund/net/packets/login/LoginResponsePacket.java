@@ -23,6 +23,7 @@ public final class LoginResponsePacket implements IncomingPacket {
                 if (MoribundClient.getInstance().getScreen() instanceof LoginScreen) {
                     LoginScreen loginScreen = (LoginScreen) MoribundClient.getInstance().getScreen();
                     loginScreen.setLoginScreenState(LoginScreenState.INPUT);
+                    MoribundClient.getInstance().terminateNetworking();
                 }
                 break;
         }

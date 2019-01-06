@@ -19,6 +19,7 @@ import com.github.moribund.net.packets.movement.LocationPacket;
 import com.github.moribund.net.packets.movement.RotationPacket;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
+import lombok.Getter;
 
 import java.io.IOException;
 
@@ -43,6 +44,7 @@ public class NetworkBootstrapper {
     /**
      * The {@code KryoNet} connection client.
      */
+    @Getter
     private final Client client;
 
     /**
