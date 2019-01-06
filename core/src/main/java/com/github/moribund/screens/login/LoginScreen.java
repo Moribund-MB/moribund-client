@@ -45,13 +45,9 @@ public class LoginScreen implements Screen {
 
     @Override
     public void show() {
-        playTitleScreenMusic();
+        musicPlayer.play(MusicFile.TITLE_SCREEN, true);
         addTextFieldListeners();
         addLoginButtonListener();
-        setActiveTextField();
-    }
-
-    private void setActiveTextField() {
         inputStage.setKeyboardFocus(usernameTextField);
     }
 
@@ -104,7 +100,10 @@ public class LoginScreen implements Screen {
 
     private Stage createInputStage() {
         val stageFactory = new StageFactory();
-        val stage = stageFactory.createStage(this::createCredentialTextFields, this::createButtons);
+        val stage = stageFactory.createStage(this::createCredentialTextFields, buttons -> {
+            loginButton = new TextButton("Login", StyleUtils.getTextButtonStyle());
+            buttons.add(loginButton);
+        });
 
         Gdx.input.setInputProcessor(stage);
         return stage;
@@ -132,18 +131,6 @@ public class LoginScreen implements Screen {
         passwordTextField.setPasswordCharacter('x');
 
         textFields.addAll(Arrays.asList(usernameTextField, passwordTextField));
-    }
-
-    private void createButtons(ObjectList<Actor> buttons) {
-        val textButtonStyle = StyleUtils.getTextButtonStyle();
-
-        loginButton = new TextButton("Login", textButtonStyle);
-
-        buttons.add(loginButton);
-    }
-
-    private void playTitleScreenMusic() {
-        musicPlayer.play(MusicFile.TITLE_SCREEN, true);
     }
 
 
