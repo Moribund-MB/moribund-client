@@ -7,6 +7,7 @@ import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.screens.ScreenFactory;
 import com.github.moribund.screens.login.LoginScreenFactory;
+import com.github.moribund.screens.login.LoginScreenState;
 import com.github.moribund.screens.title.TitleScreenFactory;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -46,7 +47,7 @@ class MoribundClientFactory {
      * @return The newly made factory.
      */
     private ScreenFactory createLoginScreenFactory() {
-        return new LoginScreenFactory();
+        return new LoginScreenFactory(LoginScreenState.INPUT);
     }
 
     /**

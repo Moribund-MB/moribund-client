@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -19,6 +20,7 @@ import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import lombok.Setter;
 import lombok.val;
 
 import java.util.Arrays;
@@ -26,14 +28,19 @@ import java.util.Arrays;
 public class LoginScreen implements Screen {
 
     private final MusicPlayer musicPlayer;
+    @Setter
+    private LoginScreenState loginScreenState;
     private TextField usernameTextField;
     private TextField passwordTextField;
     private Button loginButton;
-    private Stage stage;
+    private Stage inputStage;
+    private Stage attemptStage;
 
-    LoginScreen(MusicPlayer musicPlayer) {
+    LoginScreen(MusicPlayer musicPlayer, LoginScreenState loginScreenState) {
         this.musicPlayer = musicPlayer;
-        stage = createStage();
+        this.loginScreenState = loginScreenState;
+        inputStage = createInputStage();
+        attemptStage = createAttemptStage();
     }
 
     @Override
@@ -45,14 +52,14 @@ public class LoginScreen implements Screen {
     }
 
     private void setActiveTextField() {
-        stage.setKeyboardFocus(usernameTextField);
+        inputStage.setKeyboardFocus(usernameTextField);
     }
 
     private void addLoginButtonListener() {
         loginButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                login();
+                attemptLogin();
             }
         });
     }
@@ -76,7 +83,7 @@ public class LoginScreen implements Screen {
             public boolean keyDown(InputEvent event, int keycode) {
                 switch (keycode) {
                     case Input.Keys.ENTER:
-                        login();
+                        attemptLogin();
                         return true;
                     case tabKey:
                         passwordTextField.next(true);
@@ -87,19 +94,30 @@ public class LoginScreen implements Screen {
         });
     }
 
-    private void login() {
+    private void attemptLogin() {
         System.out.println("logging in with " + usernameTextField.getText() + " and " + passwordTextField.getText());
         val username = usernameTextField.getText().trim();
         val password = passwordTextField.getText();
+
+        loginScreenState = LoginScreenState.ATTEMPTING;
         MoribundClient.getInstance().getPacketDispatcher().sendUDP(new LoginPacket(username, password));
     }
 
-    private Stage createStage() {
+    private Stage createInputStage() {
         val stageFactory = new StageFactory();
         val stage = stageFactory.createStage(this::createCredentialTextFields, this::createButtons);
 
         Gdx.input.setInputProcessor(stage);
         return stage;
+    }
+
+    private Stage createAttemptStage() {
+        val stageFactory = new StageFactory();
+        return stageFactory.createStage(actors -> {
+            val labelStyle = StyleUtils.getLabelStyle();
+            val label = new Label("Attempting to log you in...", labelStyle);
+            actors.add(label);
+        });
     }
 
     private void createCredentialTextFields(ObjectList<Actor> textFields) {
@@ -133,7 +151,14 @@ public class LoginScreen implements Screen {
     @Override
     public void render(float delta) {
         GLUtils.clearGL();
-        stage.draw();
+        switch (loginScreenState) {
+            case INPUT:
+                inputStage.draw();
+                break;
+            case ATTEMPTING:
+                attemptStage.draw();
+                break;
+        }
     }
 
     @Override
@@ -158,7 +183,6 @@ public class LoginScreen implements Screen {
 
     @Override
     public void dispose() {
-        musicPlayer.dispose();
-        stage.dispose();
+        inputStage.dispose();
     }
 }
