@@ -71,7 +71,7 @@ public class TitleScreen implements Screen {
                 val gameScreenFactory = new GameScreenFactory();
                 MoribundClient.getInstance().switchToScreen(gameScreenFactory.createScreen(), true);
                 val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-                packetDispatcher.sendUDP(new CreateNewPlayerRequestPacket());
+                packetDispatcher.sendTCP(new CreateNewPlayerRequestPacket());
             }
         });
     }

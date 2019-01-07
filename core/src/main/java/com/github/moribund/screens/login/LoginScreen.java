@@ -98,7 +98,7 @@ public class LoginScreen implements Screen {
 
         MoribundClient.getInstance().connectNetworking();
         loginScreenState = LoginScreenState.ATTEMPTING;
-        MoribundClient.getInstance().getPacketDispatcher().sendUDP(new LoginPacket(username, password));
+        MoribundClient.getInstance().getPacketDispatcher().sendTCP(new LoginPacket(username, password));
     }
 
     private Stage createInputStage() {

@@ -284,7 +284,7 @@ public class Player extends PlayableCharacter {
             val player = MoribundClient.getInstance().getPlayer();
             val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
             val keyPressedPacket = new KeyPressedPacket(player.getGameId(), player.getPlayerId(), keycode);
-            packetDispatcher.sendUDP(keyPressedPacket);
+            packetDispatcher.sendTCP(keyPressedPacket);
         }
         return true;
     }
@@ -295,7 +295,7 @@ public class Player extends PlayableCharacter {
             val player = MoribundClient.getInstance().getPlayer();
             val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
             val keyUnpressedPacket = new KeyUnpressedPacket(player.getGameId(), player.getPlayerId(), keycode);
-            packetDispatcher.sendUDP(keyUnpressedPacket);
+            packetDispatcher.sendTCP(keyUnpressedPacket);
         }
         return true;
     }
