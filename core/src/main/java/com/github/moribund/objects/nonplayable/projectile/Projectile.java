@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.objects.attributes.Collidable;
 import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
@@ -113,18 +114,14 @@ public class Projectile implements Movable, Drawable, Flaggable {
     }
 
     private void checkCollision() {
-        for (Drawable drawable : MoribundClient.getInstance().getDrawables()) {
-            if (drawable instanceof Projectile) {
-                continue;
-            }
-            if (ignores.contains(drawable)) {
-                continue;
-            }
-            if (sprite.getBoundingRectangle().overlaps(drawable.getSprite().getBoundingRectangle())) {
-                removeProjectile();
-                break;
-            }
-        }
+        MoribundClient.getInstance().getDrawables().stream()
+                .filter(drawable -> drawable instanceof Collidable)
+                .filter(drawable -> !ignores.contains(drawable))
+                .forEach(drawable -> {
+                    if (sprite.getBoundingRectangle().overlaps(drawable.getSprite().getBoundingRectangle())) {
+                        removeProjectile();
+                    }
+                });
     }
 
     @Override
