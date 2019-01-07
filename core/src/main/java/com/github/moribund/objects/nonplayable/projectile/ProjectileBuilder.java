@@ -3,6 +3,9 @@ package com.github.moribund.objects.nonplayable.projectile;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.github.moribund.images.SpriteContainer;
 import com.github.moribund.images.SpriteFile;
+import com.github.moribund.objects.attributes.Drawable;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
+import it.unimi.dsi.fastutil.objects.ObjectSet;
 
 /**
  * The {@code ProjectileBuilder} follows the <a href="https://en.wikipedia.org/wiki/Builder_pattern">Builder pattern</a>
@@ -15,6 +18,7 @@ public final class ProjectileBuilder {
     private float rotationSpeed;
     private float movingSpeed;
     private float angle;
+    private ObjectSet<Drawable> ignores;
 
     /**
      * Takes a {@link SpriteFile} and makes a new {@link Sprite} out of it.
@@ -68,11 +72,19 @@ public final class ProjectileBuilder {
         return this;
     }
 
+    public ProjectileBuilder ignoring(Drawable ignore) {
+        if (ignores == null) {
+            ignores = new ObjectArraySet<>();
+        }
+        ignores.add(ignore);
+        return this;
+    }
+
     /**
      * Creates the {@link Projectile} with the given configurations above.
      * @return The newly created {@link Projectile}.
      */
     public Projectile create() {
-        return new Projectile(sprite, x, y, angle, rotationSpeed, movingSpeed);
+        return new Projectile(sprite, x, y, angle, rotationSpeed, movingSpeed, ignores);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.moribund.objects.attributes;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -8,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * {@link com.github.moribund.MoribundClient#drawables} {@link it.unimi.dsi.fastutil.objects.ObjectList}.
  */
 public interface Drawable {
+    Sprite getSprite();
     /**
      * Draws the player onto the screen.
      * @param spriteBatch The {@link SpriteBatch} to draw the {@code PlayableCharacter}'s

@@ -11,7 +11,11 @@ import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
+import lombok.Getter;
 import lombok.val;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * A {@code Projectile} is not a singular {@link com.badlogic.gdx.graphics.g2d.Sprite},
@@ -26,8 +30,14 @@ public class Projectile implements Movable, Drawable, Flaggable {
     private final ObjectSet<Flag> flags;
 
     /**
+     * The list of {@link Drawable} that don't count as "collisions" should they collide.
+     */
+    private final ObjectSet<Drawable> ignores;
+
+    /**
      * The sprite of the {@code Projectile}.
      */
+    @Getter
     private final Sprite sprite;
 
     /**
@@ -39,21 +49,24 @@ public class Projectile implements Movable, Drawable, Flaggable {
      * The speed at which the {@code Projectile} can move forward or back.
      */
     private final float movementSpeed;
+    private final LocalDateTime timeReleased;
 
     /**
      * Creates a new {@code Projectile} with a multitude of initial settings. It is important to note that in this
      * constructor, a {@code Projectile} is automatically marked with the {@link FlagConstants#MOVE_FORWARD_FLAG}
      * flag.
      */
-    Projectile(Sprite sprite, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed) {
+    Projectile(Sprite sprite, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<Drawable> ignores) {
         this.sprite = sprite;
         this.rotationSpeed = rotationSpeed;
         this.movementSpeed = movementSpeed;
+        this.ignores = new ObjectArraySet<>(ignores);
         flags = new ObjectArraySet<>();
         flags.add(FlagConstants.MOVE_FORWARD_FLAG);
         sprite.setX(startingX);
         sprite.setY(startingY);
         sprite.setRotation(startingAngle);
+        timeReleased = LocalDateTime.now();
     }
 
     /**
@@ -67,6 +80,11 @@ public class Projectile implements Movable, Drawable, Flaggable {
         MoribundClient.getInstance().getDrawables().add(projectile);
     }
 
+    private void removeProjectile() {
+        MoribundClient.getInstance().getFlaggables().remove(this);
+        MoribundClient.getInstance().getDrawables().remove(this);
+    }
+
     /**
      * Calls the {@link ProjectileBuilder} as an API to construct a {@code Projectile}.
      * @return The newly created {@link ProjectileBuilder}.
@@ -78,6 +96,35 @@ public class Projectile implements Movable, Drawable, Flaggable {
     @Override
     public void draw(SpriteBatch spriteBatch) {
         sprite.draw(spriteBatch);
+        checkRemoval();
+    }
+
+    private void checkRemoval() {
+        checkCollision();
+        checkTimeExceeded();
+    }
+
+    private void checkTimeExceeded() {
+        val timeTillRemoval = 3;
+        val timeTillRemoveUnits = ChronoUnit.SECONDS;
+        if (timeTillRemoveUnits.between(timeReleased, LocalDateTime.now()) >= timeTillRemoval) {
+            removeProjectile();
+        }
+    }
+
+    private void checkCollision() {
+        for (Drawable drawable : MoribundClient.getInstance().getDrawables()) {
+            if (drawable instanceof Projectile) {
+                continue;
+            }
+            if (ignores.contains(drawable)) {
+                continue;
+            }
+            if (sprite.getBoundingRectangle().overlaps(drawable.getSprite().getBoundingRectangle())) {
+                removeProjectile();
+                break;
+            }
+        }
     }
 
     @Override

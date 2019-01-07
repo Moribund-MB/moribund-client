@@ -67,9 +67,9 @@ public class Player extends PlayableCharacter {
     public Player(int gameId, int playerId) {
         this.gameId = gameId;
         this.playerId = playerId;
-        sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.PLAYER));
         flags = new ObjectArraySet<>();
         flagsToRemove = new ObjectArraySet<>();
+        sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.PLAYER));
     }
 
     /**
@@ -173,6 +173,7 @@ public class Player extends PlayableCharacter {
                         .withMovementSpeed(10)
                         .withAngle(getRotation())
                         .atXY(getX(), getY())
+                        .ignoring(Player.this)
                         .create();
                 Projectile.launchProjectile(projectile);
             }
