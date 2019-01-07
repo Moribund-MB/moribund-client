@@ -13,21 +13,25 @@ import lombok.val;
  * easy-to-manipulate packet should the client be decompiled and abused, however.
  */
 public final class RotationPacket implements IncomingPacket, OutgoingPacket {
+    private final int gameId;
     /**
      * The player ID of the player that is finished rotating.
      */
     private final int playerId;
+
     /**
      * The angle at which the player is now.
      */
     private final float angle;
 
-    public RotationPacket(int playerId, float angle) {
+    public RotationPacket(int gameId, int playerId, float angle) {
+        this.gameId = gameId;
         this.playerId = playerId;
         this.angle = angle;
     }
 
     RotationPacket() {
+        gameId = -1;
         playerId = -1;
         angle = 0;
     }

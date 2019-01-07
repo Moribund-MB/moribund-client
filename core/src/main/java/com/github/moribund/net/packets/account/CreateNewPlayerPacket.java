@@ -13,6 +13,7 @@ import lombok.val;
  * arrival.
  */
 public final class CreateNewPlayerPacket implements IncomingPacket {
+    private int gameId;
     /**
      * The unique player ID of the one who just logged in.
      */
@@ -41,7 +42,7 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
             val location = pair.getValue();
             val x = location.getKey();
             val y = location.getValue();
-            PlayerUtils.makePlayer(playerId, x, y);
+            PlayerUtils.makePlayer(gameId, playerId, x, y);
         });
         playerRotations.forEach(pair -> {
             val playerId = pair.getKey();

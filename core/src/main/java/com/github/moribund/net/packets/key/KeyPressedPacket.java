@@ -10,6 +10,7 @@ import lombok.Value;
  */
 @Value
 public class KeyPressedPacket implements OutgoingPacket {
+    private int gameId;
     /**
      * The unique player ID of the player that owns this client.
      */

@@ -16,7 +16,7 @@ abstract class RotateFlag implements Flag {
      */
     void sendRotationPacket(PlayableCharacter playableCharacter) {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-        val rotationPacket = new RotationPacket(playableCharacter.getPlayerId(), playableCharacter.getRotation());
+        val rotationPacket = new RotationPacket(playableCharacter.getGameId(), playableCharacter.getPlayerId(), playableCharacter.getRotation());
         packetDispatcher.sendUDP(rotationPacket);
     }
 }

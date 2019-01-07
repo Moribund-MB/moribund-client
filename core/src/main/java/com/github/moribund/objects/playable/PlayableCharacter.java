@@ -20,6 +20,8 @@ public abstract class PlayableCharacter implements Flaggable, Drawable, Movable,
      */
     public abstract int getPlayerId();
 
+    public abstract int getGameId();
+
     /**
      * Binds the keys to the {@code keyBinds} using the
      * {@link com.badlogic.gdx.Input.Keys} constants to delegate

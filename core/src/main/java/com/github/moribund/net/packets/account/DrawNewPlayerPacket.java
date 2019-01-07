@@ -9,6 +9,7 @@ import com.github.moribund.utils.PlayerUtils;
  * {@link Player} onto the screen.
  */
 public final class DrawNewPlayerPacket implements IncomingPacket {
+    private int gameId;
     /**
      * The {@link Player}'s unique ID.
      */
@@ -34,7 +35,7 @@ public final class DrawNewPlayerPacket implements IncomingPacket {
 
     @Override
     public void process() {
-        PlayerUtils.makePlayer(playerId, x, y);
+        PlayerUtils.makePlayer(gameId, playerId, x, y);
         PlayerUtils.rotatePlayer(playerId, rotation);
     }
 }

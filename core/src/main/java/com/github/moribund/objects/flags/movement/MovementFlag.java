@@ -16,7 +16,7 @@ abstract class MovementFlag implements Flag {
      */
     void sendLocationPacket(PlayableCharacter playableCharacter) {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
-        val tilePacket = new LocationPacket(playableCharacter.getPlayerId(), playableCharacter.getX(), playableCharacter.getY());
+        val tilePacket = new LocationPacket(playableCharacter.getGameId(), playableCharacter.getPlayerId(), playableCharacter.getX(), playableCharacter.getY());
         packetDispatcher.sendUDP(tilePacket);
     }
 }
