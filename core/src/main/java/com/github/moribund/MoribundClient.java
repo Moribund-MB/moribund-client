@@ -9,10 +9,13 @@ import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
 import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
+import com.github.moribund.objects.attributes.Pickable;
 import com.github.moribund.objects.playable.PlayableCharacter;
 import com.github.moribund.screens.login.LoginScreen;
 import com.github.moribund.screens.login.LoginScreenState;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +37,8 @@ public class MoribundClient extends Game {
     @Getter
     private final Int2ObjectMap<PlayableCharacter> players;
     @Getter
+    private final ObjectList<Pickable> pickables;
+    @Getter
     private final ObjectList<Drawable> drawables;
     @Getter
     private final ObjectList<Flaggable> flaggables;
@@ -53,20 +58,17 @@ public class MoribundClient extends Game {
 
     /**
      * Constructor that provides the {@code MoribundClient} its dependencies.
-     * @param players The list of players in the entire game.
      * @param networkBootstrapper The network bootstrapper to start networking.
      * @param packetDispatcher The packet dispatcher to send the server packets.
      */
-    MoribundClient(Int2ObjectMap<PlayableCharacter> players,
-                   ObjectList<Drawable> drawables,
-                   ObjectList<Flaggable> flaggables,
-                   NetworkBootstrapper networkBootstrapper,
+    MoribundClient(NetworkBootstrapper networkBootstrapper,
                    PacketDispatcher packetDispatcher) {
-        this.players = players;
-        this.drawables = drawables;
-        this.flaggables = flaggables;
         this.networkBootstrapper = networkBootstrapper;
         this.packetDispatcher = packetDispatcher;
+        players = new Int2ObjectOpenHashMap<>();
+        drawables = new ObjectArrayList<>();
+        flaggables = new ObjectArrayList<>();
+        pickables = new ObjectArrayList<>();
     }
 
     /**

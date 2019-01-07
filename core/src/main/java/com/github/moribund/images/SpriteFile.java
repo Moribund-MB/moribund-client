@@ -23,14 +23,13 @@ public enum SpriteFile {
      * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
      */
     BACKGROUND("images/background.png"),
-    /**
-     * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
-     */
     INVENTORY_SELECTED("images/ui/inventory/selected.png"),
-    /**
-     * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
-     */
-    INVENTORY_UNSELECTED("images/ui/inventory/unselected.png");
+    INVENTORY_UNSELECTED("images/ui/inventory/unselected.png"),
+    FEATHER("images/items/raw/feather.png"),
+    ROCK("images/items/raw/rock.png"),
+    STICK("images/items/raw/stick.png"),
+    STRING("images/items/raw/string.png"),
+    ;
 
     /**
      * A static, final singleton for the {@link SpriteFile#values()} method so

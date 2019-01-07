@@ -2,13 +2,6 @@ package com.github.moribund;
 
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
-import com.github.moribund.objects.attributes.Drawable;
-import com.github.moribund.objects.attributes.Flaggable;
-import com.github.moribund.objects.playable.PlayableCharacter;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
 /**
@@ -21,20 +14,9 @@ class MoribundClientFactory {
      * @return The newly made {@link MoribundClient}.
      */
     MoribundClient createMoribundClient() {
-        val players = createPlayersMap();
-        val drawables = createDrawablesList();
-        val flaggables = createFlaggablesList();
         val networkBootstrapper = createNetworkBootstrapper();
         val packetDispatcher = createPacketDispatcher(networkBootstrapper);
-        return new MoribundClient(players, drawables, flaggables, networkBootstrapper, packetDispatcher);
-    }
-
-    private ObjectList<Flaggable> createFlaggablesList() {
-        return new ObjectArrayList<>();
-    }
-
-    private ObjectList<Drawable> createDrawablesList() {
-        return new ObjectArrayList<>();
+        return new MoribundClient(networkBootstrapper, packetDispatcher);
     }
 
     /**
@@ -52,13 +34,5 @@ class MoribundClientFactory {
      */
     private NetworkBootstrapper createNetworkBootstrapper() {
         return new NetworkBootstrapper();
-    }
-
-    /**
-     * Creates an empty map of all the players in the game.
-     * @return The newly made empty map of players.
-     */
-    private Int2ObjectMap<PlayableCharacter> createPlayersMap() {
-        return new Int2ObjectOpenHashMap<>();
     }
 }

@@ -1,6 +1,8 @@
 package com.github.moribund.net.packets.account;
 
 import com.github.moribund.net.packets.IncomingPacket;
+import com.github.moribund.objects.nonplayable.items.GroundItem;
+import com.github.moribund.objects.nonplayable.items.GroundItemType;
 import com.github.moribund.objects.playable.Player;
 import com.github.moribund.utils.PlayerUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -30,6 +32,11 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
     private ObjectList<Pair<Integer, Float>> playerRotations;
 
     /**
+     * TODO SERIOUSLY MAKE POJOS FOR ALL THESE CUZ THIS IS RIDICULOUS
+     */
+    private ObjectList<Pair<Integer, Pair<Float, Float>>> groundItems;
+
+    /**
      * A private constructor to ensure the client cannot unexpectedly send this
      * request to the server.
      */
@@ -37,6 +44,13 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
 
     @Override
     public void process() {
+        groundItems.forEach(pair -> {
+            val type = GroundItemType.getGroundItemType(pair.getKey());
+            val x = pair.getValue().getKey();
+            val y = pair.getValue().getValue();
+            val groundItem = new GroundItem(type, x, y);
+            GroundItem.addGroundItem(groundItem);
+        });
         playerLocations.forEach(pair -> {
             val playerId = pair.getKey();
             val location = pair.getValue();
