@@ -14,10 +14,11 @@ import lombok.val;
  */
 public class GameScreenFactory {
     public Screen createScreen() {
-        val spriteBatch = createSpriteBatch();
+        val uiSpriteBatch = createSpriteBatch();
+        val gameSpriteBatch = createSpriteBatch();
         val camera = createCamera();
         val backgroundSprite = createBackgroundSprite();
-        return new GameScreen(spriteBatch, camera, backgroundSprite);
+        return new GameScreen(uiSpriteBatch, gameSpriteBatch, camera, backgroundSprite);
     }
 
     /**

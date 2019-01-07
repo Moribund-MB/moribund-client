@@ -1,11 +1,13 @@
 package com.github.moribund.screens.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.images.SpriteContainer;
+import com.github.moribund.images.SpriteFile;
 import com.github.moribund.objects.attributes.Drawable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.PlayableCharacter;
@@ -17,10 +19,11 @@ import lombok.val;
  */
 class GameScreen implements Screen {
 
+    private final SpriteBatch uiSpritebatch;
     /**
      * The sprite batch to display sprites.
      */
-    private final SpriteBatch spriteBatch;
+    private final SpriteBatch gameSpriteBatch;
     /**
      * The camera to show the game on.
      */
@@ -32,11 +35,13 @@ class GameScreen implements Screen {
 
     /**
      * Constructor that provides the {@code GameScreen} its dependencies.
-     * @param spriteBatch The sprite batch to display sprites.
+     * @param uiSpritebatch The sprite batch to display the UI on.
+     * @param gameSpritebatch The sprite batch to display the game sprites on.
      * @param camera The camera to show the game on.
      */
-    GameScreen(SpriteBatch spriteBatch, Camera camera, Sprite background) {
-        this.spriteBatch = spriteBatch;
+    GameScreen(SpriteBatch uiSpritebatch, SpriteBatch gameSpritebatch, Camera camera, Sprite background) {
+        this.uiSpritebatch = uiSpritebatch;
+        this.gameSpriteBatch = gameSpritebatch;
         this.camera = camera;
         this.background = background;
     }
@@ -60,15 +65,35 @@ class GameScreen implements Screen {
     public void render(float delta) {
         processFlags();
         GLUtils.clearGL();
-        drawSpriteBatch(this::drawBackground, this::drawVisibleEntities);
+        drawGameSpriteBatch(this::drawBackground, this::drawVisibleEntities);
+        drawUISpriteBatch(this::drawUI);
         cameraFollowPlayer();
+    }
+
+    private void drawUI() {
+        val unselected = new Sprite[3];
+        for (int i = 0; i < unselected.length; i++) {
+            unselected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED));
+            unselected[i].setX(Gdx.graphics.getWidth() - (unselected[i].getWidth() * (i + 1)));
+            unselected[i].setY(Gdx.graphics.getHeight() - unselected[i].getHeight());
+            unselected[i].setAlpha(0.8f);
+            unselected[i].draw(uiSpritebatch);
+        }
+        val selected = new Sprite[2];
+        for (int i = 0; i < selected.length; i++) {
+            selected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_SELECTED));
+            selected[i].setX(Gdx.graphics.getWidth() - (selected[i].getWidth() * (unselected.length + (i + 1))));
+            selected[i].setY(Gdx.graphics.getHeight() - selected[i].getHeight());
+            selected[i].setAlpha(0.8f);
+            selected[i].draw(uiSpritebatch);
+        }
     }
 
     /**
      * Draws the {@link com.github.moribund.images.SpriteFile#BACKGROUND} {@link Sprite}.
      */
     private void drawBackground() {
-        background.draw(spriteBatch);
+        background.draw(gameSpriteBatch);
     }
 
     /**
@@ -127,7 +152,7 @@ class GameScreen implements Screen {
      * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
      */
     private void drawVisibleEntities() {
-        MoribundClient.getInstance().getDrawables().forEach(drawable -> drawable.draw(spriteBatch));
+        MoribundClient.getInstance().getDrawables().forEach(drawable -> drawable.draw(gameSpriteBatch));
     }
 
     /**
@@ -146,14 +171,20 @@ class GameScreen implements Screen {
      *                {@link SpriteContainer} to draw them) executed just before the
      *                {@link SpriteBatch} ends.
      */
-    private void drawSpriteBatch(Runnable background, Runnable drawing) {
-        spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.begin();
-        spriteBatch.disableBlending();
+    private void drawGameSpriteBatch(Runnable background, Runnable drawing) {
+        gameSpriteBatch.setProjectionMatrix(camera.combined);
+        gameSpriteBatch.begin();
+        gameSpriteBatch.disableBlending();
         background.run();
-        spriteBatch.enableBlending();
+        gameSpriteBatch.enableBlending();
         drawing.run();
-        spriteBatch.end();
+        gameSpriteBatch.end();
+    }
+
+    private void drawUISpriteBatch(Runnable drawing) {
+        uiSpritebatch.begin();
+        drawing.run();
+        uiSpritebatch.end();
     }
 
     @Override
@@ -178,6 +209,6 @@ class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        spriteBatch.dispose();
+        gameSpriteBatch.dispose();
     }
 }
