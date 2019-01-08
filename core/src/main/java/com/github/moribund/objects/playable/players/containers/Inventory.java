@@ -2,7 +2,7 @@ package com.github.moribund.objects.playable.players.containers;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.graphics.ui.DrawableUIAsset;
+import com.github.moribund.graphics.drawables.DrawableUIAsset;
 
 public class Inventory extends ItemContainer implements DrawableUIAsset {
     public Inventory() {

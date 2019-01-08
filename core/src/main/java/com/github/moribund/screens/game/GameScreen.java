@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
-import com.github.moribund.objects.attributes.DrawableGameAsset;
+import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
 import com.github.moribund.utils.GLUtils;

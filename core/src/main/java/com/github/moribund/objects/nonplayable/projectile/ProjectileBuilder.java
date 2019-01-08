@@ -3,7 +3,7 @@ package com.github.moribund.objects.nonplayable.projectile;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
-import com.github.moribund.objects.attributes.DrawableGameAsset;
+import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 

@@ -3,7 +3,7 @@ package com.github.moribund.objects.nonplayable.items;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.objects.attributes.DrawableGameAsset;
+import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Locatable;
 import lombok.Getter;
 
