@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.moribund.images.SpriteContainer;
-import com.github.moribund.images.SpriteFile;
+import com.github.moribund.graphics.SpriteContainer;
+import com.github.moribund.graphics.SpriteFile;
 import lombok.val;
 
 /**

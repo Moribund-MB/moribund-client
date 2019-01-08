@@ -2,7 +2,7 @@ package com.github.moribund.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.objects.playable.Player;
+import com.github.moribund.objects.playable.players.Player;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 
@@ -43,7 +43,7 @@ public class PlayerUtils {
         val client = MoribundClient.getInstance();
 
         client.getPlayers().put(playerId, player);
-        client.getDrawables().add(player);
+        client.getDrawableGameAssets().add(player);
         client.getFlaggables().add(player);
 
         player.setX(x);
@@ -58,7 +58,7 @@ public class PlayerUtils {
         val client = MoribundClient.getInstance();
         val player = client.getPlayers().get(playerId);
 
-        client.getDrawables().remove(player);
+        client.getDrawableGameAssets().remove(player);
         client.getFlaggables().remove(player);
         client.getPlayers().remove(playerId);
     }

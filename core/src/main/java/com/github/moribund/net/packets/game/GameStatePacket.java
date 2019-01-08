@@ -2,7 +2,8 @@ package com.github.moribund.net.packets.game;
 
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
-import com.github.moribund.objects.playable.PlayableCharacter;
+import com.github.moribund.objects.playable.players.PlayableCharacter;
+import com.github.moribund.objects.playable.players.Player;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
 import lombok.val;
@@ -21,11 +22,11 @@ import java.util.function.BiConsumer;
 public final class GameStatePacket implements IncomingPacket {
 
     /**
-     * The locations of all {@link com.github.moribund.objects.playable.Player}s in the game at the moment.
+     * The locations of all {@link Player}s in the game at the moment.
      */
     private ObjectList<Pair<Integer, Pair<Float, Float>>> playerLocations;
     /**
-     * The rotation angle of all {@link com.github.moribund.objects.playable.Player}s in the game at the moment.
+     * The rotation angle of all {@link Player}s in the game at the moment.
      */
     private ObjectList<Pair<Integer, Float>> playerRotations;
 

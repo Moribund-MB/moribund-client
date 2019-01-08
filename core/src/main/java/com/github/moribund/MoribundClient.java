@@ -4,13 +4,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicContainer;
 import com.github.moribund.audio.MusicPlayer;
-import com.github.moribund.images.SpriteContainer;
+import com.github.moribund.graphics.SpriteContainer;
+import com.github.moribund.graphics.ui.DrawableUIAsset;
 import com.github.moribund.net.NetworkBootstrapper;
 import com.github.moribund.net.PacketDispatcher;
-import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Flaggable;
-import com.github.moribund.objects.attributes.Pickable;
-import com.github.moribund.objects.playable.PlayableCharacter;
+import com.github.moribund.objects.nonplayable.items.GroundItem;
+import com.github.moribund.objects.playable.players.PlayableCharacter;
 import com.github.moribund.screens.login.LoginScreen;
 import com.github.moribund.screens.login.LoginScreenState;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -37,9 +38,11 @@ public class MoribundClient extends Game {
     @Getter
     private final Int2ObjectMap<PlayableCharacter> players;
     @Getter
-    private final ObjectList<Pickable> pickables;
+    private final ObjectList<GroundItem> groundItems;
     @Getter
-    private final ObjectList<Drawable> drawables;
+    private final ObjectList<DrawableGameAsset> drawableGameAssets;
+    @Getter
+    private final ObjectList<DrawableUIAsset> drawableUIAssets;
     @Getter
     private final ObjectList<Flaggable> flaggables;
     /**
@@ -66,9 +69,10 @@ public class MoribundClient extends Game {
         this.networkBootstrapper = networkBootstrapper;
         this.packetDispatcher = packetDispatcher;
         players = new Int2ObjectOpenHashMap<>();
-        drawables = new ObjectArrayList<>();
+        drawableGameAssets = new ObjectArrayList<>();
+        drawableUIAssets = new ObjectArrayList<>();
         flaggables = new ObjectArrayList<>();
-        pickables = new ObjectArrayList<>();
+        groundItems = new ObjectArrayList<>();
     }
 
     /**

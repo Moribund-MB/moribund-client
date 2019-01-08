@@ -1,7 +1,7 @@
 package com.github.moribund.net.packets.account;
 
 import com.github.moribund.net.packets.IncomingPacket;
-import com.github.moribund.objects.playable.Player;
+import com.github.moribund.objects.playable.players.Player;
 import com.github.moribund.utils.PlayerUtils;
 
 /**

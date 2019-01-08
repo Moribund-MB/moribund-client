@@ -1,4 +1,4 @@
-package com.github.moribund.objects.playable;
+package com.github.moribund.objects.playable.players;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -6,13 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.images.SpriteContainer;
-import com.github.moribund.images.SpriteFile;
+import com.github.moribund.graphics.SpriteContainer;
+import com.github.moribund.graphics.SpriteFile;
 import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
+import com.github.moribund.objects.nonplayable.items.GroundItem;
+import com.github.moribund.objects.nonplayable.items.Item;
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
+import com.github.moribund.objects.playable.players.containers.Inventory;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
@@ -24,7 +27,7 @@ import lombok.val;
  * The {@code Player} that is being controlled by a client. The {@code Player}
  * is a type of {@link InputProcessor} for it is bound to {@link Player#keyBinds}.
  */
-public class Player extends PlayableCharacter {
+public class Player implements PlayableCharacter {
 
     private static final int ROTATION_SPEED = 5;
     private static final int MOVEMENT_SPEED = 5;
@@ -37,6 +40,8 @@ public class Player extends PlayableCharacter {
      */
     @Getter
     private final int playerId;
+    @Getter
+    private final Inventory inventory;
     /**
      * The {@link Sprite} of this {@code Player} that represents the {@code Player}
      * in the live game visually.
@@ -70,6 +75,8 @@ public class Player extends PlayableCharacter {
         flags = new ObjectArraySet<>();
         flagsToRemove = new ObjectArraySet<>();
         sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.PLAYER));
+        inventory = new Inventory();
+        MoribundClient.getInstance().getDrawableUIAssets().add(inventory);
     }
 
     /**
@@ -151,6 +158,24 @@ public class Player extends PlayableCharacter {
                 flagToRemove(FlagConstants.ROTATE_LEFT_FLAG);
             }
         });
+        keyBinds.put(Input.Keys.E, new PlayerAction() {
+            @Override
+            public void keyPressed() {
+                if (inventory.hasSpace()) {
+                    val pickableObjectNear = getPickableObjectNearest();
+                    if (pickableObjectNear != null) {
+                        MoribundClient.getInstance().getGroundItems().remove(pickableObjectNear);
+                        MoribundClient.getInstance().getDrawableGameAssets().remove(pickableObjectNear);
+                        pickupItem(pickableObjectNear);
+                    }
+                }
+            }
+
+            @Override
+            public void keyUnpressed() {
+
+            }
+        });
         keyBinds.put(Input.Keys.B, new PlayerAction() {
             @Override
             public void keyPressed() {
@@ -183,6 +208,20 @@ public class Player extends PlayableCharacter {
 
             }
         });
+    }
+
+    private void pickupItem(GroundItem groundItem) {
+        val item = new Item(groundItem.getItemType());
+        inventory.addItem(item);
+    }
+
+    private GroundItem getPickableObjectNearest() {
+        for (GroundItem groundItem : MoribundClient.getInstance().getGroundItems()) {
+            if (sprite.getBoundingRectangle().overlaps(groundItem.getSprite().getBoundingRectangle())) {
+                return groundItem;
+            }
+        }
+        return null;
     }
 
     @Override

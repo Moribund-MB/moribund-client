@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.objects.attributes.Collidable;
-import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
 import com.github.moribund.objects.flags.Flag;
@@ -23,7 +23,7 @@ import java.time.temporal.ChronoUnit;
  * rather it is any {@link com.badlogic.gdx.graphics.g2d.Sprite} that is moving
  * and visible in the screen that is not attached to a {@link com.badlogic.gdx.InputProcessor}.
  */
-public class Projectile implements Movable, Drawable, Flaggable {
+public class Projectile implements Movable, DrawableGameAsset, Flaggable {
 
     /**
      * The list of {@link Flag} for its {@link Flaggable} attribute.
@@ -31,9 +31,9 @@ public class Projectile implements Movable, Drawable, Flaggable {
     private final ObjectSet<Flag> flags;
 
     /**
-     * The list of {@link Drawable} that don't count as "collisions" should they collide.
+     * The list of {@link DrawableGameAsset} that don't count as "collisions" should they collide.
      */
-    private final ObjectSet<Drawable> ignores;
+    private final ObjectSet<DrawableGameAsset> ignores;
 
     /**
      * The sprite of the {@code Projectile}.
@@ -57,7 +57,7 @@ public class Projectile implements Movable, Drawable, Flaggable {
      * constructor, a {@code Projectile} is automatically marked with the {@link FlagConstants#MOVE_FORWARD_FLAG}
      * flag.
      */
-    Projectile(Sprite sprite, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<Drawable> ignores) {
+    Projectile(Sprite sprite, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<DrawableGameAsset> ignores) {
         this.sprite = sprite;
         this.rotationSpeed = rotationSpeed;
         this.movementSpeed = movementSpeed;
@@ -72,18 +72,18 @@ public class Projectile implements Movable, Drawable, Flaggable {
 
     /**
      * A helper method made for launching projectiles. Rather than making the person who wishes to launch a projectile
-     * go through the hassle of adding the projectile to the list of {@link Flaggable} and {@link Drawable} objects,
+     * go through the hassle of adding the projectile to the list of {@link Flaggable} and {@link DrawableGameAsset} objects,
      * this helper method takes the projectile and does it for them.
      * @param projectile The respective {@code Projectile} that is about to be launched.
      */
     public static void launchProjectile(Projectile projectile) {
         MoribundClient.getInstance().getFlaggables().add(projectile);
-        MoribundClient.getInstance().getDrawables().add(projectile);
+        MoribundClient.getInstance().getDrawableGameAssets().add(projectile);
     }
 
     private void removeProjectile() {
         MoribundClient.getInstance().getFlaggables().remove(this);
-        MoribundClient.getInstance().getDrawables().remove(this);
+        MoribundClient.getInstance().getDrawableGameAssets().remove(this);
     }
 
     /**
@@ -114,7 +114,7 @@ public class Projectile implements Movable, Drawable, Flaggable {
     }
 
     private void checkCollision() {
-        MoribundClient.getInstance().getDrawables().stream()
+        MoribundClient.getInstance().getDrawableGameAssets().stream()
                 .filter(drawable -> drawable instanceof Collidable)
                 .filter(drawable -> !ignores.contains(drawable))
                 .forEach(drawable -> {

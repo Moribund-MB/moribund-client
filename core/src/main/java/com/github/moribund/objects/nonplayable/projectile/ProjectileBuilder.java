@@ -1,9 +1,9 @@
 package com.github.moribund.objects.nonplayable.projectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.github.moribund.images.SpriteContainer;
-import com.github.moribund.images.SpriteFile;
-import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.graphics.SpriteContainer;
+import com.github.moribund.graphics.SpriteFile;
+import com.github.moribund.objects.attributes.DrawableGameAsset;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 
@@ -18,7 +18,7 @@ public final class ProjectileBuilder {
     private float rotationSpeed;
     private float movingSpeed;
     private float angle;
-    private ObjectSet<Drawable> ignores;
+    private ObjectSet<DrawableGameAsset> ignores;
 
     /**
      * Takes a {@link SpriteFile} and makes a new {@link Sprite} out of it.
@@ -72,7 +72,7 @@ public final class ProjectileBuilder {
         return this;
     }
 
-    public ProjectileBuilder ignoring(Drawable ignore) {
+    public ProjectileBuilder ignoring(DrawableGameAsset ignore) {
         if (ignores == null) {
             ignores = new ObjectArraySet<>();
         }

@@ -3,34 +3,25 @@ package com.github.moribund.objects.nonplayable.items;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.images.SpriteContainer;
-import com.github.moribund.images.SpriteFile;
-import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.objects.attributes.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Locatable;
-import com.github.moribund.objects.attributes.Pickable;
+import lombok.Getter;
 
-public final class GroundItem implements Locatable, Pickable, Drawable {
+public final class GroundItem implements Locatable, DrawableGameAsset {
     private final Sprite sprite;
+    @Getter
+    private final ItemType itemType;
 
-    public GroundItem(GroundItemType itemType, float x, float y) {
-        sprite = new Sprite(getSpriteForType(itemType));
+    public GroundItem(ItemType itemType, float x, float y) {
+        sprite = new Sprite(itemType.getSprite());
+        this.itemType = itemType;
         sprite.setX(x);
         sprite.setY(y);
     }
 
-    private Sprite getSpriteForType(GroundItemType itemType) {
-        switch (itemType) {
-            case ROCK: return SpriteContainer.getInstance().getSprite(SpriteFile.ROCK);
-            case FEATHER: return SpriteContainer.getInstance().getSprite(SpriteFile.FEATHER);
-            case STICK: return SpriteContainer.getInstance().getSprite(SpriteFile.STICK);
-            case STRING: return SpriteContainer.getInstance().getSprite(SpriteFile.STRING);
-        }
-        return null;
-    }
-
     public static void addGroundItem(GroundItem groundItem) {
-        MoribundClient.getInstance().getPickables().add(groundItem);
-        MoribundClient.getInstance().getDrawables().add(groundItem);
+        MoribundClient.getInstance().getGroundItems().add(groundItem);
+        MoribundClient.getInstance().getDrawableGameAssets().add(groundItem);
     }
 
     @Override

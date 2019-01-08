@@ -2,8 +2,8 @@ package com.github.moribund.net.packets.account;
 
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.objects.nonplayable.items.GroundItem;
-import com.github.moribund.objects.nonplayable.items.GroundItemType;
-import com.github.moribund.objects.playable.Player;
+import com.github.moribund.objects.nonplayable.items.ItemType;
+import com.github.moribund.objects.playable.players.Player;
 import com.github.moribund.utils.PlayerUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import javafx.util.Pair;
@@ -45,7 +45,7 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
     @Override
     public void process() {
         groundItems.forEach(pair -> {
-            val type = GroundItemType.getGroundItemType(pair.getKey());
+            val type = ItemType.getItemType(pair.getKey());
             val x = pair.getValue().getKey();
             val y = pair.getValue().getValue();
             val groundItem = new GroundItem(type, x, y);

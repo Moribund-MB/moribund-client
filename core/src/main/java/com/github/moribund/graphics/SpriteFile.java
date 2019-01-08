@@ -1,4 +1,4 @@
-package com.github.moribund.images;
+package com.github.moribund.graphics;
 
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import lombok.Getter;

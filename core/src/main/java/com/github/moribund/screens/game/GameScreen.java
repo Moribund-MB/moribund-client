@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.images.SpriteContainer;
-import com.github.moribund.images.SpriteFile;
-import com.github.moribund.objects.attributes.Drawable;
+import com.github.moribund.graphics.SpriteContainer;
+import com.github.moribund.graphics.SpriteFile;
+import com.github.moribund.objects.attributes.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Flaggable;
-import com.github.moribund.objects.playable.PlayableCharacter;
+import com.github.moribund.objects.playable.players.PlayableCharacter;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
@@ -87,10 +87,11 @@ class GameScreen implements Screen {
             selected[i].setAlpha(0.8f);
             selected[i].draw(uiSpritebatch);
         }
+        MoribundClient.getInstance().getDrawableUIAssets().forEach(drawable -> drawable.draw(uiSpritebatch));
     }
 
     /**
-     * Draws the {@link com.github.moribund.images.SpriteFile#BACKGROUND} {@link Sprite}.
+     * Draws the {@link com.github.moribund.graphics.SpriteFile#BACKGROUND} {@link Sprite}.
      */
     private void drawBackground() {
         background.draw(gameSpriteBatch);
@@ -148,11 +149,11 @@ class GameScreen implements Screen {
     }
 
     /**
-     * Draws all the {@link Drawable}'s
+     * Draws all the {@link DrawableGameAsset}'s
      * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
      */
     private void drawVisibleEntities() {
-        MoribundClient.getInstance().getDrawables().forEach(drawable -> drawable.draw(gameSpriteBatch));
+        MoribundClient.getInstance().getDrawableGameAssets().forEach(drawable -> drawable.draw(gameSpriteBatch));
     }
 
     /**
