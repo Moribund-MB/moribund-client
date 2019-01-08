@@ -1,12 +1,14 @@
 package com.github.moribund.net.packets.account;
 
 import com.github.moribund.net.packets.IncomingPacket;
+import com.github.moribund.net.packets.data.GroundItemData;
+import com.github.moribund.net.packets.data.PlayerLocationData;
+import com.github.moribund.net.packets.data.PlayerRotationData;
 import com.github.moribund.objects.nonplayable.items.GroundItem;
 import com.github.moribund.objects.nonplayable.items.ItemType;
 import com.github.moribund.objects.playable.players.Player;
 import com.github.moribund.utils.PlayerUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import javafx.util.Pair;
 import lombok.val;
 
 /**
@@ -24,17 +26,15 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
      * The locations of all the {@link Player}s in the
      * game currently so that they may be rendered to this player logging in.
      */
-    private ObjectList<Pair<Integer, Pair<Float, Float>>> playerLocations;
+    private ObjectList<PlayerLocationData> playerLocations;
+
     /**
      * The rotations of all the {@link Player}s in the
      * game currently so that they may be rendered to this player logging in.
      */
-    private ObjectList<Pair<Integer, Float>> playerRotations;
+    private ObjectList<PlayerRotationData> playerRotations;
 
-    /**
-     * TODO SERIOUSLY MAKE POJOS FOR ALL THESE CUZ THIS IS RIDICULOUS
-     */
-    private ObjectList<Pair<Integer, Pair<Float, Float>>> groundItems;
+    private ObjectList<GroundItemData> groundItems;
 
     /**
      * A private constructor to ensure the client cannot unexpectedly send this
@@ -44,24 +44,18 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
 
     @Override
     public void process() {
-        groundItems.forEach(pair -> {
-            val type = ItemType.getItemType(pair.getKey());
-            val x = pair.getValue().getKey();
-            val y = pair.getValue().getValue();
-            val groundItem = new GroundItem(type, x, y);
+        groundItems.forEach(itemData -> {
+            val type = ItemType.getItemType(itemData.getItemId());
+            val groundItem = new GroundItem(type, itemData.getX(), itemData.getY());
             GroundItem.addGroundItem(groundItem);
         });
-        playerLocations.forEach(pair -> {
-            val playerId = pair.getKey();
-            val location = pair.getValue();
-            val x = location.getKey();
-            val y = location.getValue();
-            PlayerUtils.makePlayer(gameId, playerId, x, y);
+        playerLocations.forEach(locationData -> {
+            val playerId = locationData.getPlayerId();
+            PlayerUtils.makePlayer(gameId, playerId, locationData.getX(), locationData.getY());
         });
-        playerRotations.forEach(pair -> {
-            val playerId = pair.getKey();
-            val rotation = pair.getValue();
-            PlayerUtils.rotatePlayer(playerId, rotation);
+        playerRotations.forEach(rotationData -> {
+            val playerId = rotationData.getPlayerId();
+            PlayerUtils.rotatePlayer(playerId, rotationData.getAngle());
         });
         PlayerUtils.setClientPlayer(playerId);
     }
