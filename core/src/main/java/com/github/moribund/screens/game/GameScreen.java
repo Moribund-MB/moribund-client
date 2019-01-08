@@ -11,6 +11,7 @@ import com.github.moribund.graphics.SpriteFile;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
+import com.github.moribund.objects.playable.players.containers.Inventory;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
@@ -71,7 +72,7 @@ class GameScreen implements Screen {
     }
 
     private void drawUI() {
-        val unselected = new Sprite[3];
+        val unselected = new Sprite[Inventory.CAPACITY];
         for (int i = 0; i < unselected.length; i++) {
             unselected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED));
             unselected[i].setX(Gdx.graphics.getWidth() - (unselected[i].getWidth() * (i + 1)));
