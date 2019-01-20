@@ -114,7 +114,7 @@ public class Player implements PlayableCharacter {
 
     @Override
     public void bindKeys() {
-        val upKeyAction = new PlayerAction() {
+        keyBinds.put(Input.Keys.W, new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.MOVE_FORWARD_FLAG);
@@ -124,8 +124,8 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.MOVE_FORWARD_FLAG);
             }
-        };
-        val downKeyAction = new PlayerAction() {
+        });
+        keyBinds.put(Input.Keys.S, new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.MOVE_BACKWARD_FLAG);
@@ -135,8 +135,8 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.MOVE_BACKWARD_FLAG);
             }
-        };
-        val rightKeyAction = new PlayerAction() {
+        });
+        keyBinds.put(Input.Keys.D, new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.ROTATE_RIGHT_FLAG);
@@ -146,8 +146,8 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.ROTATE_RIGHT_FLAG);
             }
-        };
-        val leftKeyAction = new PlayerAction() {
+        });
+        keyBinds.put(Input.Keys.A, new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.ROTATE_LEFT_FLAG);
@@ -157,18 +157,7 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.ROTATE_LEFT_FLAG);
             }
-        };
-
-        keyBinds.put(Input.Keys.UP, upKeyAction);
-        keyBinds.put(Input.Keys.DOWN, downKeyAction);
-        keyBinds.put(Input.Keys.RIGHT, rightKeyAction);
-        keyBinds.put(Input.Keys.LEFT, leftKeyAction);
-
-        keyBinds.put(Input.Keys.W, upKeyAction);
-        keyBinds.put(Input.Keys.S, downKeyAction);
-        keyBinds.put(Input.Keys.D, rightKeyAction);
-        keyBinds.put(Input.Keys.A, leftKeyAction);
-
+        });
         keyBinds.put(Input.Keys.E, new PlayerAction() {
             @Override
             public void keyPressed() {
@@ -195,24 +184,6 @@ public class Player implements PlayableCharacter {
                 newSprite.setPosition(sprite.getX(), sprite.getY());
                 newSprite.setRotation(sprite.getRotation());
                 sprite = newSprite;
-            }
-
-            @Override
-            public void keyUnpressed() {
-
-            }
-        });
-        keyBinds.put(Input.Keys.T, new PlayerAction() {
-            @Override
-            public void keyPressed() {
-                val projectile = Projectile.builder()
-                        .withSprite(SpriteFile.ARROW_PROJECTILE)
-                        .withMovementSpeed(10)
-                        .withAngle(getRotation())
-                        .atXY(getX(), getY())
-                        .ignoring(Player.this)
-                        .create();
-                Projectile.launchProjectile(projectile);
             }
 
             @Override
@@ -359,7 +330,15 @@ public class Player implements PlayableCharacter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        val projectile = Projectile.builder()
+                .withSprite(SpriteFile.ARROW_PROJECTILE)
+                .withMovementSpeed(10)
+                .withAngle(getRotation())
+                .atXY(getX(), getY())
+                .ignoring(Player.this)
+                .create();
+        Projectile.launchProjectile(projectile);
+        return true;
     }
 
     @Override
