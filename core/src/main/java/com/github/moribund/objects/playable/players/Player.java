@@ -114,7 +114,7 @@ public class Player implements PlayableCharacter {
 
     @Override
     public void bindKeys() {
-        keyBinds.put(Input.Keys.UP, new PlayerAction() {
+        val upKeyAction = new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.MOVE_FORWARD_FLAG);
@@ -124,8 +124,8 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.MOVE_FORWARD_FLAG);
             }
-        });
-        keyBinds.put(Input.Keys.DOWN, new PlayerAction() {
+        };
+        val downKeyAction = new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.MOVE_BACKWARD_FLAG);
@@ -135,8 +135,8 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.MOVE_BACKWARD_FLAG);
             }
-        });
-        keyBinds.put(Input.Keys.RIGHT, new PlayerAction() {
+        };
+        val rightKeyAction = new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.ROTATE_RIGHT_FLAG);
@@ -146,8 +146,8 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.ROTATE_RIGHT_FLAG);
             }
-        });
-        keyBinds.put(Input.Keys.LEFT, new PlayerAction() {
+        };
+        val leftKeyAction = new PlayerAction() {
             @Override
             public void keyPressed() {
                 flag(FlagConstants.ROTATE_LEFT_FLAG);
@@ -157,10 +157,22 @@ public class Player implements PlayableCharacter {
             public void keyUnpressed() {
                 flagToRemove(FlagConstants.ROTATE_LEFT_FLAG);
             }
-        });
+        };
+
+        keyBinds.put(Input.Keys.UP, upKeyAction);
+        keyBinds.put(Input.Keys.DOWN, downKeyAction);
+        keyBinds.put(Input.Keys.RIGHT, rightKeyAction);
+        keyBinds.put(Input.Keys.LEFT, leftKeyAction);
+
+        keyBinds.put(Input.Keys.W, upKeyAction);
+        keyBinds.put(Input.Keys.S, downKeyAction);
+        keyBinds.put(Input.Keys.D, rightKeyAction);
+        keyBinds.put(Input.Keys.A, leftKeyAction);
+
         keyBinds.put(Input.Keys.E, new PlayerAction() {
             @Override
             public void keyPressed() {
+
                 if (inventory.hasSpace()) {
                     val pickableObjectNear = getPickableObjectNearest();
                     if (pickableObjectNear != null) {
