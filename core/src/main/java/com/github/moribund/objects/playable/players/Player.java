@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
+import com.github.moribund.net.packets.items.PickupItemPacket;
 import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.objects.flags.Flag;
@@ -161,13 +162,10 @@ public class Player implements PlayableCharacter {
         keyBinds.put(Input.Keys.E, new PlayerAction() {
             @Override
             public void keyPressed() {
-
                 if (inventory.hasSpace()) {
                     val pickableObjectNear = getPickableObjectNearest();
                     if (pickableObjectNear != null) {
-                        MoribundClient.getInstance().getGroundItems().remove(pickableObjectNear);
-                        MoribundClient.getInstance().getDrawableGameAssets().remove(pickableObjectNear);
-                        pickupItem(pickableObjectNear);
+                        sendPickupItemRequest(pickableObjectNear);
                     }
                 }
             }
@@ -193,9 +191,17 @@ public class Player implements PlayableCharacter {
         });
     }
 
-    private void pickupItem(GroundItem groundItem) {
+    private void sendPickupItemRequest(GroundItem groundItem) {
+        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+        val pickupItemPacket = new PickupItemPacket(gameId, playerId, groundItem.getItemType().getId(), groundItem.getX(), groundItem.getY());
+        packetDispatcher.sendTCP(pickupItemPacket);
+    }
+
+    public void pickupItem(GroundItem groundItem) {
         val item = new Item(groundItem.getItemType());
         inventory.addItem(item);
+        MoribundClient.getInstance().getGroundItems().remove(groundItem);
+        MoribundClient.getInstance().getDrawableGameAssets().remove(groundItem);
     }
 
     private GroundItem getPickableObjectNearest() {

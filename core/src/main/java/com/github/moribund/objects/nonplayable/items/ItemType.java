@@ -12,6 +12,7 @@ public enum ItemType {
     STRING(3, SpriteContainer.getInstance().getSprite(SpriteFile.STRING));
 
     private static final ItemType[] VALUES = values();
+    @Getter
     private final int id;
     @Getter
     private final Sprite sprite;

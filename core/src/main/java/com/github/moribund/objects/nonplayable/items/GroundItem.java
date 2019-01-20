@@ -48,4 +48,8 @@ public final class GroundItem implements Locatable, DrawableGameAsset {
     public void draw(SpriteBatch spriteBatch) {
         sprite.draw(spriteBatch);
     }
+
+    public boolean matches(int itemId, float x, float y) {
+        return itemType.getId() == itemId && getX() == x && getY() == y;
+    }
 }
