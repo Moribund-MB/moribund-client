@@ -118,7 +118,7 @@ class GameScreen implements Screen {
      */
     private float getCameraPositionX(PlayableCharacter player) {
         val playerX = player.getX();
-        val balancingConstant = 400;
+        val balancingConstant = 500;
         val furthestLeftBound = -(background.getWidth() / 2) + balancingConstant;
         val furthestRightBound = background.getWidth() / 2 - balancingConstant;
 
@@ -137,7 +137,7 @@ class GameScreen implements Screen {
      */
     private float getCameraPositionY(PlayableCharacter player) {
         val playerY = player.getY();
-        val balancingConstant = 240;
+        val balancingConstant = 350;
         val furthestLowerBound = -(background.getHeight() / 2) + balancingConstant;
         val furthestUpperBound = background.getHeight() / 2 - balancingConstant;
 
