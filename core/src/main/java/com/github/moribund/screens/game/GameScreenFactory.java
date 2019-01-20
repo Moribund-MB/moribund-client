@@ -1,5 +1,6 @@
 package com.github.moribund.screens.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -45,7 +46,7 @@ public class GameScreenFactory {
      */
     private Camera createCamera() {
         val camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1000, 700);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         return camera;
     }
 }
