@@ -99,7 +99,7 @@ public class PrivateMatchOptionScreen implements Screen {
     }
 
     private void createButtons(ObjectList<Actor> buttons) {
-        val textButtonStyle = StyleUtils.getTextButtonStyle();
+        val textButtonStyle = StyleUtils.TEXT_BUTTON_STYLE;
         val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
@@ -107,7 +107,7 @@ public class PrivateMatchOptionScreen implements Screen {
     }
 
     private void createTextFields(ObjectList<Actor> textFields) {
-        val textFieldStyle = StyleUtils.getTextFieldStyle();
+        val textFieldStyle = StyleUtils.TEXT_FIELD_STYLE;
         val privateMatchCodePrompt = "Enter Match Code Here";
 
         privateMatchCodeInput = new TextField(privateMatchCodePrompt, textFieldStyle);

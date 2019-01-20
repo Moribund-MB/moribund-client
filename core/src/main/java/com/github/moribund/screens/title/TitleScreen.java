@@ -146,7 +146,7 @@ public class TitleScreen implements Screen {
     }
 
     private void createButtons(ObjectList<Actor> buttons) {
-        val textButtonStyle = StyleUtils.getTextButtonStyle();
+        val textButtonStyle = StyleUtils.TEXT_BUTTON_STYLE;
 
         val findMatchText = "Find Match";
         val settingsText = "Settings";

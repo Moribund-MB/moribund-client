@@ -104,7 +104,7 @@ public class LoginScreen implements Screen {
     private Stage createInputStage() {
         val stageFactory = new StageFactory();
         val stage = stageFactory.createStage(this::createCredentialTextFields, buttons -> {
-            loginButton = new TextButton("Login", StyleUtils.getTextButtonStyle());
+            loginButton = new TextButton("Login", StyleUtils.TEXT_BUTTON_STYLE);
             buttons.add(loginButton);
         });
 
@@ -115,14 +115,14 @@ public class LoginScreen implements Screen {
     private Stage createAttemptStage() {
         val stageFactory = new StageFactory();
         return stageFactory.createStage(actors -> {
-            val labelStyle = StyleUtils.getLabelStyle();
+            val labelStyle = StyleUtils.LABEL_STYLE;
             val label = new Label("Attempting to log you in...", labelStyle);
             actors.add(label);
         });
     }
 
     private void createCredentialTextFields(ObjectList<Actor> textFields) {
-        val textFieldStyle = StyleUtils.getTextFieldStyle();
+        val textFieldStyle = StyleUtils.TEXT_FIELD_STYLE;
 
         usernameTextField = new TextField("", textFieldStyle);
         passwordTextField = new TextField("", textFieldStyle);

@@ -102,7 +102,7 @@ class SettingsScreen implements Screen {
     }
 
     private void createButtons(ObjectList<Actor> buttons) {
-        val textButtonStyle = StyleUtils.getTextButtonStyle();
+        val textButtonStyle = StyleUtils.TEXT_BUTTON_STYLE;
         val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
@@ -110,7 +110,7 @@ class SettingsScreen implements Screen {
     }
 
     private void createSlider(ObjectList<Actor> sliders) {
-        val sliderStyle = StyleUtils.getSliderStyle();
+        val sliderStyle = StyleUtils.SLIDER_STYLE;
 
         float audioMinimumValue = 0;
         float audioMaximumValue = 1;
