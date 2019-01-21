@@ -76,7 +76,8 @@ public final class ProjectileBuilder {
 
     /**
      * Creates the {@link Projectile} with the given configurations above.
-     * @return The newly created {@link Projectile}.
+     * @return The newly created {@link Projectile}. Returns null if the {@link Projectile} created encounters an
+     *         {@link InvalidObjectException}.
      */
     public Projectile create() {
         try {
