@@ -3,6 +3,7 @@ package com.github.moribund;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicContainer;
+import com.github.moribund.graphics.AnimationContainer;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.graphics.drawables.DrawableUIAsset;
@@ -85,6 +86,7 @@ public class MoribundClient extends Game {
         //connectNetworking();
         SpriteContainer.getInstance().setup();
         MusicContainer.getInstance().setup();
+        AnimationContainer.getInstance().setup();
 
         val initialScreenFactory = new LoginScreenFactory();
         val initialScreen = initialScreenFactory.createScreen();
