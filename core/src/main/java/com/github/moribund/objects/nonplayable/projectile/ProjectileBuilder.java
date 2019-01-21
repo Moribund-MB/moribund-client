@@ -1,11 +1,15 @@
 package com.github.moribund.objects.nonplayable.projectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
+import com.github.moribund.graphics.SpriteVertices;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
+
+import java.io.InvalidObjectException;
 
 /**
  * The {@code ProjectileBuilder} follows the <a href="https://en.wikipedia.org/wiki/Builder_pattern">Builder pattern</a>
@@ -13,12 +17,13 @@ import it.unimi.dsi.fastutil.objects.ObjectSet;
  */
 public final class ProjectileBuilder {
     private Sprite sprite;
-    private float x;
-    private float y;
+    private float x = -1;
+    private float y = -1;
     private float rotationSpeed;
-    private float movingSpeed;
-    private float angle;
+    private float movingSpeed = -1;
+    private float angle = -1;
     private ObjectSet<DrawableGameAsset> ignores;
+    private Polygon polygon;
 
     /**
      * Takes a {@link SpriteFile} and makes a new {@link Sprite} out of it.
@@ -80,11 +85,38 @@ public final class ProjectileBuilder {
         return this;
     }
 
+    public ProjectileBuilder withVertices(SpriteVertices spriteVertices) {
+        polygon = new Polygon(spriteVertices.getVertices());
+        return this;
+    }
+
     /**
      * Creates the {@link Projectile} with the given configurations above.
      * @return The newly created {@link Projectile}.
      */
     public Projectile create() {
-        return new Projectile(sprite, x, y, angle, rotationSpeed, movingSpeed, ignores);
+        try {
+            if (sprite == null) {
+                throw new InvalidObjectException("Unable to make a Projectile without a Sprite.");
+            }
+            if (polygon == null) {
+                throw new InvalidObjectException("Unable to make a Projectile without vertices");
+            }
+            if (x == -1) {
+                throw new InvalidObjectException("Unable to make a projectile with no x-coordinate");
+            }
+            if (y == -1) {
+                throw new InvalidObjectException("Unable to make a projectile with no x-coordinate");
+            }
+            if (angle == -1) {
+                throw new InvalidObjectException("Unable to make a projectile without an angle");
+            }
+            if (movingSpeed == -1) {
+                throw new InvalidObjectException("Unable to make a Projectile with no moving speed");
+            }
+        } catch (InvalidObjectException e) {
+            e.printStackTrace();
+        }
+        return new Projectile(sprite, polygon, x, y, angle, rotationSpeed, movingSpeed, ignores);
     }
 }

@@ -14,8 +14,8 @@ public final class StyleUtils {
     public static final TextField.TextFieldStyle TEXT_FIELD_STYLE = createTextFieldStyle();
     public static final Label.LabelStyle LABEL_STYLE = createLabelStyle();
 
-    private static final String SKIN_NAME = "medieval";
-    private static final String UI_ATLAS_NAME = "medieval";
+    private static final String SKIN_NAME = "clean-crispy";
+    private static final String UI_ATLAS_NAME = "clean-crispy-ui";
     private static final String FONT_NAME = "font-export";
 
     private static TextField.TextFieldStyle createTextFieldStyle() {
@@ -23,15 +23,15 @@ public final class StyleUtils {
 
         textFieldStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME +".fnt"));
         textFieldStyle.fontColor = Color.BLACK;
-        textFieldStyle.background = SKIN.getDrawable("buttonlong_beige_pressed");
+        textFieldStyle.background = SKIN.getDrawable("textfield");
         return textFieldStyle;
     }
 
     private static Slider.SliderStyle createSliderStyle() {
         val sliderStyle = new Slider.SliderStyle();
 
-        //sliderStyle.knob = SKIN.getDrawable("scrollpane-knob-horizontal");
-        //sliderStyle.background = SKIN.getDrawable("scrollpane-horizontal");
+        sliderStyle.knob = SKIN.getDrawable("scrollpane-knob-horizontal");
+        sliderStyle.background = SKIN.getDrawable("scrollpane-horizontal");
         return sliderStyle;
     }
 
@@ -39,9 +39,9 @@ public final class StyleUtils {
         val textButtonStyle = new TextButton.TextButtonStyle();
 
         textButtonStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME + ".fnt"));
-        textButtonStyle.up = SKIN.getDrawable("buttonlong_brown");
-        textButtonStyle.down = SKIN.getDrawable("buttonlong_brown_pressed");
-        textButtonStyle.checked = SKIN.getDrawable(("buttonlong_brown"));
+        textButtonStyle.up = SKIN.getDrawable("button");
+        textButtonStyle.down = SKIN.getDrawable("button-pressed");
+        textButtonStyle.checked = SKIN.getDrawable(("button-over"));
         return textButtonStyle;
     }
 

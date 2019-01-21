@@ -2,7 +2,9 @@ package com.github.moribund.objects.nonplayable.projectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Collidable;
@@ -51,14 +53,16 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
      */
     private final float movementSpeed;
     private final LocalDateTime timeReleased;
+    private final Polygon polygon;
 
     /**
      * Creates a new {@code Projectile} with a multitude of initial settings. It is important to note that in this
      * constructor, a {@code Projectile} is automatically marked with the {@link FlagConstants#MOVE_FORWARD_FLAG}
      * flag.
      */
-    Projectile(Sprite sprite, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<DrawableGameAsset> ignores) {
+    Projectile(Sprite sprite, Polygon polygon, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<DrawableGameAsset> ignores) {
         this.sprite = sprite;
+        this.polygon = polygon;
         this.rotationSpeed = rotationSpeed;
         this.movementSpeed = movementSpeed;
         this.ignores = new ObjectArraySet<>(ignores);
@@ -67,6 +71,9 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
         sprite.setX(startingX);
         sprite.setY(startingY);
         sprite.setRotation(startingAngle);
+        polygon.setPosition(startingX, startingY);
+        polygon.setRotation(startingAngle);
+        polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
         timeReleased = LocalDateTime.now();
     }
 
@@ -118,7 +125,7 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
                 .filter(drawable -> drawable instanceof Collidable)
                 .filter(drawable -> !ignores.contains(drawable))
                 .forEach(drawable -> {
-                    if (sprite.getBoundingRectangle().overlaps(drawable.getSprite().getBoundingRectangle())) {
+                    if (Intersector.overlapConvexPolygons(polygon, drawable.getPolygon())) {
                         removeProjectile();
                     }
                 });
@@ -142,16 +149,19 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
     @Override
     public void setX(float x) {
         sprite.setX(x);
+        polygon.setPosition(x, getY());
     }
 
     @Override
     public void setY(float y) {
         sprite.setY(y);
+        polygon.setPosition(getX(), y);
     }
 
     @Override
     public void setRotation(float angle) {
         sprite.setRotation(angle);
+        polygon.setRotation(angle);
     }
 
     @Override
@@ -176,6 +186,7 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
         val yVelocity = movementSpeed * MathUtils.sinDeg(angle);
 
         sprite.translate(xVelocity, yVelocity);
+        polygon.translate(xVelocity, yVelocity);
     }
 
     @Override
@@ -185,5 +196,11 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
         val yVelocity = -movementSpeed * MathUtils.sinDeg(angle);
 
         sprite.translate(xVelocity, yVelocity);
+        polygon.translate(xVelocity, yVelocity);
+    }
+
+    @Override
+    public Polygon getPolygon() {
+        return polygon;
     }
 }

@@ -3,8 +3,10 @@ package com.github.moribund.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
@@ -33,6 +35,7 @@ class GameScreen implements Screen {
      * The sprite that represents the background image.
      */
     private final Sprite background;
+    private final ShapeRenderer renderer;
 
     /**
      * Constructor that provides the {@code GameScreen} its dependencies.
@@ -45,6 +48,7 @@ class GameScreen implements Screen {
         this.gameSpriteBatch = gameSpritebatch;
         this.camera = camera;
         this.background = background;
+        renderer = new ShapeRenderer();
     }
 
     /**
@@ -53,7 +57,7 @@ class GameScreen implements Screen {
      */
     @Override
     public void show() {
-
+        renderer.setColor(Color.GREEN);
     }
 
     /**
@@ -64,11 +68,14 @@ class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        renderer.setProjectionMatrix(camera.combined);
+        renderer.begin(ShapeRenderer.ShapeType.Line);
         processFlags();
         GLUtils.clearGL();
         drawGameSpriteBatch(this::drawBackground, this::drawVisibleEntities);
         drawUISpriteBatch(this::drawUI);
         cameraFollowPlayer();
+        renderer.end();
     }
 
     private void drawUI() {
@@ -154,7 +161,10 @@ class GameScreen implements Screen {
      * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
      */
     private void drawVisibleEntities() {
-        MoribundClient.getInstance().getDrawableGameAssets().forEach(drawable -> drawable.draw(gameSpriteBatch));
+        MoribundClient.getInstance().getDrawableGameAssets().forEach(drawable -> {
+            drawable.draw(gameSpriteBatch);
+            renderer.polygon(drawable.getPolygon().getTransformedVertices());
+        });
     }
 
     /**
