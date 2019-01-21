@@ -23,6 +23,7 @@ public enum SpriteFile {
      * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
      */
     BACKGROUND("images/background.png"),
+    MINIMAP("images/minimap.png"),
     INVENTORY_SELECTED("images/ui/inventory/selected.png"),
     INVENTORY_UNSELECTED("images/ui/inventory/unselected.png"),
     FEATHER("images/items/raw/feather.png"),

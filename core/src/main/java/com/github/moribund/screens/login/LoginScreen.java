@@ -3,6 +3,9 @@ package com.github.moribund.screens.login;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -17,19 +20,29 @@ import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.login.LoginPacket;
 import com.github.moribund.screens.StageFactory;
+import com.github.moribund.utils.AestheticUtils;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.java.Log;
 import lombok.val;
 
+import java.io.IOException;
 import java.util.Arrays;
 
+@Log
 public class LoginScreen implements Screen {
 
     @Getter
     private final MusicPlayer musicPlayer;
+    @Getter
+    private final Batch batch;
+    @Getter
+    private final Sprite background;
+    @Getter
+    private final Camera camera;
     @Setter
     private LoginScreenState loginScreenState;
     private TextField usernameTextField;
@@ -37,10 +50,14 @@ public class LoginScreen implements Screen {
     private Button loginButton;
     private Stage inputStage;
     private Stage attemptStage;
+    private boolean cameraMovingLeft;
 
-    public LoginScreen(MusicPlayer musicPlayer, LoginScreenState loginScreenState) {
+    LoginScreen(MusicPlayer musicPlayer, LoginScreenState loginScreenState, Batch batch, Sprite background, Camera camera) {
         this.musicPlayer = musicPlayer;
         this.loginScreenState = loginScreenState;
+        this.batch = batch;
+        this.background = background;
+        this.camera = camera;
         inputStage = createInputStage();
         attemptStage = createAttemptStage();
     }
@@ -96,9 +113,14 @@ public class LoginScreen implements Screen {
         val username = usernameTextField.getText().trim();
         val password = passwordTextField.getText();
 
-        MoribundClient.getInstance().connectNetworking();
-        loginScreenState = LoginScreenState.ATTEMPTING;
-        MoribundClient.getInstance().getPacketDispatcher().sendTCP(new LoginPacket(username, password));
+        try {
+            MoribundClient.getInstance().connectNetworking();
+            loginScreenState = LoginScreenState.ATTEMPTING;
+            MoribundClient.getInstance().getPacketDispatcher().sendTCP(new LoginPacket(username, password));
+        } catch (IOException e) {
+            log.severe("The server is currently offline!");
+            loginScreenState = LoginScreenState.INPUT;
+        }
     }
 
     private Stage createInputStage() {
@@ -140,6 +162,7 @@ public class LoginScreen implements Screen {
     @Override
     public void render(float delta) {
         GLUtils.clearGL();
+        AestheticUtils.renderAestheticSetting(camera, batch, background);
         switch (loginScreenState) {
             case INPUT:
                 inputStage.draw();

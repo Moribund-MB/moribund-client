@@ -3,6 +3,9 @@ package com.github.moribund.screens.title;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -13,6 +16,7 @@ import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
 import com.github.moribund.screens.StageFactory;
 import com.github.moribund.screens.game.GameScreenFactory;
+import com.github.moribund.utils.AestheticUtils;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -30,6 +34,9 @@ public class TitleScreen implements Screen {
      * The music player to play cached music.
      */
     private final MusicPlayer musicPlayer;
+    private final Batch batch;
+    private final Sprite background;
+    private final Camera camera;
     private final Stage stage;
 
     private TextButton findMatchButton, settingsButton, privateMatchButton, exitButton;
@@ -38,8 +45,11 @@ public class TitleScreen implements Screen {
      * Constructor that provides the {@code TitleScreen} its dependencies.
      * @param musicPlayer The music player dependency.
      */
-    public TitleScreen(MusicPlayer musicPlayer) {
+    public TitleScreen(MusicPlayer musicPlayer, Batch batch, Sprite background, Camera camera) {
         this.musicPlayer = musicPlayer;
+        this.batch = batch;
+        this.background = background;
+        this.camera = camera;
         stage = createStage();
     }
 
@@ -80,7 +90,7 @@ public class TitleScreen implements Screen {
         privateMatchButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val privateMatchScreen = new PrivateMatchOptionScreen(TitleScreen.this);
+                val privateMatchScreen = new PrivateMatchOptionScreen(TitleScreen.this, batch, background, camera);
                 MoribundClient.getInstance().switchToScreen(privateMatchScreen, false);
             }
         });
@@ -91,7 +101,7 @@ public class TitleScreen implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val settingsScreen = new SettingsScreen(TitleScreen.this, musicPlayer);
+                val settingsScreen = new SettingsScreen(TitleScreen.this, musicPlayer, batch, background, camera);
                 MoribundClient.getInstance().switchToScreen(settingsScreen, false);
             }
         });
@@ -109,6 +119,7 @@ public class TitleScreen implements Screen {
     @Override
     public void render(float delta) {
         GLUtils.clearGL();
+        AestheticUtils.renderAestheticSetting(camera, batch, background);
         stage.draw();
         // Draw your screen here. "delta" is the time since last render in seconds.
     }

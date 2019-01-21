@@ -64,16 +64,12 @@ public class NetworkBootstrapper {
      * {@link Client}. This method registers the packets before starting the
      * {@link com.esotericsoftware.kryonet.Connection}.
      */
-    public void connect() {
+    public void connect() throws IOException {
         client.addListener(new ClientListener());
         registerPackets(client.getKryo());
 
         client.start();
-        try {
-            client.connect(INITIAL_TIMEOUT, IP_ADDRESS, PORT, PORT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        client.connect(INITIAL_TIMEOUT, IP_ADDRESS, PORT, PORT);
     }
 
     /**

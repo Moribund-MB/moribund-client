@@ -3,7 +3,6 @@ package com.github.moribund;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.github.moribund.audio.MusicContainer;
-import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.graphics.drawables.DrawableUIAsset;
@@ -12,8 +11,7 @@ import com.github.moribund.net.PacketDispatcher;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.nonplayable.items.GroundItem;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
-import com.github.moribund.screens.login.LoginScreen;
-import com.github.moribund.screens.login.LoginScreenState;
+import com.github.moribund.screens.login.LoginScreenFactory;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -21,6 +19,8 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
+
+import java.io.IOException;
 
 /**
  * The {@code MoribundClient} class represents the entire {@link Game} for
@@ -82,11 +82,12 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
-        val initialScreen = new LoginScreen(new MusicPlayer(), LoginScreenState.INPUT);
-
         //connectNetworking();
         SpriteContainer.getInstance().setup();
         MusicContainer.getInstance().setup();
+
+        val initialScreenFactory = new LoginScreenFactory();
+        val initialScreen = initialScreenFactory.createScreen();
         switchToScreen(initialScreen, true);
     }
 
@@ -115,7 +116,7 @@ public class MoribundClient extends Game {
     /**
      * Connects the client to the {@link com.esotericsoftware.kryonet.Server}.
      */
-    public void connectNetworking() {
+    public void connectNetworking() throws IOException {
         networkBootstrapper.connect();
     }
 

@@ -6,6 +6,7 @@ import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.screens.login.LoginScreen;
 import com.github.moribund.screens.login.LoginScreenState;
 import com.github.moribund.screens.title.TitleScreen;
+import lombok.val;
 
 public final class LoginResponsePacket implements IncomingPacket {
     private LoginResponse loginResponse;
@@ -19,7 +20,11 @@ public final class LoginResponsePacket implements IncomingPacket {
             switch (loginResponse) {
                 case NEW_ACCOUNT:
                 case SUCCESS:
-                    Gdx.app.postRunnable(() -> MoribundClient.getInstance().switchToScreen(new TitleScreen(loginScreen.getMusicPlayer()), false));
+                    Gdx.app.postRunnable(() -> {
+                        val titleScreen = new TitleScreen(loginScreen.getMusicPlayer(), loginScreen.getBatch(),
+                                loginScreen.getBackground(), loginScreen.getCamera());
+                        MoribundClient.getInstance().switchToScreen(titleScreen, false);
+                    });
                     break;
                 case INCORRECT_PASSWORD:
                     loginScreen.setLoginScreenState(LoginScreenState.INPUT);
