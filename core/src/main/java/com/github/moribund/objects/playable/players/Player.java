@@ -19,6 +19,7 @@ import com.github.moribund.objects.nonplayable.items.Item;
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Inventory;
+import com.github.moribund.objects.playable.players.ui.HealthBar;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
@@ -89,7 +90,15 @@ public class Player implements PlayableCharacter {
         inventory = new Inventory();
         polygon = new Polygon(SpriteVertices.PLAYER.getVertices());
         polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
-        MoribundClient.getInstance().getDrawableUIAssets().add(inventory);
+    }
+
+    /**
+     * todo optimize this
+     */
+    public void addUIAssets() {
+        val assets = MoribundClient.getInstance().getDrawableUIAssets();
+        assets.add(inventory);
+        assets.add(new HealthBar(this));
     }
 
     private void changeCharacter(SpriteFile spriteFile, SpriteVertices spriteVertices) {

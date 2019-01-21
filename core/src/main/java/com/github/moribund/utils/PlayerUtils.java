@@ -28,9 +28,10 @@ public class PlayerUtils {
     public void setClientPlayer(int playerId) {
         val player = MoribundClient.getInstance().getPlayers().get(playerId);
         MoribundClient.getInstance().setPlayer(player);
+        Gdx.input.setInputProcessor(player);
         if (player instanceof Player) {
             val actualPlayer = (Player) player;
-            Gdx.input.setInputProcessor(actualPlayer);
+            actualPlayer.addUIAssets();
         }
     }
 
