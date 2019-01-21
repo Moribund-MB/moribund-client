@@ -15,8 +15,8 @@ public class Item {
     public void draw(int slot, SpriteBatch spriteBatch) {
         val sprite = new Sprite(itemType.getSprite());
         val incrementation = 95;
-        val x = (float) (Gdx.graphics.getWidth() - (incrementation * 3) + (incrementation * slot)) + 20;
-        val y = (float) (Gdx.graphics.getHeight() - incrementation) + 20;
+        val x = (float) (Gdx.graphics.getWidth() - (incrementation * 5) + (incrementation * slot)) + 20 - 175;
+        val y = 20f;
         sprite.setX(x);
         sprite.setY(y);
         sprite.draw(spriteBatch);
