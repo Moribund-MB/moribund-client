@@ -38,8 +38,8 @@ public class PlayerUtils {
      * Makes a new player and sets their coordinates for rendering them.
      * @param playerId The unique player ID of the character made.
      */
-    public void makePlayer(int gameId, int playerId, float x, float y) {
-        val player = new Player(gameId, playerId);
+    public void makePlayer(int gameId, int playerId, float x, float y, int hitpoints) {
+        val player = new Player(gameId, playerId, hitpoints);
         val client = MoribundClient.getInstance();
 
         client.getPlayers().put(playerId, player);

@@ -43,6 +43,8 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
     @Getter
     private final Sprite sprite;
 
+    @Getter
+    private final ProjectileType projectileType;
     /**
      * The speed at which the {@code Projectile} can rotate left or right.
      */
@@ -60,9 +62,10 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
      * constructor, a {@code Projectile} is automatically marked with the {@link FlagConstants#MOVE_FORWARD_FLAG}
      * flag.
      */
-    Projectile(Sprite sprite, Polygon polygon, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<DrawableGameAsset> ignores) {
-        this.sprite = sprite;
-        this.polygon = polygon;
+    Projectile(ProjectileType projectileType, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<DrawableGameAsset> ignores) {
+        this.sprite = new Sprite(projectileType.getSprite());
+        this.polygon = new Polygon(projectileType.getSpriteVertices().getVertices());
+        this.projectileType = projectileType;
         this.rotationSpeed = rotationSpeed;
         this.movementSpeed = movementSpeed;
         this.ignores = new ObjectArraySet<>(ignores);
@@ -88,7 +91,7 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
         MoribundClient.getInstance().getDrawableGameAssets().add(projectile);
     }
 
-    private void removeProjectile() {
+    public void removeProjectile() {
         MoribundClient.getInstance().getFlaggables().remove(this);
         MoribundClient.getInstance().getDrawableGameAssets().remove(this);
     }
@@ -125,8 +128,9 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
                 .filter(drawable -> drawable instanceof Collidable)
                 .filter(drawable -> !ignores.contains(drawable))
                 .forEach(drawable -> {
+                    Collidable collidable = (Collidable) drawable;
                     if (Intersector.overlapConvexPolygons(polygon, drawable.getPolygon())) {
-                        removeProjectile();
+                        collidable.collide(this);
                     }
                 });
     }

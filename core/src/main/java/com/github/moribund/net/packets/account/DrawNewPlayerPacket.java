@@ -26,6 +26,7 @@ public final class DrawNewPlayerPacket implements IncomingPacket {
      * The angle of rotation of the new player.
      */
     private float rotation;
+    private int hitpoints;
 
     /**
      * A private constructor to ensure the client cannot unexpectedly send this
@@ -35,7 +36,7 @@ public final class DrawNewPlayerPacket implements IncomingPacket {
 
     @Override
     public void process() {
-        PlayerUtils.makePlayer(gameId, playerId, x, y);
+        PlayerUtils.makePlayer(gameId, playerId, x, y, hitpoints);
         PlayerUtils.rotatePlayer(playerId, rotation);
     }
 }

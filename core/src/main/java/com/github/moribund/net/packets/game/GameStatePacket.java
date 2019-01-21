@@ -2,8 +2,7 @@ package com.github.moribund.net.packets.game;
 
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
-import com.github.moribund.net.packets.data.PlayerLocationData;
-import com.github.moribund.net.packets.data.PlayerRotationData;
+import com.github.moribund.net.packets.data.PlayerData;
 import com.github.moribund.objects.playable.players.Player;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
@@ -21,11 +20,7 @@ public final class GameStatePacket implements IncomingPacket {
     /**
      * The locations of all {@link Player}s in the game at the moment.
      */
-    private ObjectList<PlayerLocationData> playerLocations;
-    /**
-     * The rotation angle of all {@link Player}s in the game at the moment.
-     */
-    private ObjectList<PlayerRotationData> playerRotations;
+    private ObjectList<PlayerData> playerData;
 
     /**
      * A private constructor to ensure the client cannot unexpectedly send this
@@ -35,14 +30,14 @@ public final class GameStatePacket implements IncomingPacket {
 
     @Override
     public void process() {
-        playerLocations.forEach(locationData -> {
-            val player = MoribundClient.getInstance().getPlayers().get(locationData.getPlayerId());
-            player.setX(locationData.getX());
-            player.setY(locationData.getY());
-        });
-        playerRotations.forEach(rotationData -> {
-            val player = MoribundClient.getInstance().getPlayers().get(rotationData.getPlayerId());
-            player.setRotation(rotationData.getAngle());
+        playerData.forEach(data -> {
+            val player = MoribundClient.getInstance().getPlayers().get(data.getPlayerId());
+            if (player != null) {
+                player.setX(data.getX());
+                player.setY(data.getY());
+                player.setRotation(data.getRotation());
+                player.setHitpoints(data.getHitpoints());
+            }
         });
     }
 }

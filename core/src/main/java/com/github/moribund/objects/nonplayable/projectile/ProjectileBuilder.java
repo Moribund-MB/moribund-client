@@ -1,10 +1,5 @@
 package com.github.moribund.objects.nonplayable.projectile;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Polygon;
-import com.github.moribund.graphics.SpriteContainer;
-import com.github.moribund.graphics.SpriteFile;
-import com.github.moribund.graphics.SpriteVertices;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
@@ -16,24 +11,13 @@ import java.io.InvalidObjectException;
  * to allow for an easy-to-use API to create a rather-complex object: a {@link Projectile}.
  */
 public final class ProjectileBuilder {
-    private Sprite sprite;
     private float x = -1;
     private float y = -1;
     private float rotationSpeed;
     private float movingSpeed = -1;
     private float angle = -1;
     private ObjectSet<DrawableGameAsset> ignores;
-    private Polygon polygon;
-
-    /**
-     * Takes a {@link SpriteFile} and makes a new {@link Sprite} out of it.
-     * @param spriteFile The {@link SpriteFile} for the projectile.
-     * @return This builder to allow for the building of other attributes.
-     */
-    public ProjectileBuilder withSprite(SpriteFile spriteFile) {
-        sprite = new Sprite(SpriteContainer.getInstance().getSprite(spriteFile));
-        return this;
-    }
+    private ProjectileType projectileType;
 
     /**
      * Takes in x and y coordinates to start the {@link Projectile} at initially.
@@ -85,8 +69,8 @@ public final class ProjectileBuilder {
         return this;
     }
 
-    public ProjectileBuilder withVertices(SpriteVertices spriteVertices) {
-        polygon = new Polygon(spriteVertices.getVertices());
+    public ProjectileBuilder type(ProjectileType projectileType) {
+        this.projectileType = projectileType;
         return this;
     }
 
@@ -96,11 +80,8 @@ public final class ProjectileBuilder {
      */
     public Projectile create() {
         try {
-            if (sprite == null) {
-                throw new InvalidObjectException("Unable to make a Projectile without a Sprite.");
-            }
-            if (polygon == null) {
-                throw new InvalidObjectException("Unable to make a Projectile without vertices");
+            if (projectileType == null) {
+                throw new InvalidObjectException("Unable to make a Projectile that is typeless");
             }
             if (x == -1) {
                 throw new InvalidObjectException("Unable to make a projectile with no x-coordinate");
@@ -117,6 +98,6 @@ public final class ProjectileBuilder {
         } catch (InvalidObjectException e) {
             e.printStackTrace();
         }
-        return new Projectile(sprite, polygon, x, y, angle, rotationSpeed, movingSpeed, ignores);
+        return new Projectile(projectileType, x, y, angle, rotationSpeed, movingSpeed, ignores);
     }
 }
