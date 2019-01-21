@@ -80,18 +80,19 @@ class GameScreen implements Screen {
 
     private void drawUI() {
         val unselected = new Sprite[Inventory.CAPACITY];
+        val centeringConstant = 175; // todo find a more mathematical way to do this
         for (int i = 0; i < unselected.length; i++) {
             unselected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED));
-            unselected[i].setX(Gdx.graphics.getWidth() - (unselected[i].getWidth() * (i + 1)));
-            unselected[i].setY(Gdx.graphics.getHeight() - unselected[i].getHeight());
+            unselected[i].setX(Gdx.graphics.getWidth() - (unselected[i].getWidth() * (i + 1)) - centeringConstant);
+            unselected[i].setY(0);
             unselected[i].setAlpha(0.8f);
             unselected[i].draw(uiSpritebatch);
         }
         val selected = new Sprite[2];
         for (int i = 0; i < selected.length; i++) {
             selected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_SELECTED));
-            selected[i].setX(Gdx.graphics.getWidth() - (selected[i].getWidth() * (unselected.length + (i + 1))));
-            selected[i].setY(Gdx.graphics.getHeight() - selected[i].getHeight());
+            selected[i].setX(Gdx.graphics.getWidth() - (selected[i].getWidth() * (unselected.length + (i + 1))) - centeringConstant);
+            selected[i].setY(0);
             selected[i].setAlpha(0.8f);
             selected[i].draw(uiSpritebatch);
         }
