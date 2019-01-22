@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.graphics.drawables.DrawableUIAsset;
 
 public class Inventory extends ItemContainer implements DrawableUIAsset {
-    public static final int CAPACITY = 5;
+    public static final int SLOTS = 5;
 
     public Inventory() {
-        super(CAPACITY);
+        super();
     }
 
     @Override

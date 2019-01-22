@@ -15,7 +15,6 @@ import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
 import com.github.moribund.objects.nonplayable.items.GroundItem;
-import com.github.moribund.objects.nonplayable.items.Item;
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Inventory;
@@ -69,7 +68,8 @@ public class Player implements PlayableCharacter {
      * the respective {@link Player#flags} have been removed from their {@link ObjectSet}.
      */
     private final ObjectSet<Flag> flagsToRemove;
-    @Getter @Setter
+    @Getter
+    @Setter
     private int hitpoints;
     private SpriteAnimation currentAnimation;
 
@@ -200,11 +200,9 @@ public class Player implements PlayableCharacter {
         keyBinds.put(Input.Keys.E, new PlayerAction() {
             @Override
             public void keyPressed() {
-                if (inventory.hasSpace()) {
-                    val pickableObjectNear = getPickableObjectNearest();
-                    if (pickableObjectNear != null) {
-                        sendPickupItemRequest(pickableObjectNear);
-                    }
+                val pickableObjectNear = getPickableObjectNearest();
+                if (pickableObjectNear != null) {
+                    sendPickupItemRequest(pickableObjectNear);
                 }
             }
 
@@ -241,13 +239,6 @@ public class Player implements PlayableCharacter {
         val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
         val pickupItemPacket = new PickupItemPacket(gameId, playerId, groundItem.getItemType().getId(), groundItem.getX(), groundItem.getY());
         packetDispatcher.sendTCP(pickupItemPacket);
-    }
-
-    public void pickupItem(GroundItem groundItem) {
-        val item = new Item(groundItem.getItemType());
-        inventory.addItem(item);
-        MoribundClient.getInstance().getGroundItems().remove(groundItem);
-        MoribundClient.getInstance().getDrawableGameAssets().remove(groundItem);
     }
 
     private GroundItem getPickableObjectNearest() {

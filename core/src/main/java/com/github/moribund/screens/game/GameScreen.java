@@ -80,7 +80,7 @@ class GameScreen implements Screen {
     }
 
     private void drawUI() {
-        val unselected = new Sprite[Inventory.CAPACITY];
+        val unselected = new Sprite[Inventory.SLOTS];
         val centeringConstant = 175; // todo find a more mathematical way to do this
         for (int i = 0; i < unselected.length; i++) {
             unselected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED));

@@ -31,10 +31,10 @@ public class PickupItemPacket implements OutgoingPacket, IncomingPacket {
 
     @Override
     public void process() {
-        val player = MoribundClient.getInstance().getPlayers().get(playerId);
         val groundItem = getGroundItem();
         if (groundItem != null) {
-            player.pickupItem(groundItem);
+            MoribundClient.getInstance().getGroundItems().remove(groundItem);
+            MoribundClient.getInstance().getDrawableGameAssets().remove(groundItem);
         }
     }
 
