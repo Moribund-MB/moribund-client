@@ -96,9 +96,10 @@ public final class ProjectileBuilder {
             if (movingSpeed == -1) {
                 throw new InvalidObjectException("Unable to make a Projectile with no moving speed");
             }
+            return new Projectile(projectileType, x, y, angle, rotationSpeed, movingSpeed, ignores);
         } catch (InvalidObjectException e) {
             e.printStackTrace();
         }
-        return new Projectile(projectileType, x, y, angle, rotationSpeed, movingSpeed, ignores);
+        return null;
     }
 }
