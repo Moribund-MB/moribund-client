@@ -18,7 +18,8 @@ import com.github.moribund.objects.nonplayable.items.GroundItem;
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Inventory;
-import com.github.moribund.objects.playable.players.ui.HealthBar;
+import com.github.moribund.objects.playable.players.ui.LocalHealthBar;
+import com.github.moribund.utils.GLUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
@@ -46,6 +47,7 @@ public class Player implements PlayableCharacter {
     private final int playerId;
     @Getter
     private final Inventory inventory;
+    private final LocalHealthBar healthBar;
     @Getter
     private Polygon polygon;
     /**
@@ -71,6 +73,8 @@ public class Player implements PlayableCharacter {
     @Getter
     @Setter
     private int hitpoints;
+    @Getter
+    private int maxHitpoints;
     private SpriteAnimation currentAnimation;
 
     /**
@@ -80,14 +84,16 @@ public class Player implements PlayableCharacter {
      *
      * @param playerId The unique player ID.
      */
-    public Player(int gameId, int playerId, int hitpoints) {
+    public Player(int gameId, int playerId, int maxHitpoints) {
         this.gameId = gameId;
         this.playerId = playerId;
-        this.hitpoints = hitpoints;
+        this.maxHitpoints = maxHitpoints;
+        hitpoints = maxHitpoints;
         flags = new ObjectArraySet<>();
         flagsToRemove = new ObjectArraySet<>();
         sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.PLAYER));
         inventory = new Inventory();
+        healthBar = new LocalHealthBar(this);
         polygon = new Polygon(SpriteVertices.PLAYER.getVertices());
         polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
     }
@@ -98,7 +104,7 @@ public class Player implements PlayableCharacter {
     public void addUIAssets() {
         val assets = MoribundClient.getInstance().getDrawableUIAssets();
         assets.add(inventory);
-        assets.add(new HealthBar(this));
+        assets.add(healthBar);
     }
 
     private void changeCharacter(SpriteFile spriteFile, SpriteVertices spriteVertices) {
@@ -283,6 +289,14 @@ public class Player implements PlayableCharacter {
         } else {
             sprite.draw(spriteBatch);
         }
+        drawUniversalHealthBar(spriteBatch);
+    }
+
+    private void drawUniversalHealthBar(SpriteBatch spriteBatch) {
+        val hitpointsPercentage = hitpoints / (double) maxHitpoints;
+        val biggestLength = Math.max(sprite.getHeight(), sprite.getWidth());
+        spriteBatch.draw(GLUtils.getRedTexture(), getX() + 3, getY() + biggestLength + 10, biggestLength - 20, 10);
+        spriteBatch.draw(GLUtils.getGreenTexture(), getX() + 3, getY() + biggestLength + 10, (int) ((biggestLength - 20) * hitpointsPercentage), 10);
     }
 
     @Override

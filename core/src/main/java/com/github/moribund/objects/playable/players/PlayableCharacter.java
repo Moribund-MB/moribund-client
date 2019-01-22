@@ -58,4 +58,5 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
 
     int getHitpoints();
     void setHitpoints(int hitpoints);
+    int getMaxHitpoints();
 }
