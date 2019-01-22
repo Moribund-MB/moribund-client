@@ -38,6 +38,7 @@ public final class GameStatePacket implements IncomingPacket {
                 player.setRotation(data.getRotation());
                 player.setHitpoints(data.getHitpoints());
                 player.getInventory().setItemIds(data.getInventoryItems());
+                player.getEquipment().setItemIds(data.getEquipmentItems());
             }
         });
     }

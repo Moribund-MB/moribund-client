@@ -55,8 +55,10 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
     void keyUnpressed(int keyUnpressed);
 
     ItemContainer getInventory();
+    ItemContainer getEquipment();
 
     int getHitpoints();
     void setHitpoints(int hitpoints);
     int getMaxHitpoints();
+    void equipItem(int inventorySlot);
 }

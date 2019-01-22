@@ -20,4 +20,6 @@ public class PlayerData implements Serializable {
     private int hitpoints;
     @Getter
     private ObjectList<Integer> inventoryItems;
+    @Getter
+    private ObjectList<Integer> equipmentItems;
 }

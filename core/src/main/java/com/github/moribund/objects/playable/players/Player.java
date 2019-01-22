@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.*;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
+import com.github.moribund.net.packets.items.EquipItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
 import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedPacket;
@@ -17,6 +18,7 @@ import com.github.moribund.objects.flags.FlagConstants;
 import com.github.moribund.objects.nonplayable.items.GroundItem;
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
+import com.github.moribund.objects.playable.players.containers.Equipment;
 import com.github.moribund.objects.playable.players.containers.Inventory;
 import com.github.moribund.objects.playable.players.ui.LocalHealthBar;
 import com.github.moribund.utils.GLUtils;
@@ -48,6 +50,8 @@ public class Player implements PlayableCharacter {
     @Getter
     private final Inventory inventory;
     private final LocalHealthBar healthBar;
+    @Getter
+    private final Equipment equipment;
     @Getter
     private Polygon polygon;
     /**
@@ -92,6 +96,7 @@ public class Player implements PlayableCharacter {
         flagsToRemove = new ObjectArraySet<>();
         sprite = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.PLAYER));
         inventory = new Inventory();
+        equipment = new Equipment();
         healthBar = new LocalHealthBar(this);
         polygon = new Polygon(SpriteVertices.PLAYER.getVertices());
         polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
@@ -103,6 +108,7 @@ public class Player implements PlayableCharacter {
     public void addUIAssets() {
         val assets = MoribundClient.getInstance().getDrawableUIAssets();
         assets.add(inventory);
+        assets.add(equipment);
         assets.add(healthBar);
     }
 
@@ -413,6 +419,12 @@ public class Player implements PlayableCharacter {
             Projectile.launchProjectile(projectile);
         }
         return true;
+    }
+
+    @Override
+    public void equipItem(int inventorySlot) {
+        val equipItemPacket = new EquipItemPacket(gameId, playerId, inventorySlot);
+        MoribundClient.getInstance().getPacketDispatcher().sendTCP(equipItemPacket);
     }
 
     @Override

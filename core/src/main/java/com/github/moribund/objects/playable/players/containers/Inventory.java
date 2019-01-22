@@ -14,9 +14,9 @@ import lombok.Getter;
 import lombok.val;
 
 public class Inventory extends ItemContainer implements DrawableUIAsset {
-    private static final int SLOTS = 5;
-    private Sprite[] unselected;
-    private Sprite[] selected;
+    public static final int SLOTS = 5;
+    private final Sprite singularSprite;
+    private Sprite[] slots;
     @Getter
     private Rectangle boundingRectangle;
     private boolean itemSelected;
@@ -24,9 +24,8 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
     private int slotSelected2;
 
     public Inventory() {
-        super();
-        unselected = new Sprite[SLOTS];
-        selected = new Sprite[2];
+        singularSprite = SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED);
+        slots = new Sprite[SLOTS];
         slotSelected1 = -1;
         slotSelected2 = -1;
         initiateUI();
@@ -34,30 +33,21 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
 
     private void initiateUI() {
         val centeringConstant = 175; // todo find a more mathematical way to do this
-        for (int i = 0; i < unselected.length; i++) {
-            unselected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED));
-            unselected[i].setX(Gdx.graphics.getWidth() - (unselected[i].getWidth() * (i + 1)) - centeringConstant);
-            unselected[i].setY(0);
-            unselected[i].setAlpha(0.8f);
-        }
-        for (int i = 0; i < selected.length; i++) {
-            selected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_SELECTED));
-            selected[i].setX(Gdx.graphics.getWidth() - (selected[i].getWidth() * (unselected.length + (i + 1))) - centeringConstant);
-            selected[i].setY(0);
-            selected[i].setAlpha(0.8f);
+        for (int i = 0; i < slots.length; i++) {
+            slots[i] = new Sprite(singularSprite);
+            slots[i].setX(Gdx.graphics.getWidth() - (slots[i].getWidth() * (i + 1)) - centeringConstant);
+            slots[i].setY(0);
+            slots[i].setAlpha(0.8f);
         }
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-        for (Sprite sprite : unselected) {
-            sprite.draw(spriteBatch);
-        }
-        for (Sprite sprite : selected) {
+        for (Sprite sprite : slots) {
             sprite.draw(spriteBatch);
         }
         for (int i = 0; i < items.size(); i++) {
-            items.get(i).draw(i, spriteBatch);
+            items.get(i).draw(i, Gdx.graphics.getWidth() - (singularSprite.getWidth() * SLOTS), spriteBatch);
         }
     }
 
@@ -65,15 +55,17 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
         val increment = 95;
         val startingXLeft = 279;
         val startingXRight = startingXLeft + increment;
-        for (int i = 0; i < unselected.length; i++) {
+        for (int i = 0; i < slots.length; i++) {
             if (screenX >= (startingXLeft + (increment * (i + 1))) && screenX <= (startingXRight + (increment * (i + 1)))) {
                 if (!itemSelected) {
                     itemSelected = true;
                     slotSelected1 = i;
-                } else {
+                } else if (i != slotSelected1) {
                     slotSelected2 = i;
                     sendItemOnItemPacket(playableCharacter);
                     resetVariables();
+                } else {
+                    playableCharacter.equipItem(slotSelected1);
                 }
                 break;
             }
