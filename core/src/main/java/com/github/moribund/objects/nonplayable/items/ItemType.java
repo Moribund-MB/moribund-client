@@ -9,7 +9,11 @@ public enum ItemType {
     ROCK(0, SpriteContainer.getInstance().getSprite(SpriteFile.ROCK)),
     FEATHER(1, SpriteContainer.getInstance().getSprite(SpriteFile.FEATHER)),
     STICK(2, SpriteContainer.getInstance().getSprite(SpriteFile.STICK)),
-    STRING(3, SpriteContainer.getInstance().getSprite(SpriteFile.STRING));
+    STRING(3, SpriteContainer.getInstance().getSprite(SpriteFile.STRING)),
+    SPEAR(4, SpriteContainer.getInstance().getSprite(SpriteFile.SPEAR)),
+    BOW(5, SpriteContainer.getInstance().getSprite(SpriteFile.BOW)),
+    DART(6, SpriteContainer.getInstance().getSprite(SpriteFile.DART)),
+    ARROW(7, SpriteContainer.getInstance().getSprite(SpriteFile.ARROW_ITEM));
 
     private static final ItemType[] VALUES = values();
     @Getter

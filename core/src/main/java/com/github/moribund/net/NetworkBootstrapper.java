@@ -11,6 +11,7 @@ import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.data.GroundItemData;
 import com.github.moribund.net.packets.data.PlayerData;
 import com.github.moribund.net.packets.game.GameStatePacket;
+import com.github.moribund.net.packets.items.ItemOnItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
 import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyPressedResponsePacket;
@@ -100,6 +101,7 @@ public class NetworkBootstrapper {
         kryo.register(PlayerData.class);
         kryo.register(PickupItemPacket.class);
         kryo.register(ProjectileCollisionPacket.class);
+        kryo.register(ItemOnItemPacket.class);
     }
 
     /**

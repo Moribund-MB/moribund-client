@@ -54,7 +54,6 @@ public class Player implements PlayableCharacter {
      * The {@link Sprite} of this {@code Player} that represents the {@code Player}
      * in the live game visually.
      */
-    @Getter
     private Sprite sprite;
     /**
      * The respective {@link com.badlogic.gdx.Input.Keys} that are bound to
@@ -249,7 +248,7 @@ public class Player implements PlayableCharacter {
 
     private GroundItem getPickableObjectNearest() {
         for (GroundItem groundItem : MoribundClient.getInstance().getGroundItems()) {
-            if (sprite.getBoundingRectangle().overlaps(groundItem.getSprite().getBoundingRectangle())) {
+            if (groundItem.isTouching(sprite.getBoundingRectangle())) {
                 return groundItem;
             }
         }
@@ -401,14 +400,18 @@ public class Player implements PlayableCharacter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        val projectile = Projectile.builder()
-                .type(ProjectileType.ARROW)
-                .withMovementSpeed(10)
-                .withAngle(getRotation())
-                .atXY(getX(), getY())
-                .ignoring(Player.this)
-                .create();
-        Projectile.launchProjectile(projectile);
+        if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
+            inventory.click(this, screenX);
+        } else {
+            val projectile = Projectile.builder()
+                    .type(ProjectileType.ARROW)
+                    .withMovementSpeed(10)
+                    .withAngle(getRotation())
+                    .atXY(getX(), getY())
+                    .ignoring(Player.this)
+                    .create();
+            Projectile.launchProjectile(projectile);
+        }
         return true;
     }
 

@@ -2,6 +2,7 @@ package com.github.moribund.objects.nonplayable.items;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Locatable;
@@ -39,9 +40,8 @@ public final class GroundItem implements Locatable, DrawableGameAsset {
         return 0;
     }
 
-    @Override
-    public Sprite getSprite() {
-        return sprite;
+    public boolean isTouching(Rectangle rectangle) {
+        return sprite.getBoundingRectangle().overlaps(rectangle);
     }
 
     @Override

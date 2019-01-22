@@ -30,6 +30,10 @@ public enum SpriteFile {
     ROCK("images/items/raw/rock.png"),
     STICK("images/items/raw/stick.png"),
     STRING("images/items/raw/string.png"),
+    SPEAR("images/items/weapon/spear.png"),
+    BOW("images/items/weapon/bow.png"),
+    DART("images/items/weapon/dart.png"),
+    ARROW_ITEM("images/items/weapon/arrow.png"),
     ;
 
     /**
