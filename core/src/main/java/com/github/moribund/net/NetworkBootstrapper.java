@@ -3,10 +3,7 @@ package com.github.moribund.net;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryonet.Client;
-import com.github.moribund.net.packets.account.CreateNewPlayerPacket;
-import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
-import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
-import com.github.moribund.net.packets.account.LogoutPacket;
+import com.github.moribund.net.packets.account.*;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.data.GroundItemData;
 import com.github.moribund.net.packets.data.PlayerData;
@@ -104,6 +101,7 @@ public class NetworkBootstrapper {
         kryo.register(ProjectileCollisionPacket.class);
         kryo.register(ItemOnItemPacket.class);
         kryo.register(EquipItemPacket.class);
+        kryo.register(UpdateAppearancePacket.class);
     }
 
     /**

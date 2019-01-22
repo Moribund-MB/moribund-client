@@ -2,9 +2,11 @@ package com.github.moribund.objects.nonplayable.items;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import lombok.Getter;
 import lombok.val;
 
 public class Item {
+    @Getter
     private final ItemType itemType;
 
     public Item(ItemType itemType) {

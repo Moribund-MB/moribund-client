@@ -66,6 +66,7 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
                     resetVariables();
                 } else {
                     playableCharacter.equipItem(slotSelected1);
+                    resetVariables();
                 }
                 break;
             }

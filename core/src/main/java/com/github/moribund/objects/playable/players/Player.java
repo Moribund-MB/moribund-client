@@ -15,7 +15,9 @@ import com.github.moribund.net.packets.key.KeyPressedPacket;
 import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
+import com.github.moribund.objects.nonplayable.items.EquippedItemType;
 import com.github.moribund.objects.nonplayable.items.GroundItem;
+import com.github.moribund.objects.nonplayable.items.Item;
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Equipment;
@@ -302,6 +304,17 @@ public class Player implements PlayableCharacter {
         val biggestLength = Math.max(sprite.getHeight(), sprite.getWidth());
         spriteBatch.draw(GLUtils.getRedTexture(), getX() + 3, getY() + biggestLength + 10, biggestLength - 20, 10);
         spriteBatch.draw(GLUtils.getGreenTexture(), getX() + 3, getY() + biggestLength + 10, (int) ((biggestLength - 20) * hitpointsPercentage), 10);
+    }
+
+    @Override
+    public void updateAppearance() {
+        for (Item item : equipment.getItems()) {
+            val equippedItemType = EquippedItemType.getItemType(item.getItemType().getId());
+            if (equippedItemType != null) {
+                changeCharacter(equippedItemType.getSpriteFile(), equippedItemType.getSpriteVertices());
+                break;
+            }
+        }
     }
 
     @Override
