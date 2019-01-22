@@ -16,6 +16,14 @@ public enum SpriteFile {
      */
     PLAYER_WITH_BOW("images/players/player_with_bow.png"),
     /**
+     * A player character that is equipping darts
+     */
+    PLAYER_WITH_DART("images/players/player_with_dart.png"),
+    /**
+     * A player character that is equipping a spear
+     */
+    PLAYER_WITH_SPEAR("images/players/player_with_spear.png"),
+    /**
      * A {@link Projectile} sprite for arrows.
      */
     ARROW_PROJECTILE("images/items/projectile/arrow.png"),
