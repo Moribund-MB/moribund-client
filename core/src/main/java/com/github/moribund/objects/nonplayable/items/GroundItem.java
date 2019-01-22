@@ -2,7 +2,6 @@ package com.github.moribund.objects.nonplayable.items;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Polygon;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Locatable;
@@ -23,11 +22,6 @@ public final class GroundItem implements Locatable, DrawableGameAsset {
     public static void addGroundItem(GroundItem groundItem) {
         MoribundClient.getInstance().getGroundItems().add(groundItem);
         MoribundClient.getInstance().getDrawableGameAssets().add(groundItem);
-    }
-
-    @Override
-    public Polygon getPolygon() {
-        return new Polygon(new float[] {0,0,0,0,0,0});
     }
 
     @Override

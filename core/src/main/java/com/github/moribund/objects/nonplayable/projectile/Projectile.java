@@ -129,7 +129,7 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
                 .filter(drawable -> !ignores.contains(drawable))
                 .forEach(drawable -> {
                     Collidable collidable = (Collidable) drawable;
-                    if (Intersector.overlapConvexPolygons(polygon, drawable.getPolygon())) {
+                    if (Intersector.overlapConvexPolygons(polygon, collidable.getPolygon())) {
                         collidable.collide(this);
                     }
                 });
@@ -201,10 +201,5 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
 
         sprite.translate(xVelocity, yVelocity);
         polygon.translate(xVelocity, yVelocity);
-    }
-
-    @Override
-    public Polygon getPolygon() {
-        return polygon;
     }
 }

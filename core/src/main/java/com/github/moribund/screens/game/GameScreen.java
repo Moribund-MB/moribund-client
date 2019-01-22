@@ -11,6 +11,7 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
+import com.github.moribund.objects.attributes.Collidable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
 import com.github.moribund.objects.playable.players.containers.Inventory;
@@ -79,7 +80,7 @@ class GameScreen implements Screen {
     }
 
     private void drawUI() {
-        val unselected = new Sprite[Inventory.CAPACITY];
+        val unselected = new Sprite[Inventory.SLOTS];
         val centeringConstant = 175; // todo find a more mathematical way to do this
         for (int i = 0; i < unselected.length; i++) {
             unselected[i] = new Sprite(SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED));
@@ -164,7 +165,9 @@ class GameScreen implements Screen {
     private void drawVisibleEntities() {
         MoribundClient.getInstance().getDrawableGameAssets().forEach(drawable -> {
             drawable.draw(gameSpriteBatch);
-            renderer.polygon(drawable.getPolygon().getTransformedVertices());
+            if (drawable instanceof Collidable) {
+                renderer.polygon(((Collidable) drawable).getPolygon().getTransformedVertices());
+            }
         });
     }
 

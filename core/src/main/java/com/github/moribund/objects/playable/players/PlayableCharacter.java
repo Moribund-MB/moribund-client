@@ -5,7 +5,7 @@ import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Collidable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
-import com.github.moribund.objects.nonplayable.items.GroundItem;
+import com.github.moribund.objects.playable.players.containers.ItemContainer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 
 /**
@@ -54,7 +54,7 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
      */
     void keyUnpressed(int keyUnpressed);
 
-    void pickupItem(GroundItem groundItem);
+    ItemContainer getInventory();
 
     int getHitpoints();
     void setHitpoints(int hitpoints);
