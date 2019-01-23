@@ -74,7 +74,7 @@ public class LoginScreen implements Screen {
         loginButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                attemptLogin();
+                attemptLoginIfPossible();
             }
         });
     }
@@ -98,7 +98,7 @@ public class LoginScreen implements Screen {
             public boolean keyDown(InputEvent event, int keycode) {
                 switch (keycode) {
                     case Input.Keys.ENTER:
-                        attemptLogin();
+                        attemptLoginIfPossible();
                         return true;
                     case tabKey:
                         passwordTextField.next(true);
@@ -109,7 +109,10 @@ public class LoginScreen implements Screen {
         });
     }
 
-    private void attemptLogin() {
+    private void attemptLoginIfPossible() {
+        if (usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
+            return;
+        }
         val username = usernameTextField.getText().trim();
         val password = passwordTextField.getText();
 
