@@ -12,9 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicPlayer;
-import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.AestheticUtils;
 import com.github.moribund.utils.GLUtils;
+import com.github.moribund.utils.StageUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
@@ -105,8 +105,7 @@ class SettingsScreen implements Screen {
     }
 
     private Stage createStage() {
-        val stageFactory = new StageFactory();
-        val stage = stageFactory.createStage(this::createButtons, this::createSlider);
+        val stage = StageUtils.createStage(this::createButtons, this::createSlider);
 
         Gdx.input.setInputProcessor(stage);
         return stage;

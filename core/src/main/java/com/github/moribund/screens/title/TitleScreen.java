@@ -14,10 +14,10 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
-import com.github.moribund.screens.StageFactory;
 import com.github.moribund.screens.game.GameScreenFactory;
 import com.github.moribund.utils.AestheticUtils;
 import com.github.moribund.utils.GLUtils;
+import com.github.moribund.utils.StageUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
@@ -149,8 +149,7 @@ public class TitleScreen implements Screen {
     }
 
     private Stage createStage() {
-        val stageFactory = new StageFactory();
-        val stage = stageFactory.createStage(this::createButtons);
+        val stage = StageUtils.createStage(this::createButtons);
 
         Gdx.input.setInputProcessor(stage);
         return stage;

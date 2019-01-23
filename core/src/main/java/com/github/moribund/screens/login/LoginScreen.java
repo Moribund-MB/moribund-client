@@ -19,9 +19,9 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.net.packets.login.LoginPacket;
-import com.github.moribund.screens.StageFactory;
 import com.github.moribund.utils.AestheticUtils;
 import com.github.moribund.utils.GLUtils;
+import com.github.moribund.utils.StageUtils;
 import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
@@ -127,8 +127,7 @@ public class LoginScreen implements Screen {
     }
 
     private Stage createInputStage() {
-        val stageFactory = new StageFactory();
-        val stage = stageFactory.createStage(this::createCredentialTextFields, buttons -> {
+        val stage = StageUtils.createStage(this::createCredentialTextFields, buttons -> {
             loginButton = new TextButton("Login", StyleUtils.TEXT_BUTTON_STYLE);
             buttons.add(loginButton);
         });
@@ -138,8 +137,7 @@ public class LoginScreen implements Screen {
     }
 
     private Stage createAttemptStage() {
-        val stageFactory = new StageFactory();
-        return stageFactory.createStage(actors -> {
+        return StageUtils.createStage(actors -> {
             val labelStyle = StyleUtils.LABEL_STYLE;
             val label = new Label("Attempting to log you in...", labelStyle);
             actors.add(label);

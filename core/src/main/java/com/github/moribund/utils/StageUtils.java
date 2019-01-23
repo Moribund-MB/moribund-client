@@ -1,15 +1,17 @@
-package com.github.moribund.screens;
+package com.github.moribund.utils;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
+import lombok.experimental.UtilityClass;
 import lombok.val;
 
 import java.util.function.Consumer;
 
-public class StageFactory {
+@UtilityClass
+public class StageUtils {
     public Stage createStage(Consumer<ObjectList<Actor>>... createComponents) {
         val stage = new Stage();
         val componentContainer = new ObjectArrayList<Actor>();
