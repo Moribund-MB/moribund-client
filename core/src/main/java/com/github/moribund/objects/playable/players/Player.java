@@ -82,6 +82,7 @@ public class Player implements PlayableCharacter {
     @Getter
     @Setter
     private int hitpoints;
+    private final String username;
     @Getter
     private int maxHitpoints;
     private SpriteAnimation currentAnimation;
@@ -93,9 +94,10 @@ public class Player implements PlayableCharacter {
      *
      * @param playerId The unique player ID.
      */
-    public Player(int gameId, int playerId, int maxHitpoints) {
+    public Player(int gameId, int playerId, String username, int maxHitpoints) {
         this.gameId = gameId;
         this.playerId = playerId;
+        this.username = username;
         this.maxHitpoints = maxHitpoints;
         hitpoints = maxHitpoints;
         flags = new ObjectArraySet<>();

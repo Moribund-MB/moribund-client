@@ -11,6 +11,8 @@ public class PlayerData implements Serializable {
     @Getter
     private int playerId;
     @Getter
+    private String username;
+    @Getter
     private float x;
     @Getter
     private float y;

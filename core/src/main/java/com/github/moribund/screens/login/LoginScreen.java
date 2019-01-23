@@ -116,7 +116,7 @@ public class LoginScreen implements Screen {
         try {
             MoribundClient.getInstance().connectNetworking();
             loginScreenState = LoginScreenState.ATTEMPTING;
-            MoribundClient.getInstance().getPacketDispatcher().sendTCP(new LoginPacket(username, password));
+            MoribundClient.getInstance().getPacketDispatcher().sendTCP(new LoginPacket(username.toLowerCase(), password));
         } catch (IOException e) {
             log.severe("The server is currently offline!");
             loginScreenState = LoginScreenState.INPUT;

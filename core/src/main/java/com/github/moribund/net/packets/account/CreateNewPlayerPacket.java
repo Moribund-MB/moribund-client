@@ -41,7 +41,7 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
         });
         playerData.forEach(data -> {
             val playerId = data.getPlayerId();
-            PlayerUtils.makePlayer(gameId, playerId, data.getX(), data.getY(), data.getHitpoints());
+            PlayerUtils.makePlayer(gameId, playerId, data.getUsername(), data.getX(), data.getY(), data.getHitpoints());
             PlayerUtils.rotatePlayer(playerId, data.getRotation());
         });
         PlayerUtils.setClientPlayer(playerId);

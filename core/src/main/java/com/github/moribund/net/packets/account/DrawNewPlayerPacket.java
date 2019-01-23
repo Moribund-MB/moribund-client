@@ -14,6 +14,7 @@ public final class DrawNewPlayerPacket implements IncomingPacket {
      * The {@link Player}'s unique ID.
      */
     private int playerId;
+    private String username;
     /**
      * The x location of the new player.
      */
@@ -36,7 +37,7 @@ public final class DrawNewPlayerPacket implements IncomingPacket {
 
     @Override
     public void process() {
-        PlayerUtils.makePlayer(gameId, playerId, x, y, hitpoints);
+        PlayerUtils.makePlayer(gameId, playerId, username, x, y, hitpoints);
         PlayerUtils.rotatePlayer(playerId, rotation);
     }
 }
