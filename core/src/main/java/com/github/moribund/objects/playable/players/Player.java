@@ -24,6 +24,7 @@ import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Equipment;
 import com.github.moribund.objects.playable.players.containers.Inventory;
 import com.github.moribund.objects.playable.players.ui.LocalHealthBar;
+import com.github.moribund.objects.playable.players.ui.Timer;
 import com.github.moribund.utils.GLUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -55,6 +56,8 @@ public class Player implements PlayableCharacter {
     private final LocalHealthBar healthBar;
     @Getter
     private final Equipment equipment;
+    @Getter
+    private final Timer timer;
     @Getter
     private Polygon polygon;
     /**
@@ -101,6 +104,7 @@ public class Player implements PlayableCharacter {
         inventory = new Inventory();
         equipment = new Equipment();
         healthBar = new LocalHealthBar(this);
+        timer = new Timer();
         polygon = new Polygon(SpriteVertices.PLAYER.getVertices());
         polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
     }
@@ -113,6 +117,7 @@ public class Player implements PlayableCharacter {
         assets.add(inventory);
         assets.add(equipment);
         assets.add(healthBar);
+        assets.add(timer);
     }
 
     private void changeCharacter(SpriteFile spriteFile, SpriteVertices spriteVertices) {

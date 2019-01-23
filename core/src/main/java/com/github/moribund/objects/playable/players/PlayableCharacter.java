@@ -8,6 +8,7 @@ import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.ItemContainer;
+import com.github.moribund.objects.playable.players.ui.Timer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 
 /**
@@ -67,4 +68,6 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
     void updateAppearance();
 
     void animateThenLaunch(Animation animation, ProjectileType projectile, int movementSpeed);
+
+    Timer getTimer();
 }
