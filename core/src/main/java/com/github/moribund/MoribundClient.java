@@ -19,6 +19,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.java.Log;
 import lombok.val;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.io.IOException;
  * The {@code MoribundClient} class represents the entire {@link Game} for
  * both graphics and networking.
  */
+@Log
 public class MoribundClient extends Game {
     /**
      * The singleton instance of the client for all classes to access.
@@ -83,14 +85,18 @@ public class MoribundClient extends Game {
      */
     @Override
     public void create() {
-        //connectNetworking();
-        SpriteContainer.getInstance().setup();
-        MusicContainer.getInstance().setup();
-        AnimationContainer.getInstance().setup();
+        try {
+            connectNetworking();
+            SpriteContainer.getInstance().setup();
+            MusicContainer.getInstance().setup();
+            AnimationContainer.getInstance().setup();
 
-        val initialScreenFactory = new LoginScreenFactory();
-        val initialScreen = initialScreenFactory.createScreen();
-        switchToScreen(initialScreen, true);
+            val initialScreenFactory = new LoginScreenFactory();
+            val initialScreen = initialScreenFactory.createScreen();
+            switchToScreen(initialScreen, true);
+        } catch (IOException e) {
+            log.severe("The server is currently offline!");
+        }
     }
 
     /**
@@ -118,12 +124,8 @@ public class MoribundClient extends Game {
     /**
      * Connects the client to the {@link com.esotericsoftware.kryonet.Server}.
      */
-    public void connectNetworking() throws IOException {
+    private void connectNetworking() throws IOException {
         networkBootstrapper.connect();
-    }
-
-    public void terminateNetworking() {
-        networkBootstrapper.getClient().close();
     }
 
     /**

@@ -26,13 +26,10 @@ import com.github.moribund.utils.StyleUtils;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.java.Log;
 import lombok.val;
 
-import java.io.IOException;
 import java.util.Arrays;
 
-@Log
 public class LoginScreen implements Screen {
 
     @Getter
@@ -116,14 +113,8 @@ public class LoginScreen implements Screen {
         val username = usernameTextField.getText().trim();
         val password = passwordTextField.getText();
 
-        try {
-            MoribundClient.getInstance().connectNetworking();
-            loginScreenState = LoginScreenState.ATTEMPTING;
-            MoribundClient.getInstance().getPacketDispatcher().sendTCP(new LoginPacket(username.toLowerCase(), password));
-        } catch (IOException e) {
-            log.severe("The server is currently offline!");
-            loginScreenState = LoginScreenState.INPUT;
-        }
+        loginScreenState = LoginScreenState.ATTEMPTING;
+        MoribundClient.getInstance().getPacketDispatcher().sendTCP(new LoginPacket(username.toLowerCase(), password));
     }
 
     private Stage createInputStage() {

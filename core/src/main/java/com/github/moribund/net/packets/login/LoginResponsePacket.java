@@ -29,7 +29,6 @@ public final class LoginResponsePacket implements IncomingPacket {
                 case ALREADY_LOGGED_IN:
                 case INCORRECT_PASSWORD:
                     loginScreen.setLoginScreenState(LoginScreenState.INPUT);
-                    MoribundClient.getInstance().terminateNetworking();
                     break;
             }
         }
