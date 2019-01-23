@@ -1,0 +1,48 @@
+
+spear_animation.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Spear
+  rotate: false
+  xy: 2, 2
+  size: 190, 100
+  orig: 190, 100
+  offset: 0, 0
+  index: 1
+Spear
+  rotate: false
+  xy: 194, 2
+  size: 190, 100
+  orig: 190, 100
+  offset: 0, 0
+  index: 2
+Spear
+  rotate: false
+  xy: 386, 2
+  size: 190, 100
+  orig: 190, 100
+  offset: 0, 0
+  index: 3
+Spear
+  rotate: false
+  xy: 578, 2
+  size: 190, 100
+  orig: 190, 100
+  offset: 0, 0
+  index: 4
+Spear
+  rotate: false
+  xy: 770, 2
+  size: 101, 100
+  orig: 101, 100
+  offset: 0, 0
+  index: 6
+Spear
+  rotate: false
+  xy: 873, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: 5

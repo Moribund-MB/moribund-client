@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import lombok.Getter;
 import lombok.val;
 
@@ -13,7 +14,7 @@ public class SpriteAnimation extends Animation<TextureRegion> {
     private float stateTime;
     private boolean playing;
 
-    SpriteAnimation(float frameDuration, TextureRegion... keyFrames) {
+    SpriteAnimation(float frameDuration, Array<? extends TextureRegion> keyFrames) {
         super(frameDuration, keyFrames);
         playing = true;
     }
@@ -21,9 +22,13 @@ public class SpriteAnimation extends Animation<TextureRegion> {
     public void drawAnimation(Batch batch, Sprite originalSprite) {
         stateTime += Gdx.graphics.getDeltaTime();
         val currentFrame = getKeyFrame(stateTime, false);
-        batch.draw(currentFrame, originalSprite.getX(), originalSprite.getY(), originalSprite.getOriginX(),
-                originalSprite.getOriginY(), currentFrame.getRegionWidth(), currentFrame.getRegionHeight(),
-                originalSprite.getScaleX(), originalSprite.getScaleY(), originalSprite.getRotation() + 90);
+
+        batch.draw(currentFrame, originalSprite.getX(), originalSprite.getY(),
+                originalSprite.getOriginY(), originalSprite.getOriginX(),
+                currentFrame.getRegionWidth(), currentFrame.getRegionHeight(),
+                originalSprite.getScaleX(), originalSprite.getScaleY(),
+                originalSprite.getRotation());
+
         if (currentFrame == getKeyFrames()[getKeyFrames().length - 1]) {
             playing = false;
         }

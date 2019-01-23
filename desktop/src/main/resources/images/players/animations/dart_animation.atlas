@@ -1,0 +1,55 @@
+
+dart_animation.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Dart
+  rotate: false
+  xy: 2, 2
+  size: 88, 100
+  orig: 88, 100
+  offset: 0, 0
+  index: 6
+Dart
+  rotate: false
+  xy: 92, 2
+  size: 86, 100
+  orig: 86, 100
+  offset: 0, 0
+  index: 7
+Dart
+  rotate: false
+  xy: 180, 2
+  size: 80, 100
+  orig: 80, 100
+  offset: 0, 0
+  index: 5
+Dart
+  rotate: false
+  xy: 262, 2
+  size: 72, 100
+  orig: 72, 100
+  offset: 0, 0
+  index: 1
+Dart
+  rotate: false
+  xy: 336, 2
+  size: 72, 100
+  orig: 72, 100
+  offset: 0, 0
+  index: 3
+Dart
+  rotate: false
+  xy: 410, 2
+  size: 72, 100
+  orig: 72, 100
+  offset: 0, 0
+  index: 4
+Dart
+  rotate: false
+  xy: 484, 2
+  size: 70, 100
+  orig: 70, 100
+  offset: 0, 0
+  index: 2

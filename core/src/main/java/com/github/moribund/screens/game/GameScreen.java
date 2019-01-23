@@ -2,14 +2,11 @@ package com.github.moribund.screens.game;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
-import com.github.moribund.objects.attributes.Collidable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
 import com.github.moribund.utils.GLUtils;
@@ -33,7 +30,6 @@ class GameScreen implements Screen {
      * The sprite that represents the background image.
      */
     private final Sprite background;
-    private final ShapeRenderer renderer;
 
     /**
      * Constructor that provides the {@code GameScreen} its dependencies.
@@ -46,7 +42,6 @@ class GameScreen implements Screen {
         this.gameSpriteBatch = gameSpritebatch;
         this.camera = camera;
         this.background = background;
-        renderer = new ShapeRenderer();
     }
 
     /**
@@ -55,7 +50,6 @@ class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        renderer.setColor(Color.GREEN);
     }
 
     /**
@@ -66,14 +60,11 @@ class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        renderer.setProjectionMatrix(camera.combined);
-        renderer.begin(ShapeRenderer.ShapeType.Line);
         processFlags();
         GLUtils.clearGL();
         drawGameSpriteBatch(this::drawBackground, this::drawVisibleEntities);
         drawUISpriteBatch(this::drawUI);
         cameraFollowPlayer();
-        renderer.end();
     }
 
     private void drawUI() {
@@ -143,12 +134,7 @@ class GameScreen implements Screen {
      * {@link com.badlogic.gdx.graphics.g2d.Sprite}s.
      */
     private void drawVisibleEntities() {
-        MoribundClient.getInstance().getDrawableGameAssets().forEach(drawable -> {
-            drawable.draw(gameSpriteBatch);
-            if (drawable instanceof Collidable) {
-                renderer.polygon(((Collidable) drawable).getPolygon().getTransformedVertices());
-            }
-        });
+        MoribundClient.getInstance().getDrawableGameAssets().forEach(drawable -> drawable.draw(gameSpriteBatch));
     }
 
     /**

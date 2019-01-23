@@ -1,8 +1,7 @@
 package com.github.moribund.graphics;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.Getter;
@@ -29,18 +28,8 @@ public class AnimationContainer {
     }
 
     private SpriteAnimation makeAnimation(AnimationFile animationFile) {
-        val texture = new Texture(Gdx.files.internal(animationFile.getFile()));
-        TextureRegion[][] splitRegions = TextureRegion.split(texture,
-                texture.getWidth() / animationFile.getFrameColumns(),
-                texture.getHeight() / animationFile.getFrameRows());
-        TextureRegion[] frames = new TextureRegion[animationFile.getFrameColumns() * animationFile.getFrameRows()];
-        int index = 0;
-        for (int i = 0; i < animationFile.getFrameRows(); i++) {
-            for (int j = 0; j < animationFile.getFrameColumns(); j++) {
-                frames[index++] = splitRegions[i][j];
-            }
-        }
-        return new SpriteAnimation(animationFile.getDuration(), frames);
+        val atlas = new TextureAtlas(Gdx.files.internal(animationFile.getFile()));
+        return new SpriteAnimation(animationFile.getDuration(), atlas.findRegions(animationFile.getRegionName()));
     }
 
     public SpriteAnimation getAnimation(AnimationFile file) {

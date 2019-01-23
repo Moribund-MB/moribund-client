@@ -1,0 +1,41 @@
+
+bow_animation.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Bow
+  rotate: false
+  xy: 2, 2
+  size: 183, 100
+  orig: 183, 100
+  offset: 0, 0
+  index: 1
+Bow
+  rotate: false
+  xy: 187, 2
+  size: 177, 100
+  orig: 177, 100
+  offset: 0, 0
+  index: 5
+Bow
+  rotate: false
+  xy: 366, 2
+  size: 167, 100
+  orig: 167, 100
+  offset: 0, 0
+  index: 2
+Bow
+  rotate: false
+  xy: 535, 2
+  size: 154, 100
+  orig: 154, 100
+  offset: 0, 0
+  index: 4
+Bow
+  rotate: false
+  xy: 691, 2
+  size: 130, 100
+  orig: 130, 100
+  offset: 0, 0
+  index: 3
