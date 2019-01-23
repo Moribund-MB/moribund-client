@@ -1,7 +1,7 @@
 package com.github.moribund.objects.nonplayable.items;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
@@ -45,8 +45,8 @@ public final class GroundItem implements Locatable, DrawableGameAsset {
     }
 
     @Override
-    public void draw(SpriteBatch spriteBatch) {
-        sprite.draw(spriteBatch);
+    public void draw(Batch batch) {
+        sprite.draw(batch);
     }
 
     public boolean matches(int itemId, float x, float y) {

@@ -1,7 +1,7 @@
 package com.github.moribund.objects.nonplayable.projectile;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
@@ -105,8 +105,8 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
     }
 
     @Override
-    public void draw(SpriteBatch spriteBatch) {
-        sprite.draw(spriteBatch);
+    public void draw(Batch batch) {
+        sprite.draw(batch);
         checkRemoval();
     }
 

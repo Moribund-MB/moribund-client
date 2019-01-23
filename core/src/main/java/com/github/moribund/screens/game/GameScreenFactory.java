@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.graphics.SpriteContainer;
@@ -15,11 +16,11 @@ import lombok.val;
  */
 public class GameScreenFactory {
     public Screen createScreen() {
-        val uiSpriteBatch = createSpriteBatch();
-        val gameSpriteBatch = createSpriteBatch();
+        val uiBatch = createSpriteBatch();
+        val gameBatch = createSpriteBatch();
         val camera = createCamera();
         val backgroundSprite = createBackgroundSprite();
-        return new GameScreen(uiSpriteBatch, gameSpriteBatch, camera, backgroundSprite);
+        return new GameScreen(uiBatch, gameBatch, camera, backgroundSprite);
     }
 
     /**
@@ -36,7 +37,7 @@ public class GameScreenFactory {
      * Creates the {@link SpriteBatch} dependency.
      * @return The newly made sprite batch.
      */
-    private SpriteBatch createSpriteBatch() {
+    private Batch createSpriteBatch() {
         return new SpriteBatch();
     }
 

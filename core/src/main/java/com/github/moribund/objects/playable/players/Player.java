@@ -2,8 +2,8 @@ package com.github.moribund.objects.playable.players;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.github.moribund.MoribundClient;
@@ -294,24 +294,24 @@ public class Player implements PlayableCharacter {
     }
 
     @Override
-    public void draw(SpriteBatch spriteBatch) {
+    public void draw(Batch batch) {
         if (currentAnimation != null) {
-            currentAnimation.drawAnimation(spriteBatch, sprite);
+            currentAnimation.drawAnimation(batch, sprite);
             if (currentAnimation.isFinished()) {
                 currentAnimation.end();
                 currentAnimation = null;
             }
         } else {
-            sprite.draw(spriteBatch);
+            sprite.draw(batch);
         }
-        drawUniversalHealthBar(spriteBatch);
+        drawUniversalHealthBar(batch);
     }
 
-    private void drawUniversalHealthBar(SpriteBatch spriteBatch) {
+    private void drawUniversalHealthBar(Batch batch) {
         val hitpointsPercentage = hitpoints / (double) maxHitpoints;
         val biggestLength = Math.max(sprite.getHeight(), sprite.getWidth());
-        spriteBatch.draw(GLUtils.getRedTexture(), getX() + 3, getY() + biggestLength + 10, biggestLength - 20, 10);
-        spriteBatch.draw(GLUtils.getGreenTexture(), getX() + 3, getY() + biggestLength + 10, (int) ((biggestLength - 20) * hitpointsPercentage), 10);
+        batch.draw(GLUtils.getRedTexture(), getX() + 3, getY() + biggestLength + 10, biggestLength - 20, 10);
+        batch.draw(GLUtils.getGreenTexture(), getX() + 3, getY() + biggestLength + 10, (int) ((biggestLength - 20) * hitpointsPercentage), 10);
     }
 
     @Override

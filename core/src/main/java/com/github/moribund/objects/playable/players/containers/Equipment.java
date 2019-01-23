@@ -1,8 +1,8 @@
 package com.github.moribund.objects.playable.players.containers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
 import com.github.moribund.graphics.drawables.DrawableUIAsset;
@@ -30,12 +30,12 @@ public class Equipment extends ItemContainer implements DrawableUIAsset {
     }
 
     @Override
-    public void draw(SpriteBatch spriteBatch) {
+    public void draw(Batch batch) {
         for (Sprite sprite : slots) {
-            sprite.draw(spriteBatch);
+            sprite.draw(batch);
         }
         for (int i = 0; i < items.size(); i++) {
-            items.get(i).draw(i, Gdx.graphics.getWidth() - (singularSprite.getWidth() * (Inventory.SLOTS + SLOTS)), spriteBatch);
+            items.get(i).draw(i, Gdx.graphics.getWidth() - (singularSprite.getWidth() * (Inventory.SLOTS + SLOTS)), batch);
         }
     }
 }

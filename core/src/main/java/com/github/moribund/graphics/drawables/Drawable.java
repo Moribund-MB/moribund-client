@@ -1,6 +1,6 @@
 package com.github.moribund.graphics.drawables;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 /**
  * A {code Drawable} object is an object that has a {@link com.badlogic.gdx.graphics.g2d.Sprite} that is visible
@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 interface Drawable {
     /**
      * Draws the player onto the screen.
-     * @param spriteBatch The {@link SpriteBatch} to draw the {@code PlayableCharacter}'s
+     * @param spriteBatch The {@link Batch} to draw the {@code PlayableCharacter}'s
      *                    {@link com.badlogic.gdx.graphics.g2d.Sprite} to.
      */
-    void draw(SpriteBatch spriteBatch);
+    void draw(Batch spriteBatch);
 }
