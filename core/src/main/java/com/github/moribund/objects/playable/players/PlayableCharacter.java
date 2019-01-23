@@ -1,10 +1,12 @@
 package com.github.moribund.objects.playable.players;
 
 import com.badlogic.gdx.InputProcessor;
+import com.github.moribund.graphics.Animation;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Collidable;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
+import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.ItemContainer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 
@@ -63,4 +65,6 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
     void equipItem(int inventorySlot);
 
     void updateAppearance();
+
+    void animateThenLaunch(Animation animation, ProjectileType projectile, int movementSpeed);
 }

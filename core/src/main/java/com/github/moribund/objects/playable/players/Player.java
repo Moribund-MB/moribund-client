@@ -9,10 +9,11 @@ import com.badlogic.gdx.math.Polygon;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.*;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
+import com.github.moribund.net.packets.input.KeyPressedPacket;
+import com.github.moribund.net.packets.input.KeyUnpressedPacket;
+import com.github.moribund.net.packets.input.MouseClickedPacket;
 import com.github.moribund.net.packets.items.EquipItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
-import com.github.moribund.net.packets.key.KeyPressedPacket;
-import com.github.moribund.net.packets.key.KeyUnpressedPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
 import com.github.moribund.objects.nonplayable.items.EquippedItemType;
@@ -318,6 +319,22 @@ public class Player implements PlayableCharacter {
     }
 
     @Override
+    public void animateThenLaunch(Animation animation, ProjectileType projectileType, int movementSpeed) {
+        currentAnimation = AnimationContainer.getInstance().getAnimation(animation.getFile());
+        val projectile = Projectile.builder()
+                .type(projectileType)
+                .withMovementSpeed(movementSpeed)
+                .ignoring(this)
+                .create();
+        currentAnimation.whenEnded(() -> {
+            projectile.setX(getX());
+            projectile.setY(getY());
+            projectile.setRotation(getRotation());
+            Projectile.launchProjectile(projectile);
+        });
+    }
+
+    @Override
     public void rotateLeft() {
         sprite.rotate(ROTATION_SPEED);
         polygon.rotate(ROTATION_SPEED);
@@ -422,24 +439,10 @@ public class Player implements PlayableCharacter {
         if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
             inventory.click(this, screenX);
         } else {
-            val projectile = Projectile.builder()
-                    .type(ProjectileType.ARROW)
-                    .withMovementSpeed(15)
-                    .ignoring(Player.this)
-                    .create();
-            animateThenLaunch(AnimationContainer.getInstance().getAnimation(AnimationFile.BOW), projectile);
+            val mouseClickedPacket = new MouseClickedPacket(gameId, playerId);
+            MoribundClient.getInstance().getPacketDispatcher().sendTCP(mouseClickedPacket);
         }
         return true;
-    }
-
-    private void animateThenLaunch(SpriteAnimation animation, Projectile projectile) {
-        currentAnimation = animation;
-        currentAnimation.whenEnded(() -> {
-            projectile.setX(getX());
-            projectile.setY(getY());
-            projectile.setRotation(getRotation());
-            Projectile.launchProjectile(projectile);
-        });
     }
 
     @Override

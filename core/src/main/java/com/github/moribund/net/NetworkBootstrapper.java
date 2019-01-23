@@ -3,18 +3,20 @@ package com.github.moribund.net;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.esotericsoftware.kryonet.Client;
-import com.github.moribund.net.packets.account.*;
+import com.github.moribund.net.packets.account.CreateNewPlayerPacket;
+import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
+import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
+import com.github.moribund.net.packets.account.LogoutPacket;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.data.GroundItemData;
 import com.github.moribund.net.packets.data.PlayerData;
 import com.github.moribund.net.packets.game.GameStatePacket;
+import com.github.moribund.net.packets.graphics.AnimationProjectilePacket;
+import com.github.moribund.net.packets.graphics.UpdateAppearancePacket;
+import com.github.moribund.net.packets.input.*;
 import com.github.moribund.net.packets.items.EquipItemPacket;
 import com.github.moribund.net.packets.items.ItemOnItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
-import com.github.moribund.net.packets.key.KeyPressedPacket;
-import com.github.moribund.net.packets.key.KeyPressedResponsePacket;
-import com.github.moribund.net.packets.key.KeyUnpressedPacket;
-import com.github.moribund.net.packets.key.KeyUnpressedResponsePacket;
 import com.github.moribund.net.packets.login.LoginPacket;
 import com.github.moribund.net.packets.login.LoginResponse;
 import com.github.moribund.net.packets.login.LoginResponsePacket;
@@ -102,6 +104,8 @@ public class NetworkBootstrapper {
         kryo.register(ItemOnItemPacket.class);
         kryo.register(EquipItemPacket.class);
         kryo.register(UpdateAppearancePacket.class);
+        kryo.register(MouseClickedPacket.class);
+        kryo.register(AnimationProjectilePacket.class);
     }
 
     /**
