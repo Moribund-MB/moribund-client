@@ -238,7 +238,7 @@ public class Player implements PlayableCharacter {
         keyBinds.put(Input.Keys.N, new PlayerAction() {
             @Override
             public void keyPressed() {
-                currentAnimation = AnimationContainer.getInstance().getAnimation(AnimationFile.BOW);
+
             }
 
             @Override
@@ -424,14 +424,22 @@ public class Player implements PlayableCharacter {
         } else {
             val projectile = Projectile.builder()
                     .type(ProjectileType.ARROW)
-                    .withMovementSpeed(10)
-                    .withAngle(getRotation())
-                    .atXY(getX(), getY())
+                    .withMovementSpeed(15)
                     .ignoring(Player.this)
                     .create();
-            Projectile.launchProjectile(projectile);
+            animateThenLaunch(AnimationContainer.getInstance().getAnimation(AnimationFile.BOW), projectile);
         }
         return true;
+    }
+
+    private void animateThenLaunch(SpriteAnimation animation, Projectile projectile) {
+        currentAnimation = animation;
+        currentAnimation.whenEnded(() -> {
+            projectile.setX(getX());
+            projectile.setY(getY());
+            projectile.setRotation(getRotation());
+            Projectile.launchProjectile(projectile);
+        });
     }
 
     @Override

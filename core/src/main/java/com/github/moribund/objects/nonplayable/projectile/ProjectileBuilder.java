@@ -11,11 +11,11 @@ import java.io.InvalidObjectException;
  * to allow for an easy-to-use API to create a rather-complex object: a {@link Projectile}.
  */
 public final class ProjectileBuilder {
-    private float x = -1;
-    private float y = -1;
+    private float x;
+    private float y;
     private float rotationSpeed;
     private float movingSpeed = -1;
-    private float angle = -1;
+    private float angle;
     private ObjectSet<DrawableGameAsset> ignores;
     private ProjectileType projectileType;
 
@@ -83,15 +83,6 @@ public final class ProjectileBuilder {
         try {
             if (projectileType == null) {
                 throw new InvalidObjectException("Unable to make a Projectile that is typeless");
-            }
-            if (x == -1) {
-                throw new InvalidObjectException("Unable to make a projectile with no x-coordinate");
-            }
-            if (y == -1) {
-                throw new InvalidObjectException("Unable to make a projectile with no x-coordinate");
-            }
-            if (angle == -1) {
-                throw new InvalidObjectException("Unable to make a projectile without an angle");
             }
             if (movingSpeed == -1) {
                 throw new InvalidObjectException("Unable to make a Projectile with no moving speed");

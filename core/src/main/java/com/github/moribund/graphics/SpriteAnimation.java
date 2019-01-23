@@ -13,6 +13,7 @@ public class SpriteAnimation extends Animation<TextureRegion> {
     @Getter
     private float stateTime;
     private boolean playing;
+    private Runnable whenEnded;
 
     SpriteAnimation(float frameDuration, Array<? extends TextureRegion> keyFrames) {
         super(frameDuration, keyFrames);
@@ -24,7 +25,7 @@ public class SpriteAnimation extends Animation<TextureRegion> {
         val currentFrame = getKeyFrame(stateTime, false);
 
         batch.draw(currentFrame, originalSprite.getX(), originalSprite.getY(),
-                originalSprite.getOriginY(), originalSprite.getOriginX(),
+                originalSprite.getOriginX(), originalSprite.getOriginY(),
                 currentFrame.getRegionWidth(), currentFrame.getRegionHeight(),
                 originalSprite.getScaleX(), originalSprite.getScaleY(),
                 originalSprite.getRotation());
@@ -34,7 +35,15 @@ public class SpriteAnimation extends Animation<TextureRegion> {
         }
     }
 
+    public void whenEnded(Runnable runnable) {
+        whenEnded = runnable;
+    }
+
     public void end() {
+        if (whenEnded != null) {
+            whenEnded.run();
+        }
+        whenEnded = null;
         playing = true;
         stateTime = 0f;
     }
