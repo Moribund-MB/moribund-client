@@ -37,7 +37,6 @@ public final class DrawNewPlayerPacket implements IncomingPacket {
 
     @Override
     public void process() {
-        PlayerUtils.makePlayer(gameId, playerId, username, x, y, hitpoints);
-        PlayerUtils.rotatePlayer(playerId, rotation);
+        PlayerUtils.makePlayer(gameId, playerId, username, x, y, rotation, hitpoints);
     }
 }

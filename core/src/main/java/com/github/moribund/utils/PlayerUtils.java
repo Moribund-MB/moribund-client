@@ -11,15 +11,6 @@ import lombok.val;
  */
 @UtilityClass
 public class PlayerUtils {
-    /**
-     * Rotates a player.
-     * @param playerId The player ID of the rotating player.
-     * @param rotation The angle to rotate about its current angle.
-     */
-    public void rotatePlayer(int playerId, float rotation) {
-        val playersMap = MoribundClient.getInstance().getPlayers();
-        playersMap.get(playerId).setRotation(rotation);
-    }
 
     /**
      * Sets the {@link MoribundClient#player} to a given player ID.
@@ -36,10 +27,12 @@ public class PlayerUtils {
     }
 
     /**
-     * Makes a new player and sets their coordinates for rendering them.
+     * Makes a new player and sets their coordinates for rendering them. This method adds the player to the
+     * maps and sets for rendering.
      * @param playerId The unique player ID of the character made.
+     * @return The newly made player that has been added to the player map.
      */
-    public void makePlayer(int gameId, int playerId, String username, float x, float y, int hitpoints) {
+    public Player makePlayer(int gameId, int playerId, String username, float x, float y, float rotation, int hitpoints) {
         val player = new Player(gameId, playerId, username, hitpoints);
         val client = MoribundClient.getInstance();
 
@@ -49,6 +42,8 @@ public class PlayerUtils {
 
         player.setX(x);
         player.setY(y);
+        player.setRotation(rotation);
+        return player;
     }
 
     /**
