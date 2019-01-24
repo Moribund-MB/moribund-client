@@ -8,6 +8,7 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.SpriteFile;
 import com.github.moribund.graphics.drawables.DrawableUIAsset;
+import com.github.moribund.net.packets.items.EquipItemPacket;
 import com.github.moribund.net.packets.items.ItemOnItemPacket;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
 import lombok.Getter;
@@ -65,12 +66,17 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
                     sendItemOnItemPacket(playableCharacter);
                     resetVariables();
                 } else {
-                    playableCharacter.equipItem(slotSelected1);
+                    sendEquipItemPacket(playableCharacter);
                     resetVariables();
                 }
                 break;
             }
         }
+    }
+
+    private void sendEquipItemPacket(PlayableCharacter player) {
+        val equipItemPacket = new EquipItemPacket(player.getGameId(), player.getPlayerId(), slotSelected1);
+        MoribundClient.getInstance().getPacketDispatcher().sendTCP(equipItemPacket);
     }
 
     private void resetVariables() {

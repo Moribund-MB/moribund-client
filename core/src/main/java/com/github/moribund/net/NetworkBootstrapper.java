@@ -18,6 +18,7 @@ import com.github.moribund.net.packets.input.*;
 import com.github.moribund.net.packets.items.EquipItemPacket;
 import com.github.moribund.net.packets.items.ItemOnItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
+import com.github.moribund.net.packets.items.UnequipItemPacket;
 import com.github.moribund.net.packets.login.LoginPacket;
 import com.github.moribund.net.packets.login.LoginResponse;
 import com.github.moribund.net.packets.login.LoginResponsePacket;
@@ -108,6 +109,7 @@ public class NetworkBootstrapper {
         kryo.register(MouseClickedPacket.class);
         kryo.register(AnimationProjectilePacket.class);
         kryo.register(TimeLeftRefreshPacket.class);
+        kryo.register(UnequipItemPacket.class);
     }
 
     /**

@@ -12,7 +12,6 @@ import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.input.KeyPressedPacket;
 import com.github.moribund.net.packets.input.KeyUnpressedPacket;
 import com.github.moribund.net.packets.input.MouseClickedPacket;
-import com.github.moribund.net.packets.items.EquipItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
@@ -320,9 +319,10 @@ public class Player implements PlayableCharacter {
             val equippedItemType = EquippedItemType.getItemType(item.getItemType().getId());
             if (equippedItemType != null) {
                 changeCharacter(equippedItemType.getSpriteFile(), equippedItemType.getSpriteVertices());
-                break;
+                return;
             }
         }
+        changeCharacter(SpriteFile.PLAYER, SpriteVertices.PLAYER);
     }
 
     @Override
@@ -445,17 +445,13 @@ public class Player implements PlayableCharacter {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
             inventory.click(this, screenX);
+        } else if (screenX >= 184 && screenX <= 373 && screenY >= 673 && screenY <= 768) {
+            equipment.click(this, screenX);
         } else {
             val mouseClickedPacket = new MouseClickedPacket(gameId, playerId);
             MoribundClient.getInstance().getPacketDispatcher().sendTCP(mouseClickedPacket);
         }
         return true;
-    }
-
-    @Override
-    public void equipItem(int inventorySlot) {
-        val equipItemPacket = new EquipItemPacket(gameId, playerId, inventorySlot);
-        MoribundClient.getInstance().getPacketDispatcher().sendTCP(equipItemPacket);
     }
 
     @Override
