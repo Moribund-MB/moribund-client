@@ -8,9 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
  */
 interface Drawable {
     /**
-     * Draws the player onto the screen.
-     * @param spriteBatch The {@link Batch} to draw the {@code PlayableCharacter}'s
-     *                    {@link com.badlogic.gdx.graphics.g2d.Sprite} to.
+     * Draws an asset onto the screen.
+     * @param spriteBatch The {@link Batch} to draw {@link com.badlogic.gdx.graphics.g2d.Sprite}s to.
      */
     void draw(Batch spriteBatch);
 }

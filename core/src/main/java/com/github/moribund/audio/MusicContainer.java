@@ -10,6 +10,7 @@ import lombok.val;
  * is populated lazily.
  */
 public class MusicContainer {
+
     /**
      * A {@link Object2ObjectOpenHashMap} that contains all the {@link Music}
      * in relation to their {@link MusicFile}. The reason to prefer a {@link Object2ObjectOpenHashMap}
@@ -17,14 +18,14 @@ public class MusicContainer {
      * compared to vanilla Java's.
      */
     private final Object2ObjectOpenHashMap<MusicFile, Music> musicForFile;
+
     /**
      * The singleton instance of this container.
      */
     private static MusicContainer instance;
 
     /**
-     * The constructor for the {@code MusicContainer}. This initializes {@link MusicContainer#musicForFile},
-     * then populates it by calling {@link MusicContainer#setup()}.
+     * The constructor for the {@code MusicContainer}. This initializes {@link MusicContainer#musicForFile}.
      */
     private MusicContainer() {
         musicForFile = new Object2ObjectOpenHashMap<>();
@@ -47,7 +48,7 @@ public class MusicContainer {
      * @param musicFile The music track to play.
      * @return The music for the track.
      */
-    public Music getMusic(MusicFile musicFile) {
+    Music getMusic(MusicFile musicFile) {
         return musicForFile.get(musicFile);
     }
 
