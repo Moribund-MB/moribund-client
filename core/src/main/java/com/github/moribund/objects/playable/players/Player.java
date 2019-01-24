@@ -58,6 +58,8 @@ public class Player implements PlayableCharacter {
     @Getter
     private final Timer timer;
     @Getter
+    private final Timer lobbyTimer;
+    @Getter
     private Polygon polygon;
     /**
      * The {@link Sprite} of this {@code Player} that represents the {@code Player}
@@ -105,7 +107,8 @@ public class Player implements PlayableCharacter {
         inventory = new Inventory();
         equipment = new Equipment();
         healthBar = new LocalHealthBar(this);
-        timer = new Timer();
+        timer = new Timer(0, 0);
+        lobbyTimer = new Timer(1, 1);
         polygon = new Polygon(SpriteVertices.PLAYER.getVertices());
         polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
     }

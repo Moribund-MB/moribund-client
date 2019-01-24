@@ -69,4 +69,6 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
     void animateThenLaunch(Animation animation, ProjectileType projectile, int movementSpeed);
 
     Timer getTimer();
+
+    Timer getLobbyTimer();
 }
