@@ -10,5 +10,5 @@ dependencies {
   compile 'com.google.dagger:dagger:2.19'
   annotationProcessor 'com.google.dagger:dagger-compiler:2.19'
   compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-
+  compile group: 'org.simplejavamail', name: 'simple-java-mail', version:'5.0.3'
 }

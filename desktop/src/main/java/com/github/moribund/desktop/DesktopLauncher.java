@@ -4,7 +4,12 @@ import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.ShutdownHook;
 import lombok.val;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 /**
  * The {@code DesktopLauncher} class launches the desktop (LWJGL) application.
@@ -15,7 +20,22 @@ class DesktopLauncher {
      * @param args The program arguments.
      */
     public static void main(String[] args) {
+        setupShutdownHook();
+        redirectExceptionsToFile();
         createApplication();
+    }
+
+    private static void setupShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new ShutdownHook());
+    }
+
+    private static void redirectExceptionsToFile() {
+        try {
+            PrintStream newOut = new PrintStream(new FileOutputStream("application_error.txt"));
+            System.setErr(newOut);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -40,7 +60,7 @@ class DesktopLauncher {
         configuration.height = DesktopDimension.HEIGHT.getLength();
 
         for (int size : new int[] { 128, 64, 32, 16 }) {
-            configuration.addIcon("images/moribund" + size + ".png", FileType.Internal);
+            configuration.addIcon("images/moribund" + size + ".pg", FileType.Internal);
         }
         return configuration;
     }
