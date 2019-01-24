@@ -1,11 +1,11 @@
 package com.github.moribund.graphics;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 
 /**
  * An animation is an ID that is related to its respective animation file.
- *
- * TODO convert this enum to a publicly static HashMap for a faster Big(O) speed.
  */
 public enum Animation {
     /**
@@ -24,10 +24,9 @@ public enum Animation {
     SPEAR(2, AnimationFile.SPEAR);
 
     /**
-     * All the values of the Animation enum This field is here to save memory, as {@link Animation#values()} won't
-     * need to be invoked to make an array.
+     * All the values of the Animation enum associated with their animation ID.
      */
-    private static final Animation[] VALUES = values();
+    private static final Int2ObjectMap<Animation> VALUES;
 
     /**
      * The ID of the animation.
@@ -40,6 +39,13 @@ public enum Animation {
     @Getter
     private final AnimationFile file;
 
+    static {
+        VALUES = new Int2ObjectOpenHashMap<>();
+        for (Animation animation : values()) {
+            VALUES.put(animation.id, animation);
+        }
+    }
+
     Animation(int id, AnimationFile file) {
         this.id = id;
         this.file = file;
@@ -51,11 +57,6 @@ public enum Animation {
      * @return The {@code Animation} found, which returns null should the animation not be found.
      */
     public static Animation getForId(int id) {
-        for (Animation animation : VALUES) {
-            if (animation.id == id) {
-                return animation;
-            }
-        }
-        return null;
+        return VALUES.get(id);
     }
 }
