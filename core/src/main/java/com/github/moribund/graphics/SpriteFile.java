@@ -28,6 +28,14 @@ public enum SpriteFile {
      */
     ARROW_PROJECTILE("images/items/projectile/arrow.png"),
     /**
+     * A {@link Projectile} sprite for darts.
+     */
+    DART_PROJECTILE("images/items/projectile/dart.png"),
+    /**
+     * A {@link Projectile} sprite for a spear.
+     */
+    SPEAR_PROJECTILE("images/items/projectile/spear.png"),
+    /**
      * The {@link com.github.moribund.screens.game.GameScreen}'s background image.
      */
     BACKGROUND("images/background.png"),

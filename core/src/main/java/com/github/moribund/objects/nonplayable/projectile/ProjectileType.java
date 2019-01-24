@@ -7,7 +7,9 @@ import com.github.moribund.graphics.SpriteVertices;
 import lombok.Getter;
 
 public enum ProjectileType {
-    ARROW(0, SpriteContainer.getInstance().getSprite(SpriteFile.ARROW_PROJECTILE), SpriteVertices.ARROW_PROJECTILE);
+    ARROW(0, SpriteContainer.getInstance().getSprite(SpriteFile.ARROW_PROJECTILE), SpriteVertices.ARROW_PROJECTILE),
+    DART(1, SpriteContainer.getInstance().getSprite(SpriteFile.DART_PROJECTILE), SpriteVertices.DART_PROJECTILE),
+    SPEAR(2, SpriteContainer.getInstance().getSprite(SpriteFile.SPEAR_PROJECTILE), SpriteVertices.SPEAR_PROJECTILE);
 
     private static final ProjectileType[] VALUES = values();
     @Getter

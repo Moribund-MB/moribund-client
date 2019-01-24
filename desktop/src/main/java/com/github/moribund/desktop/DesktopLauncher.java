@@ -60,7 +60,7 @@ class DesktopLauncher {
         configuration.height = DesktopDimension.HEIGHT.getLength();
 
         for (int size : new int[] { 128, 64, 32, 16 }) {
-            configuration.addIcon("images/moribund" + size + ".pg", FileType.Internal);
+            configuration.addIcon("images/moribund" + size + ".png", FileType.Internal);
         }
         return configuration;
     }
