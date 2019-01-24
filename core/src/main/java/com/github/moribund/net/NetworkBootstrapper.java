@@ -7,6 +7,7 @@ import com.github.moribund.net.packets.account.CreateNewPlayerPacket;
 import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
 import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
 import com.github.moribund.net.packets.account.LogoutPacket;
+import com.github.moribund.net.packets.combat.DeathPacket;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.data.GroundItemData;
 import com.github.moribund.net.packets.data.PlayerData;
@@ -112,6 +113,7 @@ public class NetworkBootstrapper {
         kryo.register(TimeLeftRefreshPacket.class);
         kryo.register(UnequipItemPacket.class);
         kryo.register(LobbyTimeLeftRefreshPacket.class);
+        kryo.register(DeathPacket.class);
     }
 
     /**
