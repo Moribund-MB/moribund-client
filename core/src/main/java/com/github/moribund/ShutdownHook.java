@@ -22,7 +22,6 @@ public class ShutdownHook extends Thread {
             e.printStackTrace();
         }
         System.out.println(exception);
-        System.out.println();
         System.out.println("The application has been terminated due to a runtime exception. Would you like to e-mail this? (Yes/No)");
         val response = scanner.next();
         if (response.equalsIgnoreCase("yes")) {

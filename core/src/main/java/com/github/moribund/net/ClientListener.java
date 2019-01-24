@@ -1,9 +1,13 @@
 package com.github.moribund.net;
 
+import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.github.moribund.net.packets.IncomingPacket;
 import lombok.val;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * The overall packet listener. All this listener does is see if an object is an {@link IncomingPacket} and
@@ -12,6 +16,19 @@ import lombok.val;
  * for more info.
  */
 public class ClientListener extends Listener {
+    @Override
+    public void disconnected(Connection connection) {
+        Gdx.app.exit();
+
+        try {
+            val writer = new FileWriter("application_error.txt");
+            writer.write("The server has been disconnected from the client! Perhaps the server has crashed?");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof IncomingPacket) {

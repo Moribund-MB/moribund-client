@@ -147,4 +147,14 @@ public class MoribundClient extends Game {
     public PacketDispatcher getPacketDispatcher() {
         return packetDispatcher;
     }
+
+    @Override
+    public void dispose() {
+        players.clear();
+        groundItems.clear();
+        drawableGameAssets.clear();
+        drawableUIAssets.clear();
+        flaggables.clear();
+        player = null;
+    }
 }
