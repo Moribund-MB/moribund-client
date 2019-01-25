@@ -1,7 +1,7 @@
 package com.github.moribund.objects.nonplayable.items;
 
-import com.github.moribund.graphics.SpriteFile;
-import com.github.moribund.graphics.SpriteVertices;
+import com.github.moribund.graphics.sprites.SpriteFile;
+import com.github.moribund.graphics.sprites.SpriteVertices;
 import lombok.Getter;
 
 public enum EquippedItemType {

@@ -1,8 +1,8 @@
 package com.github.moribund.objects.nonplayable.items;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.github.moribund.graphics.SpriteContainer;
-import com.github.moribund.graphics.SpriteFile;
+import com.github.moribund.graphics.sprites.SpriteContainer;
+import com.github.moribund.graphics.sprites.SpriteFile;
 import lombok.Getter;
 
 public enum ItemType {

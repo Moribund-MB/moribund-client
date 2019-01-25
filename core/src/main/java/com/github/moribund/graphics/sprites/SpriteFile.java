@@ -1,4 +1,4 @@
-package com.github.moribund.graphics;
+package com.github.moribund.graphics.sprites;
 
 import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import lombok.Getter;
@@ -50,6 +50,7 @@ public enum SpriteFile {
     BOW("images/items/weapon/bow.png"),
     DART("images/items/weapon/dart.png"),
     ARROW_ITEM("images/items/weapon/arrow.png"),
+    STOPWATCH_ICON("images/ui/time/stopwatch.png"),
     ;
 
     /**

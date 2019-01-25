@@ -6,8 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.graphics.SpriteContainer;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
+import com.github.moribund.graphics.sprites.SpriteContainer;
+import com.github.moribund.graphics.sprites.SpriteFile;
 import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
 import com.github.moribund.utils.GLUtils;
@@ -73,7 +74,7 @@ class GameScreen implements Screen {
     }
 
     /**
-     * Draws the {@link com.github.moribund.graphics.SpriteFile#BACKGROUND} {@link Sprite}.
+     * Draws the {@link SpriteFile#BACKGROUND} {@link Sprite}.
      */
     private void drawBackground() {
         background.draw(gameBatch);

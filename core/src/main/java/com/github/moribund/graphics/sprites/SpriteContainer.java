@@ -1,4 +1,4 @@
-package com.github.moribund.graphics;
+package com.github.moribund.graphics.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

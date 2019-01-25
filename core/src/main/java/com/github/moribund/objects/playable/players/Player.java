@@ -1,5 +1,6 @@
 package com.github.moribund.objects.playable.players;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,7 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.github.moribund.MoribundClient;
-import com.github.moribund.graphics.*;
+import com.github.moribund.graphics.animations.Animation;
+import com.github.moribund.graphics.animations.AnimationContainer;
+import com.github.moribund.graphics.animations.SpriteAnimation;
+import com.github.moribund.graphics.fonts.FontFile;
+import com.github.moribund.graphics.sprites.SpriteContainer;
+import com.github.moribund.graphics.sprites.SpriteFile;
+import com.github.moribund.graphics.sprites.SpriteVertices;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.input.KeyPressedPacket;
 import com.github.moribund.net.packets.input.KeyUnpressedPacket;
@@ -22,6 +29,8 @@ import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Equipment;
 import com.github.moribund.objects.playable.players.containers.Inventory;
+import com.github.moribund.objects.playable.players.ui.DeathTimer;
+import com.github.moribund.objects.playable.players.ui.LobbyTimer;
 import com.github.moribund.objects.playable.players.ui.LocalHealthBar;
 import com.github.moribund.objects.playable.players.ui.Timer;
 import com.github.moribund.utils.GLUtils;
@@ -56,7 +65,7 @@ public class Player implements PlayableCharacter {
     @Getter
     private final Equipment equipment;
     @Getter
-    private final Timer timer;
+    private final Timer deathTimer;
     @Getter
     private final Timer lobbyTimer;
     @Getter
@@ -107,8 +116,8 @@ public class Player implements PlayableCharacter {
         inventory = new Inventory();
         equipment = new Equipment();
         healthBar = new LocalHealthBar(this);
-        timer = new Timer(0, 0);
-        lobbyTimer = new Timer(1, 1);
+        deathTimer = new DeathTimer(FontFile.CODE_BOLD, LocalHealthBar.X_LOCATION + 35, LocalHealthBar.Y_LOCATION + 50, 1.0f);
+        lobbyTimer = new LobbyTimer(FontFile.CODE_LIGHT, (Gdx.graphics.getWidth() / 2) - 10, Gdx.graphics.getHeight() - 50, 1.0f);
         polygon = new Polygon(SpriteVertices.PLAYER.getVertices());
         polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
     }
@@ -121,7 +130,8 @@ public class Player implements PlayableCharacter {
         assets.add(inventory);
         assets.add(equipment);
         assets.add(healthBar);
-        assets.add(timer);
+        assets.add(deathTimer);
+        assets.add(lobbyTimer);
     }
 
     private void changeCharacter(SpriteFile spriteFile, SpriteVertices spriteVertices) {

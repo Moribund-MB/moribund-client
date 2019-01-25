@@ -1,4 +1,4 @@
-package com.github.moribund.graphics;
+package com.github.moribund.graphics.animations;
 
 import lombok.Getter;
 

@@ -1,9 +1,9 @@
 package com.github.moribund.objects.nonplayable.projectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.github.moribund.graphics.SpriteContainer;
-import com.github.moribund.graphics.SpriteFile;
-import com.github.moribund.graphics.SpriteVertices;
+import com.github.moribund.graphics.sprites.SpriteContainer;
+import com.github.moribund.graphics.sprites.SpriteFile;
+import com.github.moribund.graphics.sprites.SpriteVertices;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;

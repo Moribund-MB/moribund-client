@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.github.moribund.graphics.fonts.FontFile;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import lombok.val;
@@ -31,5 +33,9 @@ public class GLUtils {
         pixmap.setColor(r, g, b, 1);
         pixmap.fill();
         return pixmap;
+    }
+
+    public BitmapFont getFont(FontFile fontFile) {
+        return new BitmapFont(Gdx.files.internal(fontFile.getFontFilePath()), Gdx.files.internal(fontFile.getPngFilePath()), false);
     }
 }

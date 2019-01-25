@@ -1,4 +1,4 @@
-package com.github.moribund.graphics;
+package com.github.moribund.graphics.animations;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;

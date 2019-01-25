@@ -1,7 +1,7 @@
 package com.github.moribund.objects.playable.players;
 
 import com.badlogic.gdx.InputProcessor;
-import com.github.moribund.graphics.Animation;
+import com.github.moribund.graphics.animations.Animation;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Collidable;
 import com.github.moribund.objects.attributes.Flaggable;
@@ -68,7 +68,7 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
 
     void animateThenLaunch(Animation animation, ProjectileType projectile, int movementSpeed);
 
-    Timer getTimer();
+    Timer getDeathTimer();
 
     Timer getLobbyTimer();
 }

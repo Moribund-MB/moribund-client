@@ -8,6 +8,9 @@ import lombok.val;
 
 public class LocalHealthBar implements DrawableUIAsset {
 
+    public static final int X_LOCATION = 184;
+    public static final int Y_LOCATION = 100;
+
     private final PlayableCharacter playableCharacter;
 
     public LocalHealthBar(PlayableCharacter playableCharacter) {
@@ -17,7 +20,7 @@ public class LocalHealthBar implements DrawableUIAsset {
     @Override
     public void draw(Batch batch) {
         val hitpointsPercentage = playableCharacter.getHitpoints() / (double) playableCharacter.getMaxHitpoints();
-        batch.draw(GLUtils.getRedTexture(), 184, 100, 95 * 7, 20);
-        batch.draw(GLUtils.getGreenTexture(), 184, 100, (int) ((95 * 7) * hitpointsPercentage), 20);
+        batch.draw(GLUtils.getRedTexture(), X_LOCATION, Y_LOCATION, 95 * 7, 20);
+        batch.draw(GLUtils.getGreenTexture(), X_LOCATION, Y_LOCATION, (int) ((95 * 7) * hitpointsPercentage), 20);
     }
 }

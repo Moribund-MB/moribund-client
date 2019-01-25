@@ -9,7 +9,7 @@ public class TimeLeftRefreshPacket implements IncomingPacket {
     @Override
     public void process() {
         if (displayText != null) {
-            MoribundClient.getInstance().getPlayer().getTimer().setDisplayText(displayText);
+            MoribundClient.getInstance().getPlayer().getDeathTimer().setDisplayText(displayText);
         }
     }
 }

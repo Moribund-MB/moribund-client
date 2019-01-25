@@ -1,7 +1,7 @@
 package com.github.moribund.net.packets.graphics;
 
 import com.github.moribund.MoribundClient;
-import com.github.moribund.graphics.Animation;
+import com.github.moribund.graphics.animations.Animation;
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import lombok.val;
