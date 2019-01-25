@@ -471,7 +471,7 @@ public class Player implements PlayableCharacter {
     public void collide(Projectile projectile) {
         projectile.removeProjectile();
         MoribundClient.getInstance().getPacketDispatcher().sendTCP(
-                new ProjectileCollisionPacket(gameId, playerId, projectile.getProjectileType().getId()));
+                new ProjectileCollisionPacket(gameId, playerId, projectile.getSource().getPlayerId(), projectile.getProjectileType().getId()));
     }
 
     @Override

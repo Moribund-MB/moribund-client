@@ -46,6 +46,7 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
 
     @Getter
     private final ProjectileType projectileType;
+    @Getter
     private final PlayableCharacter source;
     /**
      * The speed at which the {@code Projectile} can rotate left or right.
