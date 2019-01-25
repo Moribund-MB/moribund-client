@@ -342,6 +342,7 @@ public class Player implements PlayableCharacter {
     public void animateThenLaunch(Animation animation, ProjectileType projectileType, int movementSpeed) {
         currentAnimation = AnimationContainer.getInstance().getAnimation(animation.getFile());
         val projectile = Projectile.builder()
+                .by(this)
                 .type(projectileType)
                 .withMovementSpeed(movementSpeed)
                 .ignoring(this)
