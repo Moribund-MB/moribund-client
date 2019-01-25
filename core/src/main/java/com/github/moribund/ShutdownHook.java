@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class ShutdownHook extends Thread {
     @Override
     public void run() {
-        val scanner = new Scanner(System.in);
         StringBuilder exception = new StringBuilder();
         try {
             val fileScanner = new Scanner(new File("application_error.txt"));
@@ -22,16 +21,19 @@ public class ShutdownHook extends Thread {
             e.printStackTrace();
         }
         System.out.println(exception);
-        System.out.println("The application has been terminated due to a runtime exception. Would you like to e-mail this? (Yes/No)");
-        val response = scanner.next();
-        if (response.equalsIgnoreCase("yes")) {
-            val localDateTime = LocalDateTime.now();
-            EmailUtils.sendEmail("Moribund Email", EmailUtils.EMAIL, "Exception on "
-                    + localDateTime.getMonthValue() + "/"
-                    + localDateTime.getDayOfMonth() + "/"
-                    + localDateTime.getYear(), exception.toString());
+        if (!exception.toString().isEmpty()) {
+            val scanner = new Scanner(System.in);
+            System.out.println("The application has been terminated due to a runtime exception. Would you like to e-mail this? (Yes/No)");
+            val response = scanner.next();
+            if (response.equalsIgnoreCase("yes")) {
+                val localDateTime = LocalDateTime.now();
+                EmailUtils.sendEmail("Moribund Email", EmailUtils.EMAIL, "Exception on "
+                        + localDateTime.getMonthValue() + "/"
+                        + localDateTime.getDayOfMonth() + "/"
+                        + localDateTime.getYear(), exception.toString());
+            }
+            System.out.println();
+            System.out.println("Thank you.");
         }
-        System.out.println();
-        System.out.println("Thank you.");
     }
 }
