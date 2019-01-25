@@ -90,7 +90,7 @@ public class TitleScreen implements Screen {
         privateMatchButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val privateMatchScreen = new PrivateMatchOptionScreen(TitleScreen.this, batch, background, camera);
+                val privateMatchScreen = new PrivateMatchOptionScreen(musicPlayer, batch, background, camera);
                 MoribundClient.getInstance().switchToScreen(privateMatchScreen, false);
             }
         });
@@ -101,7 +101,7 @@ public class TitleScreen implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val settingsScreen = new SettingsScreen(TitleScreen.this, musicPlayer, batch, background, camera);
+                val settingsScreen = new SettingsScreen(musicPlayer, batch, background, camera);
                 MoribundClient.getInstance().switchToScreen(settingsScreen, false);
             }
         });

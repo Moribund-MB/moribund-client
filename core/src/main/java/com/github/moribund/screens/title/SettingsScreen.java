@@ -23,7 +23,6 @@ import java.util.Arrays;
 
 class SettingsScreen implements Screen {
 
-    private final Screen previousScreen;
     private final MusicPlayer musicPlayer;
     private final Batch batch;
     private final Sprite background;
@@ -33,8 +32,7 @@ class SettingsScreen implements Screen {
     private TextButton backButton;
     private Slider audioSlider;
 
-    SettingsScreen(Screen previousScreen, MusicPlayer musicPlayer, Batch batch, Sprite background, Camera camera) {
-        this.previousScreen = previousScreen;
+    SettingsScreen(MusicPlayer musicPlayer, Batch batch, Sprite background, Camera camera) {
         this.musicPlayer = musicPlayer;
         this.batch = batch;
         this.background = background;
@@ -88,7 +86,8 @@ class SettingsScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(previousScreen, false);
+                val titleScreen = new TitleScreen(musicPlayer, batch, background, camera);
+                MoribundClient.getInstance().switchToScreen(titleScreen, false);
             }
         });
     }

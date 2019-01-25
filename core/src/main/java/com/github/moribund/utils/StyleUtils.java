@@ -18,11 +18,17 @@ public final class StyleUtils {
     private static final String UI_ATLAS_NAME = "clean-crispy-ui";
     private static final String FONT_NAME = "font-export";
 
+    //private static final Color TEXT_COLOR = new Color((float).51, (float).32, (float).19, 1);
+    //private static final Color SECONDARY_TEXT_COLOR = new Color((float).93, (float).52, (float).26, 1);
+
     private static TextField.TextFieldStyle createTextFieldStyle() {
         val textFieldStyle = new TextField.TextFieldStyle();
 
-        textFieldStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME +".fnt"));
-        textFieldStyle.fontColor = Color.BLACK;
+        BitmapFont font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME +".fnt"));
+        textFieldStyle.font = font;
+
+        textFieldStyle.fontColor = Color.WHITE;
+        textFieldStyle.messageFontColor = Color.WHITE;
         textFieldStyle.background = SKIN.getDrawable("textfield");
         return textFieldStyle;
     }
@@ -39,6 +45,7 @@ public final class StyleUtils {
         val textButtonStyle = new TextButton.TextButtonStyle();
 
         textButtonStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME + ".fnt"));
+        textButtonStyle.fontColor = Color.WHITE;
         textButtonStyle.up = SKIN.getDrawable("button");
         textButtonStyle.down = SKIN.getDrawable("button-pressed");
         textButtonStyle.checked = SKIN.getDrawable(("button-over"));
@@ -48,6 +55,7 @@ public final class StyleUtils {
     private static Label.LabelStyle createLabelStyle() {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME + ".fnt"));
+        labelStyle.fontColor = Color.WHITE;
         return labelStyle;
     }
 

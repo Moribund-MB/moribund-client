@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.utils.AestheticUtils;
 import com.github.moribund.utils.GLUtils;
 import com.github.moribund.utils.StageUtils;
@@ -21,16 +22,16 @@ import lombok.val;
 import java.util.Arrays;
 
 public class PrivateMatchOptionScreen implements Screen {
+    private final MusicPlayer musicPlayer;
     private final Stage stage;
-    private final Screen previousScreen;
     private final Batch batch;
     private final Sprite background;
     private final Camera camera;
     private TextButton backButton;
     private TextField privateMatchCodeInput;
 
-    public PrivateMatchOptionScreen(Screen previousScreen, Batch batch, Sprite background, Camera camera) {
-        this.previousScreen = previousScreen;
+    public PrivateMatchOptionScreen(MusicPlayer musicPlayer, Batch batch, Sprite background, Camera camera) {
+        this.musicPlayer = musicPlayer;
         this.batch = batch;
         this.background = background;
         this.camera = camera;
@@ -87,7 +88,8 @@ public class PrivateMatchOptionScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                MoribundClient.getInstance().switchToScreen(previousScreen, false);
+                val titleScreen = new TitleScreen(musicPlayer, batch, background, camera);
+                MoribundClient.getInstance().switchToScreen(titleScreen, false);
             }
         });
     }
