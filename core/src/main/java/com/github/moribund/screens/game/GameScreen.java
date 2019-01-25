@@ -195,5 +195,11 @@ class GameScreen implements Screen {
     public void dispose() {
         uiBatch.dispose();
         gameBatch.dispose();
+
+        MoribundClient.getInstance().getFlaggables().clear();
+        MoribundClient.getInstance().getPlayers().clear();
+        MoribundClient.getInstance().getDrawableGameAssets().clear();
+        MoribundClient.getInstance().getDrawableUIAssets().clear();
+        MoribundClient.getInstance().setPlayer(null);
     }
 }
