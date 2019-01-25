@@ -7,5 +7,6 @@ import lombok.Value;
 public class ProjectileCollisionPacket implements OutgoingPacket {
     private int gameId;
     private int playerId;
+    private int sourcePlayerId;
     private int projectileId;
 }

@@ -12,6 +12,7 @@ import com.github.moribund.objects.attributes.Flaggable;
 import com.github.moribund.objects.attributes.Movable;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
+import com.github.moribund.objects.playable.players.PlayableCharacter;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import lombok.Getter;
@@ -45,6 +46,7 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
 
     @Getter
     private final ProjectileType projectileType;
+    private final PlayableCharacter source;
     /**
      * The speed at which the {@code Projectile} can rotate left or right.
      */
@@ -62,10 +64,11 @@ public class Projectile implements Movable, DrawableGameAsset, Flaggable {
      * constructor, a {@code Projectile} is automatically marked with the {@link FlagConstants#MOVE_FORWARD_FLAG}
      * flag.
      */
-    Projectile(ProjectileType projectileType, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<DrawableGameAsset> ignores) {
+    Projectile(ProjectileType projectileType, PlayableCharacter source, float startingX, float startingY, float startingAngle, float rotationSpeed, float movementSpeed, ObjectSet<DrawableGameAsset> ignores) {
         this.sprite = new Sprite(projectileType.getSprite());
         this.polygon = new Polygon(projectileType.getSpriteVertices().getVertices());
         this.projectileType = projectileType;
+        this.source = source;
         this.rotationSpeed = rotationSpeed;
         this.movementSpeed = movementSpeed;
         this.ignores = new ObjectArraySet<>(ignores);

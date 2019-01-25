@@ -1,6 +1,7 @@
 package com.github.moribund.objects.nonplayable.projectile;
 
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
+import com.github.moribund.objects.playable.players.PlayableCharacter;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 
@@ -18,6 +19,7 @@ public final class ProjectileBuilder {
     private float angle;
     private ObjectSet<DrawableGameAsset> ignores;
     private ProjectileType projectileType;
+    private PlayableCharacter source;
 
     /**
      * Takes in x and y coordinates to start the {@link Projectile} at initially.
@@ -28,6 +30,11 @@ public final class ProjectileBuilder {
     public ProjectileBuilder atXY(float x, float y) {
         this.x = x;
         this.y = y;
+        return this;
+    }
+
+    public ProjectileBuilder by(PlayableCharacter source) {
+        this.source = source;
         return this;
     }
 
@@ -87,7 +94,7 @@ public final class ProjectileBuilder {
             if (movingSpeed == -1) {
                 throw new InvalidObjectException("Unable to make a Projectile with no moving speed");
             }
-            return new Projectile(projectileType, x, y, angle, rotationSpeed, movingSpeed, ignores);
+            return new Projectile(projectileType, source, x, y, angle, rotationSpeed, movingSpeed, ignores);
         } catch (InvalidObjectException e) {
             e.printStackTrace();
         }
