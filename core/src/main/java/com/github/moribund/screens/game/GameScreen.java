@@ -192,6 +192,7 @@ class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        uiBatch.dispose();
         gameBatch.dispose();
     }
 }
