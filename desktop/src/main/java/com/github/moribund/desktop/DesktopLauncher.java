@@ -58,6 +58,7 @@ class DesktopLauncher {
         configuration.title = "Moribund - 2D Battle Royale";
         configuration.width = DesktopDimension.WIDTH.getLength();
         configuration.height = DesktopDimension.HEIGHT.getLength();
+        configuration.resizable = false;
 
         for (int size : new int[] { 128, 64, 32, 16 }) {
             configuration.addIcon("images/moribund" + size + ".png", FileType.Internal);
