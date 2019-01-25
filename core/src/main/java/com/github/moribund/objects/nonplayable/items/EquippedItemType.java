@@ -4,11 +4,17 @@ import com.github.moribund.graphics.sprites.SpriteFile;
 import com.github.moribund.graphics.sprites.SpriteVertices;
 import lombok.Getter;
 
+/**
+ * All equipped items in association with their {@link SpriteFile} and {@link SpriteVertices}.
+ */
 public enum EquippedItemType {
     BOW(5, SpriteFile.PLAYER_WITH_BOW, SpriteVertices.PLAYER_WITH_BOW),
     DART(6, SpriteFile.PLAYER_WITH_DART, SpriteVertices.PLAYER_WITH_DART),
     SPEAR(4, SpriteFile.PLAYER_WITH_SPEAR, SpriteVertices.PLAYER_WITH_SPEAR);
 
+    /**
+     * TODO convert this to a HashMap for maximized efficiency.
+     */
     private static final EquippedItemType[] VALUES = values();
 
     private final int itemId;
@@ -23,9 +29,14 @@ public enum EquippedItemType {
         this.spriteVertices = spriteVertices;
     }
 
-    public static EquippedItemType getItemType(int itemid) {
+    /**
+     * Gets the {@code EquippedItemType} given an {@code itemId}.
+     * @param itemId The item ID of the item type.
+     * @return The {@code EquippedItemType}.
+     */
+    public static EquippedItemType getItemType(int itemId) {
         for (EquippedItemType equippedItemType : VALUES) {
-            if (equippedItemType.itemId == itemid) {
+            if (equippedItemType.itemId == itemId) {
                 return equippedItemType;
             }
         }

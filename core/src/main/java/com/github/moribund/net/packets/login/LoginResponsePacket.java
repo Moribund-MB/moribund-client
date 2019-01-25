@@ -8,9 +8,20 @@ import com.github.moribund.screens.login.LoginScreenState;
 import com.github.moribund.screens.title.TitleScreen;
 import lombok.val;
 
+/**
+ * The {@code LoginResponsePacket} handles responses by the login response.
+ */
 public final class LoginResponsePacket implements IncomingPacket {
+
+    /**
+     * The {@link LoginResponse} by the server to the {@link LoginPacket}.
+     */
     private LoginResponse loginResponse;
 
+    /**
+     * A private constructor to ensure the client cannot unexpectedly send this
+     * request to the server.
+     */
     private LoginResponsePacket() { }
 
     @Override

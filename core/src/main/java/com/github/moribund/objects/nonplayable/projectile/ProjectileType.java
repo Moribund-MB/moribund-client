@@ -8,6 +8,9 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 
+/**
+ * The projectile types of an item which contains its IDs, {@link Sprite}s, and {@link SpriteVertices}.
+ */
 public enum ProjectileType {
     ARROW(0, SpriteContainer.getInstance().getSprite(SpriteFile.ARROW_PROJECTILE), SpriteVertices.ARROW_PROJECTILE),
     DART(1, SpriteContainer.getInstance().getSprite(SpriteFile.DART_PROJECTILE), SpriteVertices.DART_PROJECTILE),

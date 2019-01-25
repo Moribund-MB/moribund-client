@@ -8,6 +8,10 @@ import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+/**
+ * The shut down hook is called upon application failure to allow for the sending of an e-mail upon crashing.
+ * A GUI was unable to be displayed as Java terminates it's GUI system when a system is shutting down.
+ */
 public class ShutdownHook extends Thread {
     @Override
     public void run() {

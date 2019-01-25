@@ -4,12 +4,18 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.fonts.FontFile;
 
+/**
+ * The visuals for the lobby timer.
+ */
 public class LobbyTimer extends Timer {
 
     public LobbyTimer(FontFile fontFile, int x, int y, float fontSize) {
         super(fontFile, x, y, fontSize);
     }
 
+    /**
+     * The lobby timer removes itself from the {@link MoribundClient#drawableUIAssets} at time 00:00.
+     */
     @Override
     public void draw(Batch batch) {
         super.draw(batch);

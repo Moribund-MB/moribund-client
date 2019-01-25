@@ -16,14 +16,25 @@ import lombok.val;
  * arrival.
  */
 public final class CreateNewPlayerPacket implements IncomingPacket {
+    /**
+     * The game ID of the newly made player.
+     */
     private int gameId;
+
     /**
      * The unique player ID of the one who just logged in.
      */
     private int playerId;
 
+    /**
+     * The {@link PlayerData} of all the {@link com.github.moribund.objects.playable.players.PlayableCharacter}s in the
+     * game.
+     */
     private ObjectList<PlayerData> playerData;
 
+    /**
+     * The {@link GroundItemData} of all the {@link GroundItem}s in the game.
+     */
     private ObjectList<GroundItemData> groundItems;
 
     /**
@@ -32,6 +43,10 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
      */
     private CreateNewPlayerPacket() { }
 
+    /**
+     * Spawns all ground items, all players, and sets the {@link com.github.moribund.MoribundClient#player} to the
+     * {@link CreateNewPlayerPacket#playerId}.
+     */
     @Override
     public void process() {
         groundItems.forEach(itemData -> {

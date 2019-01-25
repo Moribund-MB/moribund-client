@@ -9,11 +9,15 @@ import lombok.val;
  * The {@code RotationPacket} sends the angle of a given player to update the server.
  * This packet is sent every LibGDX game cycle ({@link com.badlogic.gdx.Screen#render(float)})
  * and is constantly supplying the server where the player currently is for as long as a
- * rotation {@link com.github.moribund.objects.flags.Flag} is active. This is an
- * easy-to-manipulate packet should the client be decompiled and abused, however.
+ * rotation {@link com.github.moribund.objects.flags.Flag} is active.
  */
 public final class RotationPacket implements IncomingPacket, OutgoingPacket {
+
+    /**
+     * The game ID of the player.
+     */
     private final int gameId;
+
     /**
      * The player ID of the player that is finished rotating.
      */

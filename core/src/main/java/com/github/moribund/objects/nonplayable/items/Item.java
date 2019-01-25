@@ -5,7 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import lombok.Getter;
 import lombok.val;
 
+/**
+ * The {@code Item} in the inventory or equipment.
+ */
 public class Item {
+
+    /**
+     * The respective {@link ItemType} of the item.
+     */
     @Getter
     private final ItemType itemType;
 
@@ -13,6 +20,12 @@ public class Item {
         this.itemType = itemType;
     }
 
+    /**
+     * Draws an item onto the screen.
+     * @param slot The slot ID of the item.
+     * @param startingX The starting X coordinate to start drawing the item from, using the slot to readjust.
+     * @param batch The batch to draw the item to.
+     */
     public void draw(int slot, float startingX, Batch batch) {
         val sprite = new Sprite(itemType.getSprite());
         val incrementation = 95;

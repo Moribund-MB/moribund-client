@@ -95,6 +95,9 @@ public class Player implements PlayableCharacter {
     private final String username;
     @Getter
     private int maxHitpoints;
+    /**
+     * The animation currently rendering for the player.
+     */
     private SpriteAnimation currentAnimation;
 
     /**

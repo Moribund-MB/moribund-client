@@ -6,11 +6,17 @@ import com.github.moribund.objects.playable.players.PlayableCharacter;
 import com.github.moribund.utils.GLUtils;
 import lombok.val;
 
+/**
+ * The visuals for the local health bar.
+ */
 public class LocalHealthBar implements DrawableUIAsset {
 
     public static final int X_LOCATION = 184;
     public static final int Y_LOCATION = 100;
 
+    /**
+     * The {@link PlayableCharacter} to use for the health bar.
+     */
     private final PlayableCharacter playableCharacter;
 
     public LocalHealthBar(PlayableCharacter playableCharacter) {

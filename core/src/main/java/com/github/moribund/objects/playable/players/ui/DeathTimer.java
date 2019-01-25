@@ -6,8 +6,14 @@ import com.github.moribund.graphics.fonts.FontFile;
 import com.github.moribund.graphics.sprites.SpriteContainer;
 import com.github.moribund.graphics.sprites.SpriteFile;
 
+/**
+ * The visuals for the timer till death.
+ */
 public class DeathTimer extends Timer {
 
+    /**
+     * The stopwatch icon being shown.
+     */
     private final Sprite stopwatchIcon;
 
     public DeathTimer(FontFile fontFile, int x, int y, float fontSize) {

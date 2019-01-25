@@ -9,11 +9,15 @@ import lombok.val;
  * The {@code LocationPacket} sends the location of a given player to update the server.
  * This packet is sent every LibGDX game cycle ({@link com.badlogic.gdx.Screen#render(float)})
  * and is constantly supplying the server where the player currently is for as long as a
- * moving {@link com.github.moribund.objects.flags.Flag} is active. This is an
- * easy-to-manipulate packet should the client be decompiled and abused, however.
+ * moving {@link com.github.moribund.objects.flags.Flag} is active.
  */
 public final class LocationPacket implements IncomingPacket, OutgoingPacket {
+
+    /**
+     * The game ID of the player at the tile.
+     */
     private final int gameId;
+
     /**
      * The player ID of the player that is at the given tile.
      */

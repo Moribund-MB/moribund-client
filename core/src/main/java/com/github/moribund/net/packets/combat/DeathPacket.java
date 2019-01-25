@@ -7,9 +7,16 @@ import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.PlayerUtils;
 import lombok.val;
 
-public class DeathPacket implements IncomingPacket {
+public final class DeathPacket implements IncomingPacket {
+    /**
+     * The player ID of the player that died.
+     */
     private int playerId;
 
+    /**
+     * A private constructor to ensure the client cannot unexpectedly send this
+     * request to the server.
+     */
     private DeathPacket() { }
 
     @Override

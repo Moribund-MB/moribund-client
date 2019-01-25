@@ -33,6 +33,11 @@ public final class ProjectileBuilder {
         return this;
     }
 
+    /**
+     * The {@link PlayableCharacter} that is the {@link Projectile#source} of the projectile.
+     * @param source The source of the projectile.
+     * @return This builder to allow for the building of other attributes.
+     */
     public ProjectileBuilder by(PlayableCharacter source) {
         this.source = source;
         return this;
@@ -68,6 +73,12 @@ public final class ProjectileBuilder {
         return this;
     }
 
+    /**
+     * The {@link DrawableGameAsset}s to ignore. Initiates the ignores field if it is null.
+     * @param ignore The {@link DrawableGameAsset} to ignore.
+     * @return This builder to allow for the building of other attributes.
+     * TODO change this parameter to {@link com.github.moribund.objects.attributes.Collidable}.
+     */
     public ProjectileBuilder ignoring(DrawableGameAsset ignore) {
         if (ignores == null) {
             ignores = new ObjectArraySet<>();
@@ -76,6 +87,11 @@ public final class ProjectileBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@link ProjectileType} of the projectile.
+     * @param projectileType The {@link ProjectileType} of the projectile.
+     * @return This builder to allow for the building of other attributes.
+     */
     public ProjectileBuilder type(ProjectileType projectileType) {
         this.projectileType = projectileType;
         return this;

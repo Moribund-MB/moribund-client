@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 
 /**
- * An animation is an ID that is related to its respective animation file.
+ * An animation as an ID that is related to its respective animation file.
  */
 public enum Animation {
     /**

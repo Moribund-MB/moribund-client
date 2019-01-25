@@ -25,6 +25,10 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
      */
     int getPlayerId();
 
+    /**
+     * Gets the ID of the game the player is in
+     * @return The ID of the game the player is in.
+     */
     int getGameId();
 
     /**
@@ -57,18 +61,56 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
      */
     void keyUnpressed(int keyUnpressed);
 
+    /**
+     * Gets the player's inventory.
+     * @return The player's inventory.
+     */
     ItemContainer getInventory();
+
+    /**
+     * Gets the player's equipment.
+     * @return The player's equipment.
+     */
     ItemContainer getEquipment();
 
+    /**
+     * Gets the current hitpoints of the player.
+     * @return The current hitpoints of the player.
+     */
     int getHitpoints();
+
+    /**
+     * Sets the current hitpoints of the player.
+     * @param hitpoints The current hitpoints of the player.
+     */
     void setHitpoints(int hitpoints);
+
+    /**
+     * Gets the maximum amount of hitpoints of the player.
+     * @return The maximum amount of hitpoints of the player.
+     */
     int getMaxHitpoints();
 
+    /**
+     * Updates the appearance of the player.
+     */
     void updateAppearance();
 
+    /**
+     * Animates an {@link Animation}, the launches a {@link com.github.moribund.objects.nonplayable.projectile.Projectile}
+     * at a given speed.
+     */
     void animateThenLaunch(Animation animation, ProjectileType projectile, int movementSpeed);
 
+    /**
+     * Gets the timer for death.
+     * @return The timer for death.
+     */
     Timer getDeathTimer();
 
+    /**
+     * Gets the timer for the lobby.
+     * @return The timer for the lobby.
+     */
     Timer getLobbyTimer();
 }

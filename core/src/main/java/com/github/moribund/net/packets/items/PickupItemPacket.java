@@ -6,11 +6,34 @@ import com.github.moribund.net.packets.OutgoingPacket;
 import com.github.moribund.objects.nonplayable.items.GroundItem;
 import lombok.val;
 
-public class PickupItemPacket implements OutgoingPacket, IncomingPacket {
+/**
+ * A packet sent by both the server and the client to handle picking up {@link GroundItem}s.
+ */
+public final class PickupItemPacket implements OutgoingPacket, IncomingPacket {
+
+    /**
+     * The game ID of the player.
+     */
     private final int gameId;
+
+    /**
+     * The player ID of the player.
+     */
     private final int playerId;
+
+    /**
+     * The item ID of the item on the ground.
+     */
     private final int itemId;
+
+    /**
+     * The x-coordinate of the ground item.
+     */
     private final float x;
+
+    /**
+     * The y-coordinate of the ground item.
+     */
     private final float y;
 
     public PickupItemPacket(int gameId, int playerId, int itemId, float x, float y) {
@@ -38,6 +61,10 @@ public class PickupItemPacket implements OutgoingPacket, IncomingPacket {
         }
     }
 
+    /**
+     * Gets a ground item using the above fields.
+     * @return The ground item found.
+     */
     private GroundItem getGroundItem() {
         for (GroundItem groundItem : MoribundClient.getInstance().getGroundItems()) {
             if (groundItem.matches(itemId, x, y)) {

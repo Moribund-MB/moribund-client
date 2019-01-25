@@ -25,10 +25,16 @@ class DesktopLauncher {
         createApplication();
     }
 
+    /**
+     * Sets up a shutdown hook to be executed when the application is terminated.
+     */
     private static void setupShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new ShutdownHook());
     }
 
+    /**
+     * Redirects the stream of the {@link System#err} to a {@link FileOutputStream}.
+     */
     private static void redirectExceptionsToFile() {
         try {
             PrintStream newOut = new PrintStream(new FileOutputStream("application_error.txt"));

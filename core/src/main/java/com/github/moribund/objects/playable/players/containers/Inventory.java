@@ -3,7 +3,6 @@ package com.github.moribund.objects.playable.players.containers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.drawables.DrawableUIAsset;
 import com.github.moribund.graphics.sprites.SpriteContainer;
@@ -11,19 +10,46 @@ import com.github.moribund.graphics.sprites.SpriteFile;
 import com.github.moribund.net.packets.items.EquipItemPacket;
 import com.github.moribund.net.packets.items.ItemOnItemPacket;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
-import lombok.Getter;
 import lombok.val;
 
+/**
+ * The {@code Inventory} {@link ItemContainer}.
+ */
 public class Inventory extends ItemContainer implements DrawableUIAsset {
+
+    /**
+     * The capacity of the slots in the inventory.
+     */
     public static final int SLOTS = 5;
+
+    /**
+     * The sprite of a single equipment inventory.
+     */
     private final Sprite singularSprite;
+
+    /**
+     * The {@link Sprite} array of slots.
+     */
     private Sprite[] slots;
-    @Getter
-    private Rectangle boundingRectangle;
+
+    /**
+     * Has a slot been selected?
+     */
     private boolean itemSelected;
+
+    /**
+     * The first slot selected.
+     */
     private int slotSelected1;
+
+    /**
+     * The second slot selected.
+     */
     private int slotSelected2;
 
+    /**
+     * Makes a new inventory item container, calling {@link Inventory#initiateUI()}.
+     */
     public Inventory() {
         singularSprite = SpriteContainer.getInstance().getSprite(SpriteFile.INVENTORY_UNSELECTED);
         slots = new Sprite[SLOTS];
@@ -32,6 +58,9 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
         initiateUI();
     }
 
+    /**
+     * Initiates all the data in {@link Inventory#slots}.
+     */
     private void initiateUI() {
         val centeringConstant = 175; // todo find a more mathematical way to do this
         for (int i = 0; i < slots.length; i++) {
@@ -52,7 +81,14 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
         }
     }
 
-    public void click(PlayableCharacter playableCharacter, int screenX) {
+    /**
+     * Handles the click action of the inventory interface.
+     * @param player The player that clicked the inventory interface.
+     * @param screenX The x-coordinate of where the inventory was clicked.
+     * @implNote The {@link Inventory#click(PlayableCharacter, int)} method assumes the y-coordinate of the inventory
+     *           interface has been checked.
+     */
+    public void click(PlayableCharacter player, int screenX) {
         val increment = 95;
         val startingXLeft = 279;
         val startingXRight = startingXLeft + increment;
@@ -63,10 +99,10 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
                     slotSelected1 = i;
                 } else if (i != slotSelected1) {
                     slotSelected2 = i;
-                    sendItemOnItemPacket(playableCharacter);
+                    sendItemOnItemPacket(player);
                     resetVariables();
                 } else {
-                    sendEquipItemPacket(playableCharacter);
+                    sendEquipItemPacket(player);
                     resetVariables();
                 }
                 break;
@@ -74,17 +110,28 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
         }
     }
 
+    /**
+     * Sends the equip item packet.
+     * @param player The player that is equipping the item.
+     */
     private void sendEquipItemPacket(PlayableCharacter player) {
         val equipItemPacket = new EquipItemPacket(player.getGameId(), player.getPlayerId(), slotSelected1);
         MoribundClient.getInstance().getPacketDispatcher().sendTCP(equipItemPacket);
     }
 
+    /**
+     * Resets the variables to allow for new actions.
+     */
     private void resetVariables() {
         itemSelected = false;
         slotSelected1 = -1;
         slotSelected2 = -1;
     }
 
+    /**
+     * Sends the item on item packet.
+     * @param playableCharacter The player that is using one item on another.
+     */
     private void sendItemOnItemPacket(PlayableCharacter playableCharacter) {
         val itemOnItemPacket = new ItemOnItemPacket(playableCharacter.getGameId(), playableCharacter.getPlayerId(), slotSelected1, slotSelected2);
         MoribundClient.getInstance().getPacketDispatcher().sendTCP(itemOnItemPacket);
