@@ -44,7 +44,7 @@ public class LoginScreen implements Screen {
     private LoginScreenState loginScreenState;
     private TextField usernameTextField;
     private TextField passwordTextField;
-    private Button loginButton;
+    private Button loginButton, exitButton, howToPlayButton;
     private Stage inputStage;
     private Stage attemptStage;
 
@@ -62,8 +62,35 @@ public class LoginScreen implements Screen {
     public void show() {
         musicPlayer.play(MusicFile.TITLE_SCREEN, true);
         addTextFieldListeners();
-        addLoginButtonListener();
+        addButtonListeners();
         inputStage.setKeyboardFocus(usernameTextField);
+    }
+
+    private void addButtonListeners() {
+        addLoginButtonListener();
+        addHowToPlayButtonListener();
+        addExitButtonListener();
+    }
+
+    private void addHowToPlayButtonListener() {
+        howToPlayButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.postRunnable(() -> {
+                    val howToPlayScreen = new HowToPlayScreen(musicPlayer, batch, background, camera);
+                    MoribundClient.getInstance().switchToScreen(howToPlayScreen, false);
+                });
+            }
+        });
+    }
+
+    private void addExitButtonListener() {
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
     }
 
     private void addLoginButtonListener() {
@@ -119,7 +146,10 @@ public class LoginScreen implements Screen {
     private Stage createInputStage() {
         val stage = StageUtils.createStage(this::createCredentialTextFields, buttons -> {
             loginButton = new TextButton("Login", StyleUtils.TEXT_BUTTON_STYLE);
-            buttons.add(loginButton);
+            howToPlayButton = new TextButton("How To Play", StyleUtils.TEXT_BUTTON_STYLE);
+            exitButton = new TextButton("Exit", StyleUtils.TEXT_BUTTON_STYLE);
+
+            buttons.addAll(Arrays.asList(loginButton, howToPlayButton, exitButton));
         });
 
         Gdx.input.setInputProcessor(stage);

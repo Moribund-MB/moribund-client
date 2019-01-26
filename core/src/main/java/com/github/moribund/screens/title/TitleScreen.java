@@ -59,12 +59,8 @@ public class TitleScreen implements Screen {
      */
     @Override
     public void show() {
-        playTitleScreenMusic();
-        addButtonListeners();
-    }
-
-    private void playTitleScreenMusic() {
         musicPlayer.play(MusicFile.TITLE_SCREEN, true);
+        addButtonListeners();
     }
 
     private void addButtonListeners() {

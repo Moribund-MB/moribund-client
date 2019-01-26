@@ -3,7 +3,6 @@ package com.github.moribund.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import lombok.val;
 
@@ -13,13 +12,11 @@ public final class StyleUtils {
     public static final TextButton.TextButtonStyle TEXT_BUTTON_STYLE = createTextButtonStyle();
     public static final TextField.TextFieldStyle TEXT_FIELD_STYLE = createTextFieldStyle();
     public static final Label.LabelStyle LABEL_STYLE = createLabelStyle();
+    public static final Window.WindowStyle WINDOW_STYLE = createWindowStyle();
 
     private static final String SKIN_NAME = "clean-crispy";
     private static final String UI_ATLAS_NAME = "clean-crispy-ui";
     private static final String FONT_NAME = "font-export";
-
-    //private static final Color TEXT_COLOR = new Color((float).51, (float).32, (float).19, 1);
-    //private static final Color SECONDARY_TEXT_COLOR = new Color((float).93, (float).52, (float).26, 1);
 
     private static TextField.TextFieldStyle createTextFieldStyle() {
         val textFieldStyle = new TextField.TextFieldStyle();
@@ -59,11 +56,16 @@ public final class StyleUtils {
         return labelStyle;
     }
 
-    private static Skin createSkin() {
-        val skin = new Skin();
-        val buttonAtlas = new TextureAtlas(Gdx.files.internal("skins/" + SKIN_NAME + "/skin/" + UI_ATLAS_NAME + ".atlas"));
+    private static Window.WindowStyle createWindowStyle() {
+        val windowStyle = new Window.WindowStyle();
 
-        skin.addRegions(buttonAtlas);
-        return skin;
+        windowStyle.titleFont = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME +".fnt"));
+        windowStyle.titleFontColor = Color.WHITE;
+        windowStyle.background = SKIN.getDrawable("window");
+        return windowStyle;
+    }
+
+    private static Skin createSkin() {
+        return new Skin(Gdx.files.internal("skins/" + SKIN_NAME + "/skin/" + UI_ATLAS_NAME + ".json"));
     }
 }
