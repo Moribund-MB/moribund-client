@@ -113,4 +113,10 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
      * @return The timer for the lobby.
      */
     Timer getLobbyTimer();
+
+    /**
+     * Gets the player's username
+     * @return The player's username.
+     */
+    String getUsername();
 }

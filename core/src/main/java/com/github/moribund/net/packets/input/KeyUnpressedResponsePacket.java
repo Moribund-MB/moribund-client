@@ -27,6 +27,9 @@ public final class KeyUnpressedResponsePacket implements IncomingPacket {
     @Override
     public void process() {
         val player = MoribundClient.getInstance().getPlayers().get(playerId);
+        if (player == null) {
+            return;
+        }
         player.keyUnpressed(keyUnpressed);
     }
 }

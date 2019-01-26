@@ -32,9 +32,7 @@ import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Equipment;
 import com.github.moribund.objects.playable.players.containers.Inventory;
 import com.github.moribund.objects.playable.players.ui.*;
-import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.GLUtils;
-import com.github.moribund.utils.PlayerUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
@@ -90,9 +88,9 @@ public class Player implements PlayableCharacter {
      * the respective {@link Player#flags} have been removed from their {@link ObjectSet}.
      */
     private final ObjectSet<Flag> flagsToRemove;
-    @Getter
-    @Setter
+    @Getter @Setter
     private int hitpoints;
+    @Getter
     private final String username;
     @Getter
     private int maxHitpoints;
@@ -260,15 +258,8 @@ public class Player implements PlayableCharacter {
         keyBinds.put(Input.Keys.ESCAPE, new PlayerAction() {
             @Override
             public void keyPressed() {
-                PlayerUtils.deletePlayer(playerId);
-
-                Gdx.app.postRunnable(() -> {
-                    val titleScreenFactory = new TitleScreenFactory();
-                    MoribundClient.getInstance().switchToScreen(titleScreenFactory.createScreen(), true);
-
-                    val logoutPacket = new ExitGamePacket(gameId, playerId);
-                    MoribundClient.getInstance().getPacketDispatcher().sendTCP(logoutPacket);
-                });
+                val logoutPacket = new ExitGamePacket(gameId, playerId);
+                MoribundClient.getInstance().getPacketDispatcher().sendTCP(logoutPacket);
             }
 
             @Override

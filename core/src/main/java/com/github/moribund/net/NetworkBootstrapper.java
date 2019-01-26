@@ -110,6 +110,7 @@ public class NetworkBootstrapper {
         kryo.register(DeathPacket.class);
         kryo.register(NewGroundItemPacket.class);
         kryo.register(DropItemPacket.class);
+        kryo.register(VictoryRoyalePacket.class);
     }
 
     /**

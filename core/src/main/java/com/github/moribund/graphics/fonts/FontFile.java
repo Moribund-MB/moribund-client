@@ -20,6 +20,8 @@ public enum FontFile {
      * The CODE-light font, used for the lobby timer.
      */
     CODE_LIGHT("fonts/code-light.fnt", "fonts/code-light.png"),
+
+    CODE_LIGHT_2("fonts/code-light.fnt", "fonts/code-light.png"),
     ;
 
     /**
