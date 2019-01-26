@@ -41,5 +41,6 @@ public final class GameStatePacket implements IncomingPacket {
                 player.getEquipment().setItemIds(data.getEquipmentItems());
             }
         });
+
     }
 }

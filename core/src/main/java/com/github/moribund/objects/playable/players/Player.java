@@ -463,7 +463,7 @@ public class Player implements PlayableCharacter {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         val mouseLeftClick = 0;
         val mouseRightClick = 1;
-        if (pointer == mouseLeftClick) {
+        if (button == mouseLeftClick) {
             if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
                 val slot = inventory.getSlotFromClick(screenX);
                 inventory.click(this, slot);
@@ -473,7 +473,7 @@ public class Player implements PlayableCharacter {
                 val mouseClickedPacket = new MouseClickedPacket(gameId, playerId);
                 MoribundClient.getInstance().getPacketDispatcher().sendTCP(mouseClickedPacket);
             }
-        } else if (pointer == mouseRightClick) {
+        } else if (button == mouseRightClick) {
             if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
                 val slot = inventory.getSlotFromClick(screenX);
                 val dropItemPacket = new DropItemPacket(gameId, playerId, slot);

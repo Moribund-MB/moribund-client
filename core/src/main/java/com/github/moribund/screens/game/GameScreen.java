@@ -200,6 +200,5 @@ class GameScreen implements Screen {
         MoribundClient.getInstance().getPlayers().clear();
         MoribundClient.getInstance().getDrawableGameAssets().clear();
         MoribundClient.getInstance().getDrawableUIAssets().clear();
-        MoribundClient.getInstance().setPlayer(null);
     }
 }

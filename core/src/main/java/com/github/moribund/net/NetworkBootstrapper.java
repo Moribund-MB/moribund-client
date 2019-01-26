@@ -12,15 +12,9 @@ import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.data.GroundItemData;
 import com.github.moribund.net.packets.data.PlayerData;
 import com.github.moribund.net.packets.game.GameStatePacket;
-import com.github.moribund.net.packets.graphics.AnimationProjectilePacket;
-import com.github.moribund.net.packets.graphics.LobbyTimeLeftRefreshPacket;
-import com.github.moribund.net.packets.graphics.TimeLeftRefreshPacket;
-import com.github.moribund.net.packets.graphics.UpdateAppearancePacket;
+import com.github.moribund.net.packets.graphics.*;
 import com.github.moribund.net.packets.input.*;
-import com.github.moribund.net.packets.items.EquipItemPacket;
-import com.github.moribund.net.packets.items.ItemOnItemPacket;
-import com.github.moribund.net.packets.items.PickupItemPacket;
-import com.github.moribund.net.packets.items.UnequipItemPacket;
+import com.github.moribund.net.packets.items.*;
 import com.github.moribund.net.packets.login.LoginPacket;
 import com.github.moribund.net.packets.login.LoginResponse;
 import com.github.moribund.net.packets.login.LoginResponsePacket;
@@ -101,7 +95,7 @@ public class NetworkBootstrapper {
         kryo.register(LoginResponse.class, new JavaSerializer());
         kryo.register(LoginResponsePacket.class);
         kryo.register(ItemType.class, new JavaSerializer());
-        kryo.register(GroundItemData.class);
+        kryo.register(GroundItemData.class, new JavaSerializer());
         kryo.register(PlayerData.class);
         kryo.register(PickupItemPacket.class);
         kryo.register(ProjectileCollisionPacket.class);
@@ -114,6 +108,8 @@ public class NetworkBootstrapper {
         kryo.register(UnequipItemPacket.class);
         kryo.register(LobbyTimeLeftRefreshPacket.class);
         kryo.register(DeathPacket.class);
+        kryo.register(NewGroundItemPacket.class);
+        kryo.register(DropItemPacket.class);
     }
 
     /**
