@@ -39,7 +39,7 @@ public class TitleScreen implements Screen {
     private final Camera camera;
     private final Stage stage;
 
-    private TextButton findMatchButton, settingsButton, privateMatchButton, exitButton;
+    private TextButton findMatchButton, settingsButton, exitButton;
 
     /**
      * Constructor that provides the {@code TitleScreen} its dependencies.
@@ -70,7 +70,6 @@ public class TitleScreen implements Screen {
     private void addButtonListeners() {
         addFindMatchButtonListener();
         addSettingsButtonListener();
-        addPrivateMatchButtonListener();
         addExitButtonListener();
     }
 
@@ -84,17 +83,6 @@ public class TitleScreen implements Screen {
                 packetDispatcher.sendTCP(new CreateNewPlayerRequestPacket());
             }
         });
-    }
-
-    private void addPrivateMatchButtonListener() {
-        privateMatchButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                val privateMatchScreen = new PrivateMatchOptionScreen(musicPlayer, batch, background, camera);
-                MoribundClient.getInstance().switchToScreen(privateMatchScreen, false);
-            }
-        });
-
     }
 
     private void addSettingsButtonListener() {
@@ -160,15 +148,13 @@ public class TitleScreen implements Screen {
 
         val findMatchText = "Find Match";
         val settingsText = "Settings";
-        val privateMatchText = "Private Match";
         val exitText = "Exit";
 
         findMatchButton = new TextButton(findMatchText, textButtonStyle);
         settingsButton = new TextButton(settingsText, textButtonStyle);
-        privateMatchButton = new TextButton(privateMatchText, textButtonStyle);
         exitButton = new TextButton(exitText, textButtonStyle);
 
-        buttons.addAll(Arrays.asList(findMatchButton, settingsButton, privateMatchButton, exitButton));
+        buttons.addAll(Arrays.asList(findMatchButton, settingsButton, exitButton));
     }
 
 }
