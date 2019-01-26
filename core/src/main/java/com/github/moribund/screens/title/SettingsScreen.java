@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.utils.AestheticUtils;
 import com.github.moribund.utils.GLUtils;
@@ -42,6 +43,7 @@ class SettingsScreen implements Screen {
 
     @Override
     public void show() {
+        audioSlider.setValue(musicPlayer.getVolume(MusicFile.TITLE_SCREEN));
         addButtonListeners();
     }
 

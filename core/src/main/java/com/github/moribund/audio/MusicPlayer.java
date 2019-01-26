@@ -39,6 +39,11 @@ public class MusicPlayer {
         musicPlaying.forEach(music -> music.setVolume(volume));
     }
 
+    public float getVolume(MusicFile musicFile) {
+        val music = MusicContainer.getInstance().getMusic(musicFile);
+        return music.getVolume();
+    }
+
     /**
      * Disposes of all the current {@link MusicPlayer#musicPlaying}
      * using the {@link Music#dispose()} method of each item in the list.
