@@ -15,6 +15,7 @@ import com.github.moribund.graphics.fonts.FontFile;
 import com.github.moribund.graphics.sprites.SpriteContainer;
 import com.github.moribund.graphics.sprites.SpriteFile;
 import com.github.moribund.graphics.sprites.SpriteVertices;
+import com.github.moribund.net.packets.account.ExitGamePacket;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.input.KeyPressedPacket;
 import com.github.moribund.net.packets.input.KeyUnpressedPacket;
@@ -30,11 +31,10 @@ import com.github.moribund.objects.nonplayable.projectile.Projectile;
 import com.github.moribund.objects.nonplayable.projectile.ProjectileType;
 import com.github.moribund.objects.playable.players.containers.Equipment;
 import com.github.moribund.objects.playable.players.containers.Inventory;
-import com.github.moribund.objects.playable.players.ui.DeathTimer;
-import com.github.moribund.objects.playable.players.ui.LobbyTimer;
-import com.github.moribund.objects.playable.players.ui.LocalHealthBar;
-import com.github.moribund.objects.playable.players.ui.Timer;
+import com.github.moribund.objects.playable.players.ui.*;
+import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.GLUtils;
+import com.github.moribund.utils.PlayerUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
@@ -126,9 +126,6 @@ public class Player implements PlayableCharacter {
         polygon.setOrigin(sprite.getOriginX(), sprite.getOriginY());
     }
 
-    /**
-     * todo optimize this
-     */
     public void addUIAssets() {
         val assets = MoribundClient.getInstance().getDrawableUIAssets();
         assets.add(inventory);
@@ -136,6 +133,7 @@ public class Player implements PlayableCharacter {
         assets.add(healthBar);
         assets.add(deathTimer);
         assets.add(lobbyTimer);
+        assets.add(new EscapeKeyText(FontFile.CODE_BOLD_2));
     }
 
     private void changeCharacter(SpriteFile spriteFile, SpriteVertices spriteVertices) {
@@ -259,10 +257,18 @@ public class Player implements PlayableCharacter {
 
             }
         });
-        keyBinds.put(Input.Keys.N, new PlayerAction() {
+        keyBinds.put(Input.Keys.ESCAPE, new PlayerAction() {
             @Override
             public void keyPressed() {
+                PlayerUtils.deletePlayer(playerId);
 
+                Gdx.app.postRunnable(() -> {
+                    val titleScreenFactory = new TitleScreenFactory();
+                    MoribundClient.getInstance().switchToScreen(titleScreenFactory.createScreen(), true);
+
+                    val logoutPacket = new ExitGamePacket(gameId, playerId);
+                    MoribundClient.getInstance().getPacketDispatcher().sendTCP(logoutPacket);
+                });
             }
 
             @Override

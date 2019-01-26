@@ -14,6 +14,8 @@ public enum FontFile {
      */
     CODE_BOLD("fonts/code-bold.fnt", "fonts/code-bold.png"),
 
+    CODE_BOLD_2("fonts/code-bold.fnt", "fonts/code-bold.png"),
+
     /**
      * The CODE-light font, used for the lobby timer.
      */

@@ -6,7 +6,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.github.moribund.net.packets.account.CreateNewPlayerPacket;
 import com.github.moribund.net.packets.account.CreateNewPlayerRequestPacket;
 import com.github.moribund.net.packets.account.DrawNewPlayerPacket;
-import com.github.moribund.net.packets.account.LogoutPacket;
+import com.github.moribund.net.packets.account.ExitGamePacket;
 import com.github.moribund.net.packets.combat.DeathPacket;
 import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.data.GroundItemData;
@@ -90,7 +90,7 @@ public class NetworkBootstrapper {
         kryo.register(LocationPacket.class);
         kryo.register(RotationPacket.class);
         kryo.register(GameStatePacket.class);
-        kryo.register(LogoutPacket.class);
+        kryo.register(ExitGamePacket.class);
         kryo.register(LoginPacket.class);
         kryo.register(LoginResponse.class, new JavaSerializer());
         kryo.register(LoginResponsePacket.class);
