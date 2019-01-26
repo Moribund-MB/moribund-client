@@ -10,7 +10,7 @@ public enum AnimationFile {
     /**
      * The texture atlas of the bow animation.
      */
-    BOW("images/players/animations/bow_animation.atlas", "Bow", 0.2f),
+    BOW("images/players/animations/bow_animation.atlas", "Bow", 0.15f),
 
     /**
      * The texture atlas of the dart animation.
@@ -20,7 +20,7 @@ public enum AnimationFile {
     /**
      * The texture atlas of the spear animation.
      */
-    SPEAR("images/players/animations/spear_animation.atlas", "Spear", 0.1f),
+    SPEAR("images/players/animations/spear_animation.atlas", "Spear", 0.2f),
     ;
 
     /**
