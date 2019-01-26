@@ -19,6 +19,7 @@ import com.github.moribund.net.packets.combat.ProjectileCollisionPacket;
 import com.github.moribund.net.packets.input.KeyPressedPacket;
 import com.github.moribund.net.packets.input.KeyUnpressedPacket;
 import com.github.moribund.net.packets.input.MouseClickedPacket;
+import com.github.moribund.net.packets.items.DropItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
@@ -460,13 +461,24 @@ public class Player implements PlayableCharacter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
-            inventory.click(this, screenX);
-        } else if (screenX >= 184 && screenX <= 373 && screenY >= 673 && screenY <= 768) {
-            equipment.click(this, screenX);
-        } else {
-            val mouseClickedPacket = new MouseClickedPacket(gameId, playerId);
-            MoribundClient.getInstance().getPacketDispatcher().sendTCP(mouseClickedPacket);
+        val mouseLeftClick = 0;
+        val mouseRightClick = 1;
+        if (pointer == mouseLeftClick) {
+            if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
+                val slot = inventory.getSlotFromClick(screenX);
+                inventory.click(this, slot);
+            } else if (screenX >= 184 && screenX <= 373 && screenY >= 673 && screenY <= 768) {
+                equipment.click(this, screenX);
+            } else {
+                val mouseClickedPacket = new MouseClickedPacket(gameId, playerId);
+                MoribundClient.getInstance().getPacketDispatcher().sendTCP(mouseClickedPacket);
+            }
+        } else if (pointer == mouseRightClick) {
+            if (screenX >= 374 && screenX <= 849 && screenY >= 673 && screenY <= 768) {
+                val slot = inventory.getSlotFromClick(screenX);
+                val dropItemPacket = new DropItemPacket(gameId, playerId, slot);
+                MoribundClient.getInstance().getPacketDispatcher().sendTCP(dropItemPacket);
+            }
         }
         return true;
     }

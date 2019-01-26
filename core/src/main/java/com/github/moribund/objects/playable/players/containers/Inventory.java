@@ -84,30 +84,41 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
     /**
      * Handles the click action of the inventory interface.
      * @param player The player that clicked the inventory interface.
-     * @param screenX The x-coordinate of where the inventory was clicked.
+     * @param slot The slot that was clicked.
      * @implNote The {@link Inventory#click(PlayableCharacter, int)} method assumes the y-coordinate of the inventory
      *           interface has been checked.
      */
-    public void click(PlayableCharacter player, int screenX) {
+    public void click(PlayableCharacter player, int slot) {
+        if (slot != -1) {
+            if (!itemSelected) {
+                itemSelected = true;
+                slotSelected1 = slot;
+            } else if (slot != slotSelected1) {
+                slotSelected2 = slot;
+                sendItemOnItemPacket(player);
+                resetVariables();
+            } else {
+                sendEquipItemPacket(player);
+                resetVariables();
+            }
+        }
+    }
+
+    /**
+     * Gets the slot of a click.
+     * @param screenX The screen x-coordinate clicked.
+     * @return The slot based on the coordinate clicked.
+     */
+    public int getSlotFromClick(int screenX) {
         val increment = 95;
         val startingXLeft = 279;
         val startingXRight = startingXLeft + increment;
         for (int i = 0; i < slots.length; i++) {
             if (screenX >= (startingXLeft + (increment * (i + 1))) && screenX <= (startingXRight + (increment * (i + 1)))) {
-                if (!itemSelected) {
-                    itemSelected = true;
-                    slotSelected1 = i;
-                } else if (i != slotSelected1) {
-                    slotSelected2 = i;
-                    sendItemOnItemPacket(player);
-                    resetVariables();
-                } else {
-                    sendEquipItemPacket(player);
-                    resetVariables();
-                }
-                break;
+                return i;
             }
         }
+        return -1;
     }
 
     /**
