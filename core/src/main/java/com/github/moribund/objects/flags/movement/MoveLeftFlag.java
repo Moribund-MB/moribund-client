@@ -1,18 +1,18 @@
 package com.github.moribund.objects.flags.movement;
 
 import com.github.moribund.objects.attributes.Flaggable;
-import com.github.moribund.objects.attributes.FluidMovable;
+import com.github.moribund.objects.attributes.RestrictedMovable;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
 
 /**
- * The {@link com.github.moribund.objects.flags.Flag} that signifies that a {@link FluidMovable} is moving back.
+ * The {@link com.github.moribund.objects.flags.Flag} that signifies that a {@link RestrictedMovable} is moving leftwards.
  */
-public class MoveBackwardFlag extends MovementFlag {
+public class MoveLeftFlag extends MovementFlag {
     @Override
     public void processFlag(Flaggable flaggable) {
-        if (flaggable instanceof FluidMovable) {
-            FluidMovable movable = (FluidMovable) flaggable;
-            movable.moveBack();
+        if (flaggable instanceof RestrictedMovable) {
+            RestrictedMovable movable = (RestrictedMovable) flaggable;
+            movable.moveLeft();
         }
         if (flaggable instanceof PlayableCharacter) {
             PlayableCharacter playableCharacter = (PlayableCharacter) flaggable;

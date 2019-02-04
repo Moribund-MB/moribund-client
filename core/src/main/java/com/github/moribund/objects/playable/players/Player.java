@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector3;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.animations.Animation;
 import com.github.moribund.graphics.animations.AnimationContainer;
@@ -22,6 +22,7 @@ import com.github.moribund.net.packets.input.KeyUnpressedPacket;
 import com.github.moribund.net.packets.input.MouseClickedPacket;
 import com.github.moribund.net.packets.items.DropItemPacket;
 import com.github.moribund.net.packets.items.PickupItemPacket;
+import com.github.moribund.net.packets.movement.RotationPacket;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
 import com.github.moribund.objects.nonplayable.items.EquippedItemType;
@@ -189,45 +190,45 @@ public class Player implements PlayableCharacter {
         keyBinds.put(Input.Keys.W, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(FlagConstants.MOVE_FORWARD_FLAG);
+                flag(FlagConstants.MOVE_UP_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(FlagConstants.MOVE_FORWARD_FLAG);
+                flagToRemove(FlagConstants.MOVE_UP_FLAG);
             }
         });
         keyBinds.put(Input.Keys.S, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(FlagConstants.MOVE_BACKWARD_FLAG);
+                flag(FlagConstants.MOVE_DOWN_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(FlagConstants.MOVE_BACKWARD_FLAG);
+                flagToRemove(FlagConstants.MOVE_DOWN_FLAG);
             }
         });
         keyBinds.put(Input.Keys.D, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(FlagConstants.ROTATE_RIGHT_FLAG);
+                flag(FlagConstants.MOVE_RIGHT_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(FlagConstants.ROTATE_RIGHT_FLAG);
+                flagToRemove(FlagConstants.MOVE_RIGHT_FLAG);
             }
         });
         keyBinds.put(Input.Keys.A, new PlayerAction() {
             @Override
             public void keyPressed() {
-                flag(FlagConstants.ROTATE_LEFT_FLAG);
+                flag(FlagConstants.MOVE_LEFT_FLAG);
             }
 
             @Override
             public void keyUnpressed() {
-                flagToRemove(FlagConstants.ROTATE_LEFT_FLAG);
+                flagToRemove(FlagConstants.MOVE_LEFT_FLAG);
             }
         });
         keyBinds.put(Input.Keys.E, new PlayerAction() {
@@ -357,45 +358,41 @@ public class Player implements PlayableCharacter {
     }
 
     @Override
-    public void rotateLeft() {
-        sprite.rotate(ROTATION_SPEED);
-        polygon.rotate(ROTATION_SPEED);
+    public void moveUp() {
+        val speed = getYVelocity(false);
+        sprite.translateY(speed);
+        polygon.translate(0, speed);
     }
 
     @Override
-    public void rotateRight() {
-        sprite.rotate(-ROTATION_SPEED);
-        polygon.rotate(-ROTATION_SPEED);
+    public void moveDown() {
+        val speed = getYVelocity(true);
+        sprite.translateY(speed);
+        polygon.translate(0, speed);
     }
 
     @Override
-    public void moveForward() {
-        val angle = sprite.getRotation();
-        val xVelocity = getXVelocity(false, angle);
-        val yVelocity = getYVelocity(false, angle);
-
-        sprite.translate(xVelocity, yVelocity);
-        polygon.translate(xVelocity, yVelocity);
+    public void moveRight() {
+        val speed = getXVelocity(false);
+        sprite.translateX(speed);
+        polygon.translate(speed, 0);
     }
 
     @Override
-    public void moveBack() {
-        val angle = sprite.getRotation();
-        val xVelocity = getXVelocity(true, angle);
-        val yVelocity = getYVelocity(true, angle);
-
-        sprite.translate(xVelocity, yVelocity);
-        polygon.translate(xVelocity, yVelocity);
+    public void moveLeft() {
+        val speed = getXVelocity(true);
+        sprite.translateX(speed);
+        polygon.translate(speed, 0);
     }
 
-    private float getXVelocity(boolean back, float angle) {
-        val xVelocity = (back ? -1 : 1) * MOVEMENT_SPEED * MathUtils.cosDeg(angle);
+    private float getXVelocity(boolean back) {
+        val xVelocity = (back ? -1 : 1) * MOVEMENT_SPEED;
         val xBound = SpriteContainer.getInstance().getSprite(SpriteFile.BACKGROUND).getWidth() / 2;
         return getVelocityWithLimitations(xVelocity, getX(), xBound, -xBound);
     }
 
-    private float getYVelocity(boolean back, float angle) {
-        val yVelocity = (back ? -1 : 1) * MOVEMENT_SPEED * MathUtils.sinDeg(angle);
+    private float getYVelocity(boolean back) {
+        val yVelocity = (back ? -1 : 1) * MOVEMENT_SPEED;
         val yBound = SpriteContainer.getInstance().getSprite(SpriteFile.BACKGROUND).getHeight() / 2;
         return getVelocityWithLimitations(yVelocity, getY(), yBound, -yBound);
     }
@@ -505,5 +502,18 @@ public class Player implements PlayableCharacter {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    @Override
+    public void faceLocation(Vector3 location) {
+        float angle = (float) ((Math.atan2 (getX() - location.x, - (getY() - location.y)) * 180.0d / Math.PI) + 90.0f);
+        setRotation(angle);
+        sendRotationPacket();
+    }
+
+    private void sendRotationPacket() {
+        val packetDispatcher = MoribundClient.getInstance().getPacketDispatcher();
+        val rotationPacket = new RotationPacket(gameId, playerId, getRotation());
+        packetDispatcher.sendUDP(rotationPacket);
     }
 }

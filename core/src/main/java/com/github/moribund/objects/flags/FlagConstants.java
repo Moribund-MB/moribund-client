@@ -1,7 +1,6 @@
 package com.github.moribund.objects.flags;
 
-import com.github.moribund.objects.flags.movement.MoveBackwardFlag;
-import com.github.moribund.objects.flags.movement.MoveForwardFlag;
+import com.github.moribund.objects.flags.movement.*;
 import com.github.moribund.objects.flags.rotating.RotateLeftFlag;
 import com.github.moribund.objects.flags.rotating.RotateRightFlag;
 import lombok.experimental.UtilityClass;
@@ -14,14 +13,34 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FlagConstants {
     /**
-     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.Movable} is moving forward.
+     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.FluidMovable} is moving forward.
      */
     public Flag MOVE_FORWARD_FLAG = new MoveForwardFlag();
 
     /**
-     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.Movable} is moving backwards.
+     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.FluidMovable} is moving backwards.
      */
     public Flag MOVE_BACKWARD_FLAG = new MoveBackwardFlag();
+
+    /**
+     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.RestrictedMovable} is moving up.
+     */
+    public Flag MOVE_UP_FLAG = new MoveUpFlag();
+
+    /**
+     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.RestrictedMovable} is moving down.
+     */
+    public Flag MOVE_DOWN_FLAG = new MoveDownFlag();
+
+    /**
+     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.RestrictedMovable} is moving left.
+     */
+    public Flag MOVE_LEFT_FLAG = new MoveLeftFlag();
+
+    /**
+     * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.RestrictedMovable} is moving right.
+     */
+    public Flag MOVE_RIGHT_FLAG = new MoveRightFlag();
 
     /**
      * The {@link Flag} that signifies that a {@link com.github.moribund.objects.attributes.Movable} is rotating leftwards.

@@ -1,22 +1,19 @@
 package com.github.moribund.objects.flags.rotating;
 
 import com.github.moribund.objects.attributes.Flaggable;
+import com.github.moribund.objects.attributes.FluidMovable;
 import com.github.moribund.objects.attributes.Movable;
-import com.github.moribund.objects.playable.players.PlayableCharacter;
+import com.github.moribund.objects.flags.Flag;
 
 /**
  * The {@link com.github.moribund.objects.flags.Flag} that signifies that a {@link Movable} is rotating leftwards.
  */
-public class RotateLeftFlag extends RotateFlag {
+public class RotateLeftFlag implements Flag {
     @Override
     public void processFlag(Flaggable flaggable) {
-        if (flaggable instanceof Movable) {
-            Movable movable = (Movable) flaggable;
+        if (flaggable instanceof FluidMovable) {
+            FluidMovable movable = (FluidMovable) flaggable;
             movable.rotateLeft();
-        }
-        if (flaggable instanceof PlayableCharacter) {
-            PlayableCharacter playableCharacter = (PlayableCharacter) flaggable;
-            sendRotationPacket(playableCharacter);
         }
     }
 }

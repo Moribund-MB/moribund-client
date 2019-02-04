@@ -1,10 +1,12 @@
 package com.github.moribund.screens.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.graphics.sprites.SpriteContainer;
@@ -67,6 +69,20 @@ class GameScreen implements Screen {
         drawGameSpriteBatch(this::drawBackground, this::drawVisibleEntities);
         drawUISpriteBatch(this::drawUI);
         cameraFollowPlayer();
+        playerFollowMouse();
+    }
+
+    /**
+     * Makes the player face the location of the mouse, with the mouse's location given in world space coordinates.
+     * @see Camera#unproject(Vector3)
+     * @see PlayableCharacter#faceLocation(Vector3)
+     */
+    private void playerFollowMouse() {
+        PlayableCharacter player = MoribundClient.getInstance().getPlayer();
+        if (player != null) {
+            Vector3 mouseLocation = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            player.faceLocation(mouseLocation);
+        }
     }
 
     private void drawUI() {

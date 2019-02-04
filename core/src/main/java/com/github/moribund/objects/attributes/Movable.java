@@ -18,24 +18,4 @@ public interface Movable extends Locatable {
      * Sets the rotational angle of the {@code Movable}.
      */
     void setRotation(float angle);
-
-    /**
-     * Rotates the object leftwards.
-     */
-    void rotateLeft();
-
-    /**
-     * Rotates the object rightwards.
-     */
-    void rotateRight();
-
-    /**
-     * Moves the object forward.
-     */
-    void moveForward();
-
-    /**
-     * Moves the object backward.
-     */
-    void moveBack();
 }

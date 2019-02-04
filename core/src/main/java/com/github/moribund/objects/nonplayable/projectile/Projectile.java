@@ -9,7 +9,7 @@ import com.github.moribund.MoribundClient;
 import com.github.moribund.graphics.drawables.DrawableGameAsset;
 import com.github.moribund.objects.attributes.Collidable;
 import com.github.moribund.objects.attributes.Flaggable;
-import com.github.moribund.objects.attributes.Movable;
+import com.github.moribund.objects.attributes.FluidMovable;
 import com.github.moribund.objects.flags.Flag;
 import com.github.moribund.objects.flags.FlagConstants;
 import com.github.moribund.objects.playable.players.PlayableCharacter;
@@ -26,7 +26,7 @@ import java.time.temporal.ChronoUnit;
  * rather it is any {@link com.badlogic.gdx.graphics.g2d.Sprite} that is moving
  * and visible in the screen that is not attached to a {@link com.badlogic.gdx.InputProcessor}.
  */
-public class Projectile implements Movable, DrawableGameAsset, Flaggable {
+public class Projectile implements FluidMovable, DrawableGameAsset, Flaggable {
 
     /**
      * The list of {@link Flag} for its {@link Flaggable} attribute.
