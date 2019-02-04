@@ -47,7 +47,7 @@ public class GameScreenFactory {
      */
     private Camera createCamera() {
         val camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, Gdx.graphics.getWidth() * 1.25f, Gdx.graphics.getHeight() * 1.25f);
         return camera;
     }
 }
