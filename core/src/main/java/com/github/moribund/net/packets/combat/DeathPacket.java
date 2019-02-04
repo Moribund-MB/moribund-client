@@ -7,6 +7,9 @@ import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.PlayerUtils;
 import lombok.val;
 
+/**
+ * A packet by the server to signify the death of a player.
+ */
 public final class DeathPacket implements IncomingPacket {
     /**
      * The player ID of the player that died.

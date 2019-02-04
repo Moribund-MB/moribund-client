@@ -39,7 +39,7 @@ public class NetworkBootstrapper {
     /**
      * The IP address to connect to.
      */
-    private static final String IP_ADDRESS = "localhost";
+    private static final String IP_ADDRESS = "127.0.0.1";
     /**
      * The port to access.
      */

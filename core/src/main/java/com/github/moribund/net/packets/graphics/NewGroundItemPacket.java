@@ -5,6 +5,9 @@ import com.github.moribund.objects.nonplayable.items.GroundItem;
 import com.github.moribund.objects.nonplayable.items.ItemType;
 import lombok.val;
 
+/**
+ * A packet by the server to signify to the client that a new ground item should be spawned visually.
+ */
 public final class NewGroundItemPacket implements IncomingPacket {
     /**
      * The item ID of the ground item.
@@ -21,6 +24,10 @@ public final class NewGroundItemPacket implements IncomingPacket {
      */
     private float y;
 
+    /**
+     * A private constructor to ensure the client cannot unexpectedly send this
+     * request to the server.
+     */
     private NewGroundItemPacket() { }
 
     @Override
