@@ -22,7 +22,6 @@ import com.github.moribund.net.packets.movement.LocationPacket;
 import com.github.moribund.net.packets.movement.RotationPacket;
 import com.github.moribund.objects.nonplayable.items.ItemType;
 import it.unimi.dsi.fastutil.objects.ObjectList;
-import javafx.util.Pair;
 import lombok.Getter;
 
 import java.io.IOException;
@@ -81,7 +80,6 @@ public class NetworkBootstrapper {
         kryo.register(CreateNewPlayerPacket.class);
         kryo.register(CreateNewPlayerRequestPacket.class);
         kryo.register(ObjectList.class, new JavaSerializer());
-        kryo.register(Pair.class, new JavaSerializer());
         kryo.register(Integer.class, new JavaSerializer());
         kryo.register(KeyPressedPacket.class);
         kryo.register(KeyPressedResponsePacket.class);
