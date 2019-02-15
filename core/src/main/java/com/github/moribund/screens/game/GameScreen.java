@@ -36,6 +36,16 @@ class GameScreen implements Screen {
     private final Sprite background;
 
     /**
+     * The previous screen X coordinate registered.
+     */
+    private int previousX;
+
+    /**
+     * The previous screen Y coordinate registered.
+     */
+    private int previousY;
+
+    /**
      * Constructor that provides the {@code GameScreen} its dependencies.
      * @param uiBatch The sprite batch to display the UI on.
      * @param gameSpritebatch The sprite batch to display the game sprites on.
@@ -74,14 +84,23 @@ class GameScreen implements Screen {
 
     /**
      * Makes the player face the location of the mouse, with the mouse's location given in world space coordinates.
+     * The {@link PlayableCharacter#faceLocation(Vector3)} method is only called if the mouse cursor is on a unique
+     * location since the last render.
      * @see Camera#unproject(Vector3)
      * @see PlayableCharacter#faceLocation(Vector3)
      */
     private void playerFollowMouse() {
         PlayableCharacter player = MoribundClient.getInstance().getPlayer();
         if (player != null) {
+            if (Gdx.input.getX() == previousX && Gdx.input.getY() == previousY) {
+                return;
+            }
+
             Vector3 mouseLocation = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             player.faceLocation(mouseLocation);
+
+            previousX = Gdx.input.getX();
+            previousY = Gdx.input.getY();
         }
     }
 
