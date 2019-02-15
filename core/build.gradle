@@ -7,7 +7,5 @@ dependencies {
   compileOnly 'org.projectlombok:lombok:1.18.4'
   annotationProcessor 'org.projectlombok:lombok:1.18.4'
   compile group: 'it.unimi.dsi', name: 'fastutil', version: '8.2.2'
-  compile 'com.google.dagger:dagger:2.19'
-  annotationProcessor 'com.google.dagger:dagger-compiler:2.19'
   compile group: 'org.simplejavamail', name: 'simple-java-mail', version:'5.0.3'
 }
