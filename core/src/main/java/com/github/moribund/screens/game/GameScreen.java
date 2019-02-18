@@ -80,6 +80,12 @@ class GameScreen implements Screen {
         drawUISpriteBatch(this::drawUI);
         cameraFollowPlayer();
         playerFollowMouse();
+
+        val player = MoribundClient.getInstance().getPlayer();
+        if (player != null) {
+            player.updateRotation();
+            player.updateLocation();
+        }
     }
 
     /**

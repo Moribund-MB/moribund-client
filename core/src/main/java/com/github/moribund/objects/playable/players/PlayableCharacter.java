@@ -127,4 +127,8 @@ public interface PlayableCharacter extends Collidable, Flaggable, DrawableGameAs
      * @see com.badlogic.gdx.graphics.Camera#unproject(Vector3)
      */
     void faceLocation(Vector3 location);
+
+    void updateLocation();
+
+    void updateRotation();
 }
