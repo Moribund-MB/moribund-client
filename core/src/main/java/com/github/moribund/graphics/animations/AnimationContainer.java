@@ -18,7 +18,7 @@ public class AnimationContainer {
      * over a {@link java.util.HashMap} is due to {@code fastutil}'s superior efficiency
      * compared to vanilla Java's.
      */
-    private Object2ObjectMap<AnimationFile, SpriteAnimation> animationForFile;
+    private final Object2ObjectMap<AnimationFile, SpriteAnimation> animationForFile;
 
     /**
      * The singleton instance of this container.
@@ -35,7 +35,7 @@ public class AnimationContainer {
 
     /**
      * Sets up the {@link AnimationContainer#animationForFile} looping through every
-     * {@link AnimationFile} value and using its {@link AnimationFile#file} field and
+     * {@link AnimationFile} value and using its {@link AnimationFile#getFile()} field and
      * calling {@link AnimationContainer}
      */
     public void setup() {

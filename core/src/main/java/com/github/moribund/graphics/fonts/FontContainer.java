@@ -16,7 +16,7 @@ public class FontContainer {
      * A {@link Object2ObjectOpenHashMap} that contains all the {@link BitmapFont}s
      * in relation to their {@link FontFile}.
      */
-    private Object2ObjectMap<FontFile, BitmapFont> fontForFile;
+    private final Object2ObjectMap<FontFile, BitmapFont> fontForFile;
 
     /**
      * The singleton instance of this container.

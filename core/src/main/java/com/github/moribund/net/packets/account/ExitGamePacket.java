@@ -1,14 +1,11 @@
 package com.github.moribund.net.packets.account;
 
-import com.badlogic.gdx.Gdx;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
 import com.github.moribund.net.packets.OutgoingPacket;
-import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.PlayerUtils;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.val;
 
 /**
  * A packet that indicates a player has disconnected from a game. This allows for the server and client to enact the
@@ -37,10 +34,7 @@ public final class ExitGamePacket implements IncomingPacket, OutgoingPacket {
         PlayerUtils.deletePlayer(playerId);
 
         if (playerId == MoribundClient.getInstance().getPlayer().getPlayerId()) {
-            Gdx.app.postRunnable(() -> {
-                val titleScreenFactory = new TitleScreenFactory();
-                MoribundClient.getInstance().switchToScreen(titleScreenFactory.createScreen(), true);
-            });
+            PlayerUtils.switchToNewTitleScreen();
         }
     }
 }

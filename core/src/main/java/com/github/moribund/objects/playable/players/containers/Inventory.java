@@ -30,7 +30,7 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
     /**
      * The {@link Sprite} array of slots.
      */
-    private Sprite[] slots;
+    private final Sprite[] slots;
 
     /**
      * Has a slot been selected?
@@ -85,8 +85,7 @@ public class Inventory extends ItemContainer implements DrawableUIAsset {
      * Handles the click action of the inventory interface.
      * @param player The player that clicked the inventory interface.
      * @param slot The slot that was clicked.
-     * @implNote The {@link Inventory#click(PlayableCharacter, int)} method assumes the y-coordinate of the inventory
-     *           interface has been checked.
+     * @implNote This method assumes the y-coordinate of the inventory interface has been checked.
      */
     public void click(PlayableCharacter player, int slot) {
         if (slot != -1) {

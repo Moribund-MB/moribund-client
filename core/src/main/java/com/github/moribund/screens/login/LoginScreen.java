@@ -45,8 +45,8 @@ public class LoginScreen implements Screen {
     private TextField usernameTextField;
     private TextField passwordTextField;
     private Button loginButton, exitButton, howToPlayButton;
-    private Stage inputStage;
-    private Stage attemptStage;
+    private final Stage inputStage;
+    private final Stage attemptStage;
 
     LoginScreen(MusicPlayer musicPlayer, LoginScreenState loginScreenState, Batch batch, Sprite background, Camera camera) {
         this.musicPlayer = musicPlayer;

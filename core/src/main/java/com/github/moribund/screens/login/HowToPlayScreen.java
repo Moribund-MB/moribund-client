@@ -20,7 +20,7 @@ import com.github.moribund.utils.StageUtils;
 import com.github.moribund.utils.StyleUtils;
 import lombok.val;
 
-public class HowToPlayScreen implements Screen {
+class HowToPlayScreen implements Screen {
     private final MusicPlayer musicPlayer;
     private final Batch batch;
     private final Sprite background;

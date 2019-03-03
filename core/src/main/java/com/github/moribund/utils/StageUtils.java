@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 
 @UtilityClass
 public class StageUtils {
+    @SafeVarargs
     public Stage createStage(Consumer<ObjectList<Actor>>... createComponents) {
         val stage = new Stage();
         val componentContainer = new ObjectArrayList<Actor>();

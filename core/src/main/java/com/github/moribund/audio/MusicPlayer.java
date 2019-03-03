@@ -14,7 +14,7 @@ public class MusicPlayer {
     /**
      * The list of {@link Music} playing to keep track of them for disposal.
      */
-    private ObjectList<Music> musicPlaying;
+    private final ObjectList<Music> musicPlaying;
 
     /**
      * The constructor to make a new music player dependency.

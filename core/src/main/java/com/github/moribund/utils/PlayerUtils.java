@@ -1,8 +1,14 @@
 package com.github.moribund.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.github.moribund.MoribundClient;
+import com.github.moribund.audio.MusicPlayer;
 import com.github.moribund.objects.playable.players.Player;
+import com.github.moribund.screens.title.TitleScreen;
+import com.github.moribund.screens.title.TitleScreenFactory;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 
@@ -14,6 +20,7 @@ public class PlayerUtils {
 
     /**
      * Sets the {@link MoribundClient#player} to a given player ID.
+     *
      * @param playerId The ID of the {@link MoribundClient#player} controlling this {@link MoribundClient}.
      */
     public void setClientPlayer(int playerId) {
@@ -26,9 +33,22 @@ public class PlayerUtils {
         }
     }
 
+    public void switchToNewTitleScreen() {
+        Gdx.app.postRunnable(() -> {
+            val titleScreenFactory = new TitleScreenFactory();
+            MoribundClient.getInstance().switchToScreen(titleScreenFactory.createScreen(), true);
+        });
+    }
+
+    public void switchToTitleScreen(MusicPlayer musicPlayer, Batch batch, Sprite background, Camera camera) {
+        val titleScreen = new TitleScreen(musicPlayer, batch, background, camera);
+        MoribundClient.getInstance().switchToScreen(titleScreen, false);
+    }
+
     /**
      * Makes a new player and sets their coordinates for rendering them. This method adds the player to the
      * maps and sets for rendering.
+     *
      * @param playerId The unique player ID of the character made.
      * @return The newly made player that has been added to the player map.
      */
@@ -48,6 +68,7 @@ public class PlayerUtils {
 
     /**
      * Deletes a player from the {@link MoribundClient#players} map.
+     *
      * @param playerId The player ID (or key) of the player to delete.
      */
     public void deletePlayer(int playerId) {

@@ -10,17 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicFile;
 import com.github.moribund.audio.MusicPlayer;
-import com.github.moribund.utils.AestheticUtils;
-import com.github.moribund.utils.GLUtils;
-import com.github.moribund.utils.StageUtils;
-import com.github.moribund.utils.StyleUtils;
+import com.github.moribund.utils.*;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
-
-import java.util.Arrays;
 
 class SettingsScreen implements Screen {
 
@@ -88,8 +82,7 @@ class SettingsScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val titleScreen = new TitleScreen(musicPlayer, batch, background, camera);
-                MoribundClient.getInstance().switchToScreen(titleScreen, false);
+                PlayerUtils.switchToTitleScreen(musicPlayer, batch, background, camera);
             }
         });
     }
@@ -117,7 +110,7 @@ class SettingsScreen implements Screen {
         val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
-        buttons.addAll(Arrays.asList(backButton));
+        buttons.add(backButton);
     }
 
     private void createSlider(ObjectList<Actor> sliders) {
@@ -130,7 +123,7 @@ class SettingsScreen implements Screen {
         audioSlider = new Slider(audioMinimumValue, audioMaximumValue, audioStepSize, false, sliderStyle);
         setSliderValue(audioSlider, audioMaximumValue);
 
-        sliders.addAll(Arrays.asList(audioSlider));
+        sliders.add(audioSlider);
     }
 
     private void setSliderValue(Slider slider, float value) {

@@ -29,7 +29,7 @@ public class Equipment extends ItemContainer implements DrawableUIAsset {
     /**
      * The {@link Sprite} array of slots.
      */
-    private Sprite[] slots;
+    private final Sprite[] slots;
 
     /**
      * Makes a new equipment item container, calling {@link Equipment#initiateUI()}.
@@ -67,8 +67,7 @@ public class Equipment extends ItemContainer implements DrawableUIAsset {
      * Handles the click action of the equipment interface.
      * @param player The player that clicked the equipment interface.
      * @param screenX The x-coordinate of where the equipment was clicked.
-     * @implNote The {@link Equipment#click(PlayableCharacter, int)} method assumes the y-coordinate of the equipment
-     *           interface has been checked.
+     * @implNote This method assumes the y-coordinate of the equipment interface has been checked.
      */
     public void click(PlayableCharacter player, int screenX) {
         val increment = 95;

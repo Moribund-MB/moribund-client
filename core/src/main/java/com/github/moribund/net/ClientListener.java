@@ -15,7 +15,7 @@ import java.io.IOException;
  * distinguishment of what packet is of what classification. Refer to {@link IncomingPacket}'s documentation
  * for more info.
  */
-public class ClientListener extends Listener {
+class ClientListener extends Listener {
     @Override
     public void disconnected(Connection connection) {
         Gdx.app.exit();

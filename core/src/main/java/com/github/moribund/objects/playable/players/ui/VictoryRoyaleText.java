@@ -28,6 +28,6 @@ public class VictoryRoyaleText implements DrawableUIAsset {
 
     @Override
     public void draw(Batch spriteBatch) {
-        font.draw(spriteBatch, username + " won!", (Gdx.graphics.getWidth() / 2) - 100, Gdx.graphics.getHeight() - 20);
+        font.draw(spriteBatch, username + " won!", (Gdx.graphics.getWidth() / 2f) - 100, Gdx.graphics.getHeight() - 20);
     }
 }

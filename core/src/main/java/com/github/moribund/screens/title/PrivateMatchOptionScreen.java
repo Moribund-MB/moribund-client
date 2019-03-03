@@ -10,18 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.github.moribund.MoribundClient;
 import com.github.moribund.audio.MusicPlayer;
-import com.github.moribund.utils.AestheticUtils;
-import com.github.moribund.utils.GLUtils;
-import com.github.moribund.utils.StageUtils;
-import com.github.moribund.utils.StyleUtils;
+import com.github.moribund.utils.*;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.val;
 
-import java.util.Arrays;
-
-public class PrivateMatchOptionScreen implements Screen {
+class PrivateMatchOptionScreen implements Screen {
     private final MusicPlayer musicPlayer;
     private final Stage stage;
     private final Batch batch;
@@ -88,8 +82,7 @@ public class PrivateMatchOptionScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                val titleScreen = new TitleScreen(musicPlayer, batch, background, camera);
-                MoribundClient.getInstance().switchToScreen(titleScreen, false);
+                PlayerUtils.switchToTitleScreen(musicPlayer, batch, background, camera);
             }
         });
     }
@@ -115,7 +108,7 @@ public class PrivateMatchOptionScreen implements Screen {
         val backButtonText = "Back";
 
         backButton = new TextButton(backButtonText, textButtonStyle);
-        buttons.addAll(Arrays.asList(backButton));
+        buttons.add(backButton);
     }
 
     private void createTextFields(ObjectList<Actor> textFields) {
@@ -123,6 +116,6 @@ public class PrivateMatchOptionScreen implements Screen {
         val privateMatchCodePrompt = "Enter Match Code Here";
 
         privateMatchCodeInput = new TextField(privateMatchCodePrompt, textFieldStyle);
-        textFields.addAll(Arrays.asList(privateMatchCodeInput));
+        textFields.add(privateMatchCodeInput);
     }
 }

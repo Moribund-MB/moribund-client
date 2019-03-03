@@ -1,11 +1,8 @@
 package com.github.moribund.net.packets.combat;
 
-import com.badlogic.gdx.Gdx;
 import com.github.moribund.MoribundClient;
 import com.github.moribund.net.packets.IncomingPacket;
-import com.github.moribund.screens.title.TitleScreenFactory;
 import com.github.moribund.utils.PlayerUtils;
-import lombok.val;
 
 /**
  * A packet by the server to signify the death of a player.
@@ -26,11 +23,8 @@ public final class DeathPacket implements IncomingPacket {
     public void process() {
         PlayerUtils.deletePlayer(playerId);
 
-        if (MoribundClient.getInstance().getPlayer().getPlayerId() == playerId) {
-            Gdx.app.postRunnable(() -> {
-                val titleScreenFactory = new TitleScreenFactory();
-                MoribundClient.getInstance().switchToScreen(titleScreenFactory.createScreen(), true);
-            });
+        if (playerId == MoribundClient.getInstance().getPlayer().getPlayerId()) {
+            PlayerUtils.switchToNewTitleScreen();
         }
     }
 }

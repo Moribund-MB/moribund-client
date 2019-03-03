@@ -51,8 +51,10 @@ public final class CreateNewPlayerPacket implements IncomingPacket {
     public void process() {
         groundItems.forEach(itemData -> {
             val type = ItemType.getItemType(itemData.getItemId());
-            val groundItem = new GroundItem(type, itemData.getX(), itemData.getY());
-            GroundItem.addGroundItem(groundItem);
+            if (type != null) {
+                val groundItem = new GroundItem(type, itemData.getX(), itemData.getY());
+                GroundItem.addGroundItem(groundItem);
+            }
         });
         playerData.forEach(data -> {
             val playerId = data.getPlayerId();

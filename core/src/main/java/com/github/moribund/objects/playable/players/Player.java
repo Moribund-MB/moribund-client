@@ -355,10 +355,12 @@ public class Player implements PlayableCharacter {
                 .ignoring(this)
                 .create();
         currentAnimation.whenEnded(() -> {
-            projectile.setX(getX());
-            projectile.setY(getY());
-            projectile.setRotation(getRotation());
-            Projectile.launchProjectile(projectile);
+            if (projectile != null) {
+                projectile.setX(getX());
+                projectile.setY(getY());
+                projectile.setRotation(getRotation());
+                Projectile.launchProjectile(projectile);
+            }
         });
     }
 

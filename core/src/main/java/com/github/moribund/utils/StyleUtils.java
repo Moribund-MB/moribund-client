@@ -20,10 +20,7 @@ public final class StyleUtils {
 
     private static TextField.TextFieldStyle createTextFieldStyle() {
         val textFieldStyle = new TextField.TextFieldStyle();
-
-        BitmapFont font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME +".fnt"));
-        textFieldStyle.font = font;
-
+        textFieldStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME +".fnt"));
         textFieldStyle.fontColor = Color.WHITE;
         textFieldStyle.messageFontColor = Color.WHITE;
         textFieldStyle.background = SKIN.getDrawable("textfield");
@@ -32,7 +29,6 @@ public final class StyleUtils {
 
     private static Slider.SliderStyle createSliderStyle() {
         val sliderStyle = new Slider.SliderStyle();
-
         sliderStyle.knob = SKIN.getDrawable("scrollpane-knob-horizontal");
         sliderStyle.background = SKIN.getDrawable("scrollpane-horizontal");
         return sliderStyle;
@@ -40,7 +36,6 @@ public final class StyleUtils {
 
     private static TextButton.TextButtonStyle createTextButtonStyle() {
         val textButtonStyle = new TextButton.TextButtonStyle();
-
         textButtonStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME + ".fnt"));
         textButtonStyle.fontColor = Color.WHITE;
         textButtonStyle.up = SKIN.getDrawable("button");
@@ -50,7 +45,7 @@ public final class StyleUtils {
     }
 
     private static Label.LabelStyle createLabelStyle() {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        val labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME + ".fnt"));
         labelStyle.fontColor = Color.WHITE;
         return labelStyle;
@@ -58,7 +53,6 @@ public final class StyleUtils {
 
     private static Window.WindowStyle createWindowStyle() {
         val windowStyle = new Window.WindowStyle();
-
         windowStyle.titleFont = new BitmapFont(Gdx.files.internal("skins/" + SKIN_NAME + "/raw/" + FONT_NAME +".fnt"));
         windowStyle.titleFontColor = Color.WHITE;
         windowStyle.background = SKIN.getDrawable("window");
